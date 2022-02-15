@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,6 +56,12 @@ class User extends Authenticatable
         $this->attributes['password'] = \Hash::make($value);
     }
 
+    public function city() : Attribute {
+        return new Attribute(
+            fn() => $this->cities()->first()
+        );
+    }
+
     public function findForPassport($value) {
         $value = \StringFormatter::onlyDigits($value);
 
@@ -69,8 +76,5 @@ class User extends Authenticatable
         return $this->belongsToMany(City::class, 'user_city');
     }
 
-    public function getCityAttribute() {
-        return $this->cities()->first();
-    }
 
 }
