@@ -60,4 +60,17 @@ class User extends Authenticatable
 
         return User::query()->where('phone', $value)->first();
     }
+
+    public function addresses() {
+        return $this->hasMany(UserAddress::class);
+    }
+
+    public function cities() {
+        return $this->belongsToMany(City::class, 'user_city');
+    }
+
+    public function getCityAttribute() {
+        return $this->cities()->first();
+    }
+
 }

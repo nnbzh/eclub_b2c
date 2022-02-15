@@ -28,5 +28,12 @@ Route::group(['prefix' => 'auth'], function() {
 Route::group(['prefix' => 'user'], function() {
     Route::group(['middleware = auth:api'], function() {
         Route::post('password', 'UserController@setPassword');
+        Route::apiResource('addresses', 'UserAddressController')->names([
+            'index'     => 'addresses.list',
+            'store'     => 'addresses.create',
+            'update'    => 'addresses.edit',
+            'destroy'   => 'addresses.delete',
+            'show'      => 'addresses.details',
+        ]);
     });
 });
