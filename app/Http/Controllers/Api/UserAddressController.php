@@ -29,7 +29,8 @@ class UserAddressController extends Controller
     }
 
     public function index(Request $request) {
-        $userAddresses = $this->userAddressService->all($request->user()->id);
+        $data = $request->merge(['user_id' => $request->user()->id])->all();
+        $userAddresses = $this->userAddressService->all($data);
 
         return UserAddressResource::collection($userAddresses);
     }

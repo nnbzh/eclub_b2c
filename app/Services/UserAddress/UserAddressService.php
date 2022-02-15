@@ -11,8 +11,8 @@ class UserAddressService
     {
     }
 
-    public function all($userId) {
-        return $this->userAddressRepository->getByUserId($userId);
+    public function all($filters = []) {
+        return $this->userAddressRepository->all($filters);
     }
 
     public function create(array $data)

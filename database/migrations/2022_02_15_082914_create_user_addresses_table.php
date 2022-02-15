@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('block')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
+            $table->foreignId('city_id')->references('id')->on('cities')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ class UpdateUserAddressRequest extends FormRequest
             'apartment' => 'nullable',
             'lat'       => 'nullable|string',
             'lng'       => 'nullable|string',
+            'city_id'   => 'nullable|int|exists:cities,id',
         ];
     }
 }
