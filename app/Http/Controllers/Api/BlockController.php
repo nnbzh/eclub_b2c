@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BlockResource;
 use App\Services\Block\BlockService;
+use Illuminate\Http\Request;
 
 class BlockController extends Controller
 {
