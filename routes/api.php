@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'auth'], function() {
     Route::get('check', 'UserController@isPhoneUsed');
-    Route::post('otp', 'AuthController@requestOtp');
+    Route::post('otp', 'AuthController@requestOtp')->middleware(['throttle:5']);
     Route::post('otp/verify', 'AuthController@verifyOtp');
     Route::post('login', 'AuthController@login');
 });
