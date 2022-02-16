@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('lng')->nullable();
             $table->integer('code')->nullable();
             $table->string('number')->nullable();
-            $table->boolean('is_enabled')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->boolean('has_delivery')->default(false);
             $table->timestamps();
         });

@@ -30,6 +30,11 @@ class AdminMenuGenerator
                 'route' => backpack_url('menu_item'),
                 'icon' => 'la la-icons',
                 'label' => trans('admin.menu_item.plural'),
+            ],
+            [
+                'route' => backpack_url('city'),
+                'icon' => 'la la-city',
+                'label' => trans('admin.city.plural'),
             ]
         ];
     }
