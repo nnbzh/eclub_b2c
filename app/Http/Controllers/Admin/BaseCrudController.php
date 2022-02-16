@@ -12,10 +12,12 @@ abstract class BaseCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
 
     protected $attributes;
     protected $modelNameLower;
-    protected bool $showTimestamps = true;
+    protected bool $showTimestamps = false;
+    protected bool $hasReorderOperation = false;
 
     public function setup()
     {
@@ -26,6 +28,16 @@ abstract class BaseCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix')."/$class");
         $this->crud->setEntityNameStrings(trans('admin.'.$class.".singular"), trans('admin.'.$class.".plural"));
         $this->attributes = \DB::getSchemaBuilder()->getColumnListing($this->crud->model->getTable());
+
+        if (! $this->hasReorderOperation) {
+            $this->crud->denyAccess('reorder');
+        }
+    }
+
+    protected function setupReorderOperation($field = 'name')
+    {
+        $this->crud->set('reorder.label', $field);
+        $this->crud->set('reorder.max_level', 1);
     }
 
     protected function setupListOperation() {

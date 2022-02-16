@@ -17,8 +17,18 @@ class AdminMenuGenerator
                 'label' => trans('admin.user.plural'),
             ],
             [
-                'route' => backpack_url('menu_item'),
+                'route' => backpack_url('block'),
+                'icon' => 'la la-list',
+                'label' => trans('admin.block.plural'),
+            ],
+            [
+                'route' => backpack_url('market'),
                 'icon' => 'la la-store',
+                'label' => trans('admin.market.plural'),
+            ],
+            [
+                'route' => backpack_url('menu_item'),
+                'icon' => 'la la-icons',
                 'label' => trans('admin.menu_item.plural'),
             ]
         ];

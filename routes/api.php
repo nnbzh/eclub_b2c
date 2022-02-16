@@ -18,11 +18,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('markets', 'MarketController')->names(['index' => 'markets.list']);
+Route::apiResource('blocks', 'BlockController')->names(['index' => 'blocks.list']);
+
 Route::group(['prefix' => 'auth'], function() {
     Route::get('check', 'UserController@isPhoneUsed');
     Route::post('otp', 'AuthController@requestOtp')->middleware(['throttle:5']);
     Route::post('otp/verify', 'AuthController@verifyOtp');
     Route::post('login', 'AuthController@login');
+    Route::get('logout', 'AuthController@logout');
 });
 
 Route::group(['prefix' => 'user'], function() {

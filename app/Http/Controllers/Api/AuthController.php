@@ -17,6 +17,7 @@ class AuthController extends Controller
 
     public function __construct(private LoginService $loginService)
     {
+        $this->middleware('auth:api')->only(['logout']);
     }
 
     public function requestOtp(PhoneNumberRequest $request) {
@@ -31,5 +32,13 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request) {
         return new TokenResource(json_decode($this->issueToken($request, 'password')->getContent()));
+    }
+
+    public function logout(Request $request) {
+        $token = $request->user()->currentAccessToken();
+        $token->revoke();
+        app('Laravel\Passport\RefreshTokenRepository')->revokeRefreshTokensByAccessTokenId($token->id);
+
+        return response()->noContent();
     }
 }
