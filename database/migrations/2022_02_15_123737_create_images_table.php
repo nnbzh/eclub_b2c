@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->nullableMorphs('imageable');
+            $table->text('src')->nullable();
             $table->string('lang')->nullable();
             $table->timestamps();
         });
