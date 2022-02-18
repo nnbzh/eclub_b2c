@@ -2,22 +2,39 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ImageUploadedEvent;
+use App\Traits\Imageable;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 abstract class BaseCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
+    use CreateOperation {
+        store as parentStore;
+    }
+
+    use UpdateOperation {
+        update as parentUpdate;
+        edit as parentEdit;
+    }
+
+    use ListOperation;
+    use DeleteOperation;
+    use ShowOperation;
+    use ReorderOperation;
 
     protected $attributes;
     protected $modelNameLower;
     protected bool $showTimestamps = false;
     protected bool $hasReorderOperation = false;
+    protected bool $hasImage = false;
 
     public function setup()
     {
@@ -32,6 +49,8 @@ abstract class BaseCrudController extends CrudController
         if (! $this->hasReorderOperation) {
             $this->crud->denyAccess('reorder');
         }
+
+        $this->setHasImage($this->crud->model);
     }
 
     protected function setupReorderOperation($field = 'name')
@@ -60,6 +79,75 @@ abstract class BaseCrudController extends CrudController
                 ]);
             }
         }
+
+        if ($this->hasImage) {
+            $this->crud->addColumn([
+                'name' => 'imgSrc',
+                'label' => trans('admin.image.singular'),
+                'type' => 'image',
+                'disk' => 's3',
+                'width' => '150px',
+                'height' => '150px',
+            ]);
+        }
+    }
+
+    public function store()
+    {
+        if (! $this->hasImage) {
+            return $this->parentStore();
+        }
+
+        $this->crud->hasAccessOrFail('create');
+        $request = $this->crud->validateRequest();
+        $image   = $request->get('img_src');
+        $request->request->remove('img_src');
+        $this->crud->registerFieldEvents();
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
+        $this->data['entry'] = $this->crud->entry = $item;
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+        $this->crud->setSaveAction();
+
+        if ($image) {
+            event(new ImageUploadedEvent($item, $image));
+        }
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
+    public function update()
+    {
+        if (! $this->hasImage) {
+            return $this->parentUpdate();
+        }
+
+        $this->crud->hasAccessOrFail('update');
+        $request = $this->crud->validateRequest();
+        $image   = $request->get('img_src');
+        $request->request->remove('img_src');
+        $this->crud->registerFieldEvents();
+        $item = $this->crud->update(
+            $request->get($this->crud->model->getKeyName()),
+            $this->crud->getStrippedSaveRequest($request)
+        );
+        $this->data['entry'] = $this->crud->entry = $item;
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+        $this->crud->setSaveAction();
+
+        event(new ImageUploadedEvent($item, $image, $request->get('_locale')));
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
+    public function edit($id)
+    {
+        if (! $this->hasImage) {
+            return $this->parentEdit($id);
+        }
+
+        app()->setLocale(request('_locale', 'ru'));
+
+        return $this->parentEdit($id);
     }
 
     protected function setupCreateOperation() {
@@ -82,6 +170,17 @@ abstract class BaseCrudController extends CrudController
                     'label' => $commonAttributes[$attribute]
                 ]);
             }
+        }
+
+        if ($this->hasImage) {
+            $this->crud->addField([
+                'name' => 'img_src',
+                'label' => trans('admin.image.singular'),
+                'type' => 'image',
+                'disk' => 's3',
+                'width' => '150px',
+                'height' => '150px',
+            ]);
         }
     }
 
@@ -124,5 +223,9 @@ abstract class BaseCrudController extends CrudController
         if (class_exists($path)) {
             $this->crud->setValidation($path);
         }
+    }
+
+    private function setHasImage($model) {
+        $this->hasImage = in_array(Imageable::class, class_uses($model::class));
     }
 }

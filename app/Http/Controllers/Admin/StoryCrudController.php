@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-class MarketCrudController extends BaseCrudController
+class StoryCrudController extends BaseCrudController
 {
     protected bool $hasReorderOperation = true;
 }

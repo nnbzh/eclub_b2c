@@ -2,25 +2,23 @@
 
 namespace App\Models;
 
-use App\Traits\HasFilters;
 use App\Traits\Imageable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
-class Market extends Model
+class Story extends Model
 {
-    use Imageable, CrudTrait, HasFilters, HasTranslations;
+    use CrudTrait, Imageable, HasTranslations;
 
     public $translatable = ['img_src'];
 
     protected $fillable = [
         'name',
-        'number',
-        'is_active'
+        'is_active',
+        'lft',
+        'parent_id',
+        'rgt',
+        'depth'
     ];
-
-    public function cities() {
-        return $this->belongsToMany(City::class, 'market_city');
-    }
 }

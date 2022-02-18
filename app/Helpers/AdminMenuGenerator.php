@@ -35,6 +35,11 @@ class AdminMenuGenerator
                 'route' => backpack_url('city'),
                 'icon' => 'la la-city',
                 'label' => trans('admin.city.plural'),
+            ],
+            [
+                'route' => backpack_url('story'),
+                'icon' => 'la la-instagram',
+                'label' => trans('admin.story.plural'),
             ]
         ];
     }

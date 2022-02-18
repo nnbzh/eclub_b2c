@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('markets', 'MarketController')->names(['index' => 'markets.list']);
 Route::apiResource('blocks', 'BlockController')->names(['index' => 'blocks.list']);
+Route::apiResource('cities', 'CityController')->names(['index' => 'cities.list']);
 
 Route::group(['prefix' => 'auth'], function() {
     Route::get('check', 'UserController@isPhoneUsed');

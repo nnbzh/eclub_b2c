@@ -13,4 +13,12 @@ trait Imageable
     public function image() {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function getImgSrcAttribute() {
+        return $this->image()->first()?->src;
+    }
+
+    public function getFullImgSrcAttribute() {
+        return config('filesystems.disks.s3.endpoint')."europharm2$this->img_src";
+    }
 }

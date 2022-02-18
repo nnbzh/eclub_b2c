@@ -11,7 +11,8 @@ class MarketResource extends JsonResource
         return [
             'id'        => $this->id,
             'name'      => $this->name,
-            'number'    => $this->number
+            'number'    => $this->number,
+            'img_src'   => $this->fullImgSrc
         ];
     }
 }
