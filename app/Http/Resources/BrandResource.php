@@ -4,15 +4,14 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MenuItemResource extends JsonResource
+class BrandResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
             'id'    => $this->id,
             'name'  => $this->name,
-            'image' => $this->fullImgSrc,
-            'component' => $this->component
+            'image' => $this->fullImgSrc
         ];
     }
 }
