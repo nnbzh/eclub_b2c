@@ -11,7 +11,6 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 abstract class BaseCrudController extends CrudController
@@ -56,7 +55,6 @@ abstract class BaseCrudController extends CrudController
     protected function setupReorderOperation($field = 'name')
     {
         $this->crud->set('reorder.label', $field);
-        $this->crud->set('reorder.max_level', 1);
     }
 
     protected function setupListOperation() {

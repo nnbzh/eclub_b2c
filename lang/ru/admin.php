@@ -81,4 +81,16 @@ return [
             'is_active' => 'Активный',
         ],
     ],
+    'category' => [
+        'singular'  => 'Категория',
+        'plural'    => 'Категории',
+        'fields'    => [
+            'name'      => 'Наименование',
+            'is_active' => 'Активный',
+        ],
+        'relations'    => [
+            'subcategories' => 'Подкатегории',
+            'parent'        => 'Родительская категория',
+        ],
+    ],
 ];

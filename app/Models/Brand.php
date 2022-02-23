@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Traits\Imageable;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-    use Imageable;
+    use Imageable, CrudTrait;
 
     public $timestamps = false;
 

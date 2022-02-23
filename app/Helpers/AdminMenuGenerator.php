@@ -40,6 +40,16 @@ class AdminMenuGenerator
                 'route' => backpack_url('story'),
                 'icon' => 'la la-instagram',
                 'label' => trans('admin.story.plural'),
+            ],
+            [
+                'route' => backpack_url('brand'),
+                'icon' => 'la la-star',
+                'label' => trans('admin.brand.plural'),
+            ],
+            [
+                'route' => backpack_url('category'),
+                'icon' => 'la la-list-alt',
+                'label' => trans('admin.category.plural'),
             ]
         ];
     }

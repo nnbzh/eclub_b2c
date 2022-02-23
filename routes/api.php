@@ -18,9 +18,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('markets', 'MarketController')->names(['index' => 'markets.list']);
-Route::apiResource('blocks', 'BlockController')->names(['index' => 'blocks.list']);
-Route::apiResource('cities', 'CityController')->names(['index' => 'cities.list']);
+Route::apiResource('blocks', 'BlockController')->only(['index'])->names(['index' => 'blocks.list']);
+Route::apiResource('markets', 'MarketController')->only(['index'])->names(['index' => 'markets.list']);
+Route::apiResource('cities', 'CityController')->only(['index'])->names(['index' => 'cities.list']);
+Route::apiResource('brands', 'BrandController')->only(['index'])->names(['index' => 'brands.list']);
+Route::apiResource('stories', 'StoryController')->only(['index'])->names(['index' => 'stories.list']);
+Route::apiResource('menu-items', 'MenuItemController')->only(['index'])->names(['index' => 'menu-items.list']);
+Route::apiResource('categories', 'CategoryController')->only(['index'])->names(['index' => 'categories.list']);
 
 Route::group(['prefix' => 'auth'], function() {
     Route::get('check', 'UserController@isPhoneUsed');
