@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->boolean('is_special')->default(false);
             $table->boolean('by_recipe')->default(false);
-            $table->string('supplier')->nullable();
+            $table->foreignId('brand_id')->nullable()->references('id')->on('brands')->cascadeOnDelete();
             $table->string('country')->nullable();
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ class Product extends Model
         'is_active',
         'is_special',
         'by_recipe',
-        'supplier',
+        'brand_id',
         'country',
     ];
 

@@ -7,6 +7,10 @@ use App\Models\Story;
 class StoryRepository
 {
     public function list() {
-        return Story::query()->where('is_active', true)->orderBy('lft')->get();
+        return Story::query()
+            ->with('image')
+            ->where('is_active', true)
+            ->orderBy('lft')
+            ->get();
     }
 }

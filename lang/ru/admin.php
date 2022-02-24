@@ -105,14 +105,14 @@ return [
             'sku'           => 'SKU',
             'barcode'       => 'Штрихкод',
             'sub_limit'     => 'Лимит по подписке',
-            'supplier'      => 'Поставщик',
             'country'       => 'Страна',
             'is_active'     => 'Активный',
             'is_special'    => 'Специальный',
             'by_recipe'     => 'По рецепту',
         ],
         'relations'    => [
-            'category' => 'Категория',
+            'category'  => 'Категория',
+            'brand'     => 'Бренд',
         ],
     ],
 ];
