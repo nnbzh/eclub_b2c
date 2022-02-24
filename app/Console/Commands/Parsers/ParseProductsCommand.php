@@ -18,20 +18,18 @@ class ParseProductsCommand extends Command
         try {
             DB::connection('shop')
                 ->table('product')
-                ->selectRaw(
-                    '
-                    id as source_id,
-                    sub_limit,
-                    name,
-                    category_id,
-                    status,
-                    model as barcode,
-                    upc as sku,
-                    supplier,
-                    recipe as by_recipe,
-                    special as is_special,
-                    country,
-                    ',
+                ->select(
+                    'id as source_id',
+                    'sub_limit',
+                    'name',
+                    'category_id',
+                    'status',
+                    'model as barcode',
+                    'upc as sku',
+                    'supplier',
+                    'recipe as by_recipe',
+                    'special as is_special',
+                    'country',
                 )
                 ->orderBy('id')
                 ->chunk(500, function ($products) {
