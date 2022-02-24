@@ -27,4 +27,20 @@ class Market extends Model
     public function cities() {
         return $this->belongsToMany(City::class, 'market_city');
     }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'market_category');
+    }
+
+//    public function categories() {
+//        return $this->hasManyDeep(Category::class, ['product_market', Product::class], [
+//            'market_number',
+//            'category_id',
+//            'id'
+//        ], [
+//            'number',
+//            'sku',
+//            'sku'
+//        ]);
+//    }
 }

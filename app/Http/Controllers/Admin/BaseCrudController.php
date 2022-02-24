@@ -196,7 +196,7 @@ abstract class BaseCrudController extends CrudController
 
         $this->crud->addColumn([
             'name'      => $relatedModel,
-            'type'      => 'relationship',
+            'type'      => 'select2',
             'label'     => trans("admin.". Str::singular($relatedModel) .".singular"),
             'attribute' => $attribute
         ]);
@@ -207,7 +207,7 @@ abstract class BaseCrudController extends CrudController
 
         $this->crud->addField([
             'name'      => $relatedModel,
-            'type'      => 'relationship',
+            'type'      => 'select2',
             'label'     => trans("admin.". Str::singular($relatedModel) .".singular"),
             'attribute' => $attribute,
             'options'   => ($callable)

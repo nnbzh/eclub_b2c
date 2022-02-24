@@ -29,4 +29,8 @@ class Category extends Model
     public function parent() {
         return $this->belongsTo(Category::class, 'parent_id');
     }
+
+    public function topLevelParents() {
+        return $this->parent()->with(['parent' => fn($query) => $query->whereNull('parent_id')]);
+    }
 }

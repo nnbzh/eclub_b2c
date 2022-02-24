@@ -27,6 +27,10 @@ return [
             'number'    => 'Номер в CRM',
             'is_active' => 'Активный',
         ],
+        'relations'     => [
+            'city'          => 'Города',
+            'categories'    => 'Категории',
+        ],
     ],
     'menu_item' => [
         'singular'  => 'Предмет меню',
@@ -91,6 +95,24 @@ return [
         'relations'    => [
             'subcategories' => 'Подкатегории',
             'parent'        => 'Родительская категория',
+        ],
+    ],
+    'product' => [
+        'singular'  => 'Продукт',
+        'plural'    => 'Продукты',
+        'fields'    => [
+            'name'          => 'Наименование',
+            'sku'           => 'SKU',
+            'barcode'       => 'Штрихкод',
+            'sub_limit'     => 'Лимит по подписке',
+            'supplier'      => 'Поставщик',
+            'country'       => 'Страна',
+            'is_active'     => 'Активный',
+            'is_special'    => 'Специальный',
+            'by_recipe'     => 'По рецепту',
+        ],
+        'relations'    => [
+            'category' => 'Категория',
         ],
     ],
 ];
