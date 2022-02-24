@@ -47,8 +47,8 @@ class ParseProductsCommand extends Command
                             'barcode' => $product->barcode,
                             'sku' => $product->sku,
                             'supplier' => $product->supplier,
-                            'by_recipe' => $product->by_recipe ?? false,
-                            'is_special' => $product->is_special ?? false,
+                            'by_recipe' => $product->by_recipe === 1,
+                            'is_special' => $product->is_special  === 1,
                             'country' => $product->country,
                             'updated_at' => Carbon::now(),
                             'created_at' => Carbon::now()
