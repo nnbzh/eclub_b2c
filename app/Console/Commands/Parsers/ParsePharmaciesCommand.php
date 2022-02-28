@@ -28,7 +28,7 @@ class ParsePharmaciesCommand extends Command
                     'address'   => $pharmacy->address,
                     'lat'       => $pharmacy->lat,
                     'lng'       => $pharmacy->lng,
-                    'is_active' => $pharmacy->site_status ?? false,
+                    'is_active' => $pharmacy->site_status == 1,
                 ]);
             } else {
                 $chPhar = Pharmacy::create([
@@ -38,7 +38,7 @@ class ParsePharmaciesCommand extends Command
                     'address'   => $pharmacy->address,
                     'lat'       => $pharmacy->lat,
                     'lng'       => $pharmacy->lng,
-                    'is_active' => $pharmacy->site_status ?? false,
+                    'is_active' => $pharmacy->site_status == 1,
                 ]);
 
                 $chPhar->working_time = ($pharmacy->open_time == "00:00:00" && $pharmacy->close_time == "23:59:00")
