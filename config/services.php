@@ -35,6 +35,9 @@ return [
         'mobizon'       => [
             'key'           => env('MOBIZON_API_KEY')
         ],
+    ],
+    'tarantool' => [
+        'enabled' => env('TARANTOOL_ENABLED', true)
     ]
 
 ];

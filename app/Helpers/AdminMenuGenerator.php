@@ -55,6 +55,11 @@ class AdminMenuGenerator
                 'route' => backpack_url('product'),
                 'icon' => 'la la-shopping-basket',
                 'label' => trans('admin.product.plural'),
+            ],
+            [
+                'route' => backpack_url('pharmacy'),
+                'icon' => 'la la-hospital-alt',
+                'label' => trans('admin.pharmacy.plural'),
             ]
         ];
     }

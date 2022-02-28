@@ -26,6 +26,10 @@ return new class extends Migration
             $table->boolean('by_recipe')->default(false);
             $table->foreignId('brand_id')->nullable()->references('id')->on('brands')->cascadeOnDelete();
             $table->string('country')->nullable();
+            $table->integer('parent_id')->nullable();
+            $table->integer('lft')->default(0);
+            $table->integer('rgt')->default(0);
+            $table->integer('depth')->default(0);
             $table->timestamps();
         });
     }

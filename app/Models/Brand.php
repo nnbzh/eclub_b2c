@@ -21,4 +21,8 @@ class Brand extends Model
         'depth',
         'parent_id'
     ];
+
+    public function products() {
+        return $this->hasMany(Product::class);
+    }
 }

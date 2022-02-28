@@ -110,6 +110,40 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        'stock' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_STOCK_URL'),
+            'host' => env('DB_STOCK_HOST', '127.0.0.1'),
+            'port' => env('DB_STOCK_PORT', '3306'),
+            'database' => env('DB_STOCK_DATABASE', 'forge'),
+            'username' => env('DB_STOCK_USERNAME', 'forge'),
+            'password' => env('DB_STOCK_PASSWORD', ''),
+            'unix_socket' => env('DB_STOCK_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => 'ow_',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+        'tarantool' => [
+            'driver' => 'tarantool',
+            'host' => env('DB_TARANTOOL_HOST', 'tarantool'),
+            'port' => env('DB_TARANTOOL_PORT', 3301),
+            'database' => env('DB_TARANTOOL_DATABASE'),
+            'username' => env('DB_TARANTOOL_USERNAME', 'ginkida'),
+            'password' => env('DB_TARANTOOL_PASSWORD', 'R9zUmjNmCAkv3qFqPKdCsMd'),
+            'driver_options' => [
+                'connection_type' => env('DB_CONNECTION_TYPE', 'tcp'),
+            ],
+            'options' => [
+                'connect_timeout' => 5,
+                'max_retries' => 3,
+            ]
+        ],
     ],
 
     /*
@@ -160,7 +194,6 @@ return [
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
-
     ],
 
 ];
