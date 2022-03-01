@@ -16,6 +16,7 @@ class UserAddressResource extends JsonResource
             'apartment' => $this->apartment,
             'lat'       => $this->lat,
             'lng'       => $this->lng,
+            'is_active' => $this->is_active,
         ];
     }
 }

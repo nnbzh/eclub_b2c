@@ -19,6 +19,10 @@ trait Imageable
     }
 
     public function getFullImgSrcAttribute() {
-        return config('filesystems.disks.s3.endpoint')."europharm2$this->img_src";
+        if (filter_var($this->imgSrc, FILTER_VALIDATE_URL)) {
+            return $this->imgSrc;
+        }
+
+        return config('filesystems.disks.s3.endpoint')."europharm2$this->imgSrc";
     }
 }

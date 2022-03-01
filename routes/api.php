@@ -31,6 +31,7 @@ Route::group(['prefix' => 'user'], function() {
             'destroy'   => 'addresses.delete',
             'show'      => 'addresses.details',
         ]);
+        Route::put('addresses/{address}/activate', 'UserAddressController@activate');
     });
 });
 
@@ -40,10 +41,13 @@ Route::group(['prefix' => 'categories'], function () {
         ->names(['index' => 'categories.list']);
 });
 
+Route::group(['prefix' => 'brands'], function () {
+    Route::apiResource('', 'BrandController')->only(['index'])->names(['index' => 'brands.list']);
+});
+
 Route::apiResource('markets', 'MarketController')->only(['index'])->names(['index' => 'markets.list']);
 Route::apiResource('blocks', 'BlockController')->only(['index'])->names(['index' => 'blocks.list']);
 Route::apiResource('cities', 'CityController')->only(['index'])->names(['index' => 'cities.list']);
-Route::apiResource('brands', 'BrandController')->only(['index'])->names(['index' => 'brands.list']);
 Route::apiResource('stories', 'StoryController')->only(['index'])->names(['index' => 'stories.list']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index'])->names(['index' => 'menu-items.list']);
 Route::apiResource('products', 'ProductController')->only(['index'])->names(['index' => 'products.list']);

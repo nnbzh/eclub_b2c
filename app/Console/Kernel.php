@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Jobs\Tarantool\Price\UpdatePriceJob;
+use App\Jobs\Tarantool\Stock\UpdatePharmacyStockJob;
+use App\Jobs\Tarantool\Stock\UpdateStockJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +18,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->job(new UpdateStockJob())->everyThreeMinutes();
+        $schedule->job(new UpdatePriceJob())->everyTenMinutes();
+        $schedule->job(new UpdatePharmacyStockJob())->everyTenMinutes();
     }
 
     /**

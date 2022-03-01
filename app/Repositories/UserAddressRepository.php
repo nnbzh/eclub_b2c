@@ -32,4 +32,11 @@ class UserAddressRepository
     public function delete(UserAddress $userAddress) {
         $userAddress->delete();
     }
+
+    public function activate(UserAddress $address)
+    {
+        UserAddress::query()->where('user_id', $address->user_id)->update(['is_active' => false]);
+        $address->is_active = true;
+        $address->saveOrFail();
+    }
 }

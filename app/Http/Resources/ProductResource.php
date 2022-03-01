@@ -13,6 +13,8 @@ class ProductResource extends JsonResource
             'sku'       => $this->sku,
             'barcode'   => $this->barcode,
             'name'      => $this->name,
+            'by_recipe' => $this->by_recipe,
+            'country'   => $this->country,
         ];
     }
 }

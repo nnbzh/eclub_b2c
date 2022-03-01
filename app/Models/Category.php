@@ -33,4 +33,8 @@ class Category extends Model
     public function topLevelParents() {
         return $this->parent()->with(['parent' => fn($query) => $query->whereNull('parent_id')]);
     }
+
+    public function products() {
+        return $this->hasMany(Product::class);
+    }
 }

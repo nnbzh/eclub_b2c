@@ -28,4 +28,9 @@ class UserAddressService
     public function delete(UserAddress $userAddress) {
         $this->userAddressRepository->delete($userAddress);
     }
+
+    public function activate(UserAddress $address)
+    {
+        $this->userAddressRepository->activate($address);
+    }
 }

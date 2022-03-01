@@ -48,4 +48,11 @@ class UserAddressController extends Controller
 
         return response()->noContent();
     }
+
+    public function activate(UserAddress $address) {
+        $this->authorize('update', $address);
+        $this->userAddressService->activate($address);
+
+        return response()->noContent();
+    }
 }

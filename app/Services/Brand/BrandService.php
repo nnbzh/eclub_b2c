@@ -10,7 +10,7 @@ class BrandService
     {
     }
 
-    public function list() {
-        return $this->brandRepository->list();
+    public function list($type = '') {
+        return $type == 'all' ? $this->brandRepository->all() : $this->brandRepository->forMainPage();
     }
 }

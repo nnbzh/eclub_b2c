@@ -58,11 +58,15 @@ class User extends Authenticatable
 
     public function findForPassport($value) {
         $value = \StringFormatter::onlyDigits($value);
-        
+
         return User::query()->where('phone', $value)->first();
     }
 
     public function addresses() {
         return $this->hasMany(UserAddress::class);
+    }
+
+    public function getAddressAttribute() {
+        return $this->addresses()->where('is_active', true)->first();
     }
 }

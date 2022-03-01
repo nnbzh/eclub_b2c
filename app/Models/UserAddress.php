@@ -18,6 +18,7 @@ class UserAddress extends Model
         'lng',
         'lat',
         'city_id',
+        'is_active',
     ];
 
     public function user() {
