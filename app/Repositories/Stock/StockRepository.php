@@ -54,4 +54,14 @@ class StockRepository implements StockRepositoryInterface
                 Log::info("Successfully updated pharmacy stocks for pharmacy with number=$pharmacyNumber");
             });
     }
+
+    public function getExistingProductsInCity($products, $cityId)
+    {
+        // TODO: Implement getExistingProductsInCity() method.
+    }
+
+    public function getExistingProductsInPharmacy($products, $pharmacyNumber)
+    {
+        // TODO: Implement getExistingProductsInPharmacy() method.
+    }
 }

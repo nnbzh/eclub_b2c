@@ -54,4 +54,19 @@ class TarantoolStockRepository implements StockRepositoryInterface
                 Log::info("Successfully updated pharmacy stocks for pharmacy with number=$pharmacyNumber");
             });
     }
+
+    public function getExistingProductsInCity($products, $cityId)
+    {
+        return Stock::query()
+            ->select('sku', 'quantity')
+            ->whereIn('sku', $products->pluck('sku'))
+            ->where('city_id', $cityId)
+            ->where('quantity', '>', 0)
+            ->get();
+    }
+
+    public function getExistingProductsInPharmacy($products, $pharmacyNumber)
+    {
+        // TODO: Implement getExistingProductsInPharmacy() method.
+    }
 }

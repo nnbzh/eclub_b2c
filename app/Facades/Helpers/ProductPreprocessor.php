@@ -4,10 +4,10 @@ namespace App\Facades\Helpers;
 
 use Illuminate\Support\Facades\Facade;
 
-class StringFormatter extends Facade
+class ProductPreprocessor extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'stringFormatter';
+        return 'productPreprocessor';
     }
 }

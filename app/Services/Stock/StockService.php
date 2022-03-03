@@ -15,4 +15,12 @@ class StockService
     public function updateStocksByPharmacyNumber($pharmacyNumber) {
         $this->stockRepository->updateStocksByPharmacyNumber($pharmacyNumber);
     }
+
+    public function getExistingProductsInCity($products, $cityId) {
+        return $this->stockRepository->getExistingProductsInCity($products, $cityId);
+    }
+
+    public function getExistingProductsInPharmacy($products, $pharmacyNumber) {
+        return $this->stockRepository->getExistingProductsInPharmacy($products, $pharmacyNumber);
+    }
 }

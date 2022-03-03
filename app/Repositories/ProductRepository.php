@@ -19,6 +19,6 @@ class ProductRepository
             $query->applyFilters(new ProductFilter, $filters);
         }
 
-        return $query->orderBy('lft')->get();
+        return $query->orderBy('lft')->paginate();
     }
 }

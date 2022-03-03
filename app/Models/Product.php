@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasFilters;
 use App\Traits\Imageable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use CrudTrait, Imageable, HasTranslations;
+    use CrudTrait, Imageable, HasTranslations, HasFilters;
 
     public $translatable = ['name'];
 
@@ -37,5 +38,17 @@ class Product extends Model
             'market_number',
         'sku',
         'number');
+    }
+
+    public function brand() {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function prices() {
+        return $this->hasMany(Priceable::class, 'sku', 'sku');
+    }
+
+    public function stocks() {
+        return $this->hasMany(Stockable::class, 'sku', 'sku');
     }
 }

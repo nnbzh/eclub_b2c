@@ -19,6 +19,10 @@ trait Imageable
     }
 
     public function getFullImgSrcAttribute() {
+        if (is_null($this->imgSrc)) {
+            return null;
+        }
+
         if (filter_var($this->imgSrc, FILTER_VALIDATE_URL)) {
             return $this->imgSrc;
         }

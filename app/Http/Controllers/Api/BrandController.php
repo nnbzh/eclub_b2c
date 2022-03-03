@@ -14,7 +14,7 @@ class BrandController extends Controller
     }
 
     public function index(Request $request) {
-        $brands = $this->brandService->list($request->type);
+        $brands = $this->brandService->list($request->type ?? null);
 
         return BrandResource::collection($brands);
     }

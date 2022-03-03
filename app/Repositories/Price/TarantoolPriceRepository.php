@@ -32,7 +32,8 @@ class TarantoolPriceRepository implements PriceRepositoryInterface
             Log::info("Successfully updated prices for city with ID=$cityId");
     }
 
-    public function updateStocksByPharmacyId($pharmacyId)
+    public function setPrices($products)
     {
+        // TODO: Implement setPrices() method.
     }
 }

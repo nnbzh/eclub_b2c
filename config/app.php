@@ -192,8 +192,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'StringFormatter' => \App\Facades\Helpers\StringFormatter::class,
-        'SMS'             => \App\Services\Sms\Facades\SMS::class
+        'StringFormatter'       => \App\Facades\Helpers\StringFormatter::class,
+        'ProductPreprocessor'   => \App\Facades\Helpers\ProductPreprocessor::class,
+        'SMS'                   => \App\Services\Sms\Facades\SMS::class
     ])->toArray(),
 
 ];

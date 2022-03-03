@@ -40,4 +40,9 @@ class PriceRepository implements PriceRepositoryInterface
     {
         // TODO: Implement updateStocksByPharmacyId() method.
     }
+
+    public function setPrices($products)
+    {
+        // TODO: Implement setPrices() method.
+    }
 }
