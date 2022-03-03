@@ -129,4 +129,14 @@ return [
             'is_active'     => 'Активный',
         ],
     ],
+    'rating_message' => [
+        'singular'  => 'Причина отзыва',
+        'plural'    => 'Причины отзыва',
+        'fields'    => [
+            'message'   => 'Причина',
+        ],
+        'relations' => [
+            'rating'    => 'Оценка'
+        ]
+    ],
 ];

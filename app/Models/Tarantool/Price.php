@@ -8,6 +8,7 @@ class Price extends TarantoolModel
         'sku',
         'price',
         'sub_price',
+        'market_number',
         'city_id',
         'changed_at'
     ];

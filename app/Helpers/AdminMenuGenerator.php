@@ -60,6 +60,11 @@ class AdminMenuGenerator
                 'route' => backpack_url('pharmacy'),
                 'icon' => 'la la-hospital-alt',
                 'label' => trans('admin.pharmacy.plural'),
+            ],
+            [
+                'route' => backpack_url('rating_message'),
+                'icon' => 'la la-comments',
+                'label' => trans('admin.rating_message.plural'),
             ]
         ];
     }

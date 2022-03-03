@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Log;
 
 class TarantoolPriceRepository implements PriceRepositoryInterface
 {
-
     public function updatePricesByCityId($cityId)
     {
             \DB::connection('shop')
@@ -17,6 +16,7 @@ class TarantoolPriceRepository implements PriceRepositoryInterface
                     'city_id as CITY_ID',
                     'price as PRICE',
                     'price_eclub as SUB_PRICE',
+                    'store as MARKET_NUMBER',
                     'updated_at as CHANGED_AT'
                 )
                 ->where('city_id', $cityId)
@@ -32,8 +32,12 @@ class TarantoolPriceRepository implements PriceRepositoryInterface
             Log::info("Successfully updated prices for city with ID=$cityId");
     }
 
-    public function setPrices($products)
+    public function getPriceForProductsByCityId($products, $cityId)
     {
-        // TODO: Implement setPrices() method.
+        return Price::query()
+            ->whereIn('sku', $products->pluck('sku'))
+            ->where('price', '>', 0)
+            ->where('city_id', '=', $cityId)
+            ->get();
     }
 }

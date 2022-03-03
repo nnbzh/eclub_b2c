@@ -24,6 +24,7 @@ class InitTarantoolIndexesCommand extends Command
                 "CITY_ID" INTEGER NOT NULL,
                 "SKU" INTEGER NOT NULL,
                 "PRICE" INTEGER NOT NULL,
+                "MARKET_NUMBER" INTEGER NOT NULL,
                 "SUB_PRICE" INTEGER NOT NULL,
                 "CHANGED_AT" INTEGER NOT NULL
             );'

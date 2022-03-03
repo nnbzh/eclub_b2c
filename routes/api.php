@@ -35,9 +35,6 @@ Route::group(['prefix' => 'user'], function() {
     });
 });
 
-Route::group(['prefix' => 'categories'], function () {
-});
-
 Route::group(['prefix' => 'brands'], function () {
     Route::apiResource('', 'BrandController')->only(['index']);
 });
@@ -48,3 +45,4 @@ Route::apiResource('cities', 'CityController')->only(['index']);
 Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
 Route::apiResource('products', 'ProductController')->only(['index']);
+Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);

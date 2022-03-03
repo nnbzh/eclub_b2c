@@ -12,6 +12,7 @@ class Price extends Model
         'sku',
         'price',
         'sub_price',
+        'market_number',
         'changed_at',
         'sub_price',
         'city_id'

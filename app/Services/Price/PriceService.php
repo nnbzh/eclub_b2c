@@ -13,4 +13,8 @@ class PriceService
     public function updatePricesByCityId($cityId) {
         $this->priceRepository->updatePricesByCityId($cityId);
     }
+
+    public function getPriceForProductsByCityId($products, $cityId) {
+        return $this->priceRepository->getPriceForProductsByCityId($products, $cityId);
+    }
 }

@@ -16,15 +16,15 @@ class StartAllParsersBySingleCommand extends Command
     public function handle() {
         Bus::chain([
             Artisan::queue('parse:store'),
-            Artisan::queue('seed:markets'),
+            Artisan::queue('db:seed'),
             Artisan::queue('parse:cities'),
             Artisan::queue('parse:categories'),
             Artisan::queue('parse:brands'),
             Artisan::queue('parse:products'),
             Artisan::queue('parse:pharmacies'),
-            new UpdatePriceJob(),
-            new UpdateStockJob(),
-            new UpdatePharmacyStockJob()
+            Artisan::queue('update:stocks'),
+            Artisan::queue('update:pharmacy-stocks'),
+            Artisan::queue('update:prices'),
         ])
             ->onConnection('redis');
     }
