@@ -22,6 +22,7 @@ class StartAllParsersBySingleCommand extends Command
             Artisan::queue('parse:brands'),
             Artisan::queue('parse:products'),
             Artisan::queue('parse:pharmacies'),
+            Artisan::queue('parse:delivery-methods'),
             Artisan::queue('update:stocks'),
             Artisan::queue('update:pharmacy-stocks'),
             Artisan::queue('update:prices'),
