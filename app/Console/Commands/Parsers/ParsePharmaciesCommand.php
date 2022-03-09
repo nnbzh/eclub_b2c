@@ -14,7 +14,7 @@ class ParsePharmaciesCommand extends Command
 
     public function handle()
     {
-        $pharmacies         = DB::connection('stock')->table('pharmacy')->get();
+        $pharmacies = DB::connection('stock')->table('pharmacy')->get();
 
         foreach ($pharmacies as $pharmacy) {
             $chPhar = Pharmacy::query()

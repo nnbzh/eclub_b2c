@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PhoneNumberRequest;
 use App\Http\Requests\SetPasswordRequest;
 use App\Services\User\UserService;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {

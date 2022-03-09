@@ -167,7 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Mavinoo\Batch\BatchServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -194,7 +194,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'StringFormatter'       => \App\Facades\Helpers\StringFormatter::class,
         'ProductPreprocessor'   => \App\Facades\Helpers\ProductPreprocessor::class,
-        'SMS'                   => \App\Services\Sms\Facades\SMS::class
+        'SMS'                   => \App\Services\Sms\Facades\SMS::class,
+        'Batch'                 => Mavinoo\Batch\BatchFacade::class,
     ])->toArray(),
 
 ];

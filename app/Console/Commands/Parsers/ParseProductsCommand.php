@@ -15,6 +15,7 @@ class ParseProductsCommand extends Command
 
     public function handle()
     {
+        $iteration = 0;
         try {
             DB::connection('shop')
                 ->table('product')
@@ -32,13 +33,13 @@ class ParseProductsCommand extends Command
                     'country',
                 )
                 ->orderBy('id')
-                ->chunk(500, function ($products) {
-                    $helperProduct  = new Product();
-                    $newProducts    = [];
+                ->chunk(500, function ($products) use (&$iteration) {
+                    $helperProduct      = new Product();
+                    $shopProducts       = [];
 
                     foreach ($products as $product) {
                         $helperProduct->setTranslation('name', 'ru', $product->name);
-                        $newProducts[] = [
+                        $shopProducts[] = [
                             'source_id' => $product->source_id,
                             'sub_limit' => $product->sub_limit,
                             'name' => json_encode($helperProduct->getTranslations('name'), JSON_UNESCAPED_UNICODE),
@@ -50,15 +51,33 @@ class ParseProductsCommand extends Command
                             'by_recipe' => $product->by_recipe === 1,
                             'is_special' => $product->is_special  === 1,
                             'country' => $product->country,
-                            'updated_at' => Carbon::now(),
-                            'created_at' => Carbon::now()
                         ];
                     }
 
-                    if (! empty($newProducts)) {
-                        Product::query()->whereIn('source_id', $products->pluck('source_id'))->delete();
-                        Product::query()->insert($newProducts);
+                    $nonExistingProducts = collect($shopProducts)->whereNotIn(
+                        'sku',
+                        Product::query()
+                            ->select('sku')
+                            ->orderBy('source_id')
+                            ->limit(500)
+                            ->offset(500 * $iteration)
+                            ->get()
+                            ->pluck('sku')
+                    );
+
+                    if ($nonExistingProducts->isNotEmpty()) {
+                        $nonExistingProducts->transform(function ($product) {
+                            $product['created_at'] = Carbon::now()->toDateTimeString();
+                            $product['updated_at'] = Carbon::now()->toDateTimeString();
+
+                            return $product;
+                        });
+
+                        Product::query()->insert($nonExistingProducts->toArray());
                     }
+
+                    \Batch::update($helperProduct, $shopProducts, 'sku');
+                    $iteration++;
                 });
             $this->info("Successfully parsed products");
             Log::info("Successfully parsed products");

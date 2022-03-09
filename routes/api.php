@@ -46,3 +46,4 @@ Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
 Route::apiResource('products', 'ProductController')->only(['index']);
 Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);
+Route::apiResource('delivery-methods', 'DeliveryMethodController')->only(['index']);

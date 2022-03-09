@@ -29,7 +29,7 @@ class ParseCategoriesCommand extends Command
                 $categories[] = [
                     'id'            => $category->id,
                     'name'          => json_encode($helperCategory->getTranslations('name'), JSON_UNESCAPED_UNICODE),
-                    'is_active'     => $category->status ?? false,
+                    'is_active'     => $category->status == 1,
                     'parent_id'     => $category->parent_id ?? null,
                     'created_at'    => now(),
                     'updated_at'    => now(),

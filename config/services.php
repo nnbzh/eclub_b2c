@@ -38,6 +38,11 @@ return [
     ],
     'tarantool' => [
         'enabled' => env('TARANTOOL_ENABLED', true)
+    ],
+    'api'       => [
+        'europharma' => [
+            'host'   => 'https://api.europharma.kz',
+            'apiKey' => env('EUROPHARMA_API_KEY')
+        ]
     ]
-
 ];
