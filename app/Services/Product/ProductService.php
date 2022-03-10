@@ -16,4 +16,13 @@ class ProductService
 
         return $products;
     }
+
+    public function search(string $keyword)
+    {
+        $products   = $this->productRepository->search($keyword);
+        $processed  = ProductPreprocessor::process($products->getCollection(), 1);
+        $products   = $products->setCollection($processed);
+
+        return $products;
+    }
 }

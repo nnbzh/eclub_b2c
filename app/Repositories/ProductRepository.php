@@ -23,4 +23,9 @@ class ProductRepository
 
         return $query->simplePaginate(100);
     }
+
+    public function search(string $keyword)
+    {
+        return Product::search($keyword)->simplePaginate(100);
+    }
 }

@@ -8,10 +8,11 @@ use App\Traits\Reviewable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use CrudTrait, Imageable, HasTranslations, HasFilters, Reviewable;
+    use CrudTrait, Imageable, HasTranslations, HasFilters, Reviewable, Searchable;
 
     public $translatable = ['name'];
 
@@ -29,6 +30,29 @@ class Product extends Model
         'country',
     ];
 
+    public function searchableAs()
+    {
+        return 'mobile-app_PRODUCTS';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name'      => $this->name,
+            'barcode'   => $this->barcode
+        ];
+    }
+
+    public function getScoutKeyName()
+    {
+        return 'source_id';
+    }
+
+    public function getScoutKey()
+    {
+        return $this->source_id;
+    }
+
     public function category() {
         return $this->belongsTo(Category::class);
     }
@@ -43,13 +67,5 @@ class Product extends Model
 
     public function brand() {
         return $this->belongsTo(Brand::class);
-    }
-
-    public function prices() {
-        return $this->hasMany(Priceable::class, 'sku', 'sku');
-    }
-
-    public function stocks() {
-        return $this->hasMany(Stockable::class, 'sku', 'sku');
     }
 }

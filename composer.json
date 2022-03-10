@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "algolia/algoliasearch-client-php": "^3.2",
         "backpack/crud": "^5.0",
         "backpack/permissionmanager": "^6.0",
         "fruitcake/laravel-cors": "^2.0.5",
@@ -15,6 +16,7 @@
         "laravel/horizon": "^5.9",
         "laravel/passport": "^10.3",
         "laravel/sanctum": "^2.14",
+        "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",
         "mavinoo/laravel-batch": "^2.3",

@@ -35,15 +35,17 @@ Route::group(['prefix' => 'user'], function() {
     });
 });
 
-Route::group(['prefix' => 'brands'], function () {
-    Route::apiResource('', 'BrandController')->only(['index']);
+Route::group(['prefix' => 'products'], function () {
+    Route::get('search', 'ProductController@search');
 });
+
+Route::apiResource('products', 'ProductController')->only(['index']);
+Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);
+Route::apiResource('brands', 'BrandController')->only(['index']);
 Route::apiResource('categories', 'CategoryController')->only(['index','show']);
 Route::apiResource('markets', 'MarketController')->only(['index']);
 Route::apiResource('blocks', 'BlockController')->only(['index']);
 Route::apiResource('cities', 'CityController')->only(['index']);
 Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
-Route::apiResource('products', 'ProductController')->only(['index']);
-Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);
 Route::apiResource('delivery-methods', 'DeliveryMethodController')->only(['index']);

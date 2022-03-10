@@ -177,7 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        \App\Services\Sms\SmsServiceProvider::class
+        \App\Services\Sms\SmsServiceProvider::class,
+        \App\Providers\SearchServiceProvider::class
     ],
 
     /*
