@@ -34,10 +34,11 @@ class ParseProductDescriptionsCommand extends Command
 
                     foreach ($descriptions as $productId => $description) {
                         foreach ($description as $item) {
+                            $description = str_replace('"', "'", $item->description);
                             if (! empty($productDescriptions[$productId])) {
-                                $helperDescr = $productDescriptions[$productId]->setTranslation('description', $item->language, $item->description);
+                                $helperDescr = $productDescriptions[$productId]->setTranslation('description', $item->language, $description);
                             } else {
-                                $helperDescr = $helperDescr->setTranslation('description', $item->language, $item->description);
+                                $helperDescr = $helperDescr->setTranslation('description', $item->language, $description);
                             }
                         }
 
