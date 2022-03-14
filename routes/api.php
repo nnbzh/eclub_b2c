@@ -35,12 +35,12 @@ Route::group(['prefix' => 'user'], function() {
     });
 });
 
+Route::apiResource('products', 'ProductController')->only(['index', 'show'])->whereNumber('product');
+Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);
 Route::group(['prefix' => 'products'], function () {
     Route::get('search', 'ProductController@search');
 });
 
-Route::apiResource('products', 'ProductController')->only(['index']);
-Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);
 Route::apiResource('brands', 'BrandController')->only(['index']);
 Route::apiResource('categories', 'CategoryController')->only(['index','show']);
 Route::apiResource('markets', 'MarketController')->only(['index']);

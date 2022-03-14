@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('markets', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('number')->unique();
-            $table->boolean('is_active')->default(true);
-            $table->integer('parent_id')->nullable();
-            $table->integer('lft')->default(0);
-            $table->integer('rgt')->default(0);
-            $table->integer('depth')->default(0);
+            $table->text('name');
+            $table->string('slug');
+            $table->integer('price');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('markets');
+        Schema::dropIfExists('subscriptions');
     }
 };

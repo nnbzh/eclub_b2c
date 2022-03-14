@@ -11,7 +11,7 @@ class ProductService
 
     public function list(array $filters = []) {
         $products   = $this->productRepository->list($filters);
-        $processed  = ProductPreprocessor::process($products->getCollection(), 1);
+        $processed  = ProductPreprocessor::process($products->getCollection(), $filters['city_id']);
         $products   = $products->setCollection($processed);
 
         return $products;

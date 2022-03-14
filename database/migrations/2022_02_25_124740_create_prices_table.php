@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sku');
             $table->foreignId('city_id')->nullable()->references('id')->on('cities')->nullOnDelete();
-            $table->integer('market_number')->nullable();
+            $table->foreignId('market_number')->references('number')->on('markets')->cascadeOnDelete();
             $table->unsignedBigInteger('price')->default(0);
             $table->unsignedBigInteger('sub_price')->default(0);
             $table->unsignedBigInteger('changed_at');

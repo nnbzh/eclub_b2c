@@ -15,9 +15,28 @@ class ProductController extends Controller
     }
 
     public function index(Request $request) {
-        $products = $this->productService->list($request->all());
+        $validated = $this->validate($request, [
+            'brand_id'  => 'nullable|exists:brands,id',
+            'city_id'   => 'required_without_auth'
+        ]);
+
+        if (empty($validated['city_id'])) {
+            $validated['city_id'] = $request->user()->address?->city_id;
+        }
+
+        $products = $this->productService->list($validated);
 
         return ProductResource::collection($products);
+    }
+
+    public function show(Request $request, Product $product) {
+        $product = \ProductPreprocessor::process(collect([$product->load('description')]), 4);
+
+        if (! $product->first()) {
+            abort(400, 'Нет в наличии');
+        }
+
+        return new ProductResource($product->first());
     }
 
     public function search(Request $request) {

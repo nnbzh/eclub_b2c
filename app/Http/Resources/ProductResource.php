@@ -17,6 +17,7 @@ class ProductResource extends JsonResource
             'country'   => $this->country,
             'quantity'  => $this->quantity,
             'prices'    => $this->prices,
+            'description' => new ProductDescriptionResource($this->whenLoaded('description')),
         ];
     }
 }

@@ -13,6 +13,7 @@ use App\Repositories\Stock\TarantoolStockRepository;
 use App\Services\Price\PriceService;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        $this->registerValidationRules();
     }
 
     private function bindHelpers() {
@@ -66,5 +67,11 @@ class AppServiceProvider extends ServiceProvider
             \Backpack\PermissionManager\app\Http\Controllers\UserCrudController::class, //this is package controller
             \App\Http\Controllers\Admin\UserCrudController::class //this should be your own controller
         );
+    }
+
+    private function registerValidationRules() {
+        Validator::extendImplicit('required_without_auth', function ($attribute, $value, $parameters, $validator) {
+            return \Auth::check('api');
+        });
     }
 }

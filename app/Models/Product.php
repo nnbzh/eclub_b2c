@@ -17,6 +17,7 @@ class Product extends Model
     public $translatable = ['name'];
 
     protected $fillable = [
+        'id',
         'name',
         'barcode',
         'sku',
@@ -43,16 +44,6 @@ class Product extends Model
         ];
     }
 
-    public function getScoutKeyName()
-    {
-        return 'source_id';
-    }
-
-    public function getScoutKey()
-    {
-        return $this->source_id;
-    }
-
     public function category() {
         return $this->belongsTo(Category::class);
     }
@@ -67,5 +58,9 @@ class Product extends Model
 
     public function brand() {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function description() {
+        return $this->hasOne(ProductDescription::class);
     }
 }

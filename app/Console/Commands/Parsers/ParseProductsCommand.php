@@ -20,7 +20,7 @@ class ParseProductsCommand extends Command
             DB::connection('shop')
                 ->table('product')
                 ->select(
-                    'id as source_id',
+                    'id',
                     'sub_limit',
                     'name',
                     'category_id',
@@ -40,7 +40,7 @@ class ParseProductsCommand extends Command
                     foreach ($products as $product) {
                         $helperProduct->setTranslation('name', 'ru', $product->name);
                         $shopProducts[] = [
-                            'source_id' => $product->source_id,
+                            'id' => $product->id,
                             'sub_limit' => $product->sub_limit,
                             'name' => json_encode($helperProduct->getTranslations('name'), JSON_UNESCAPED_UNICODE),
                             'category_id' => $product->category_id,
@@ -58,7 +58,7 @@ class ParseProductsCommand extends Command
                         'sku',
                         Product::query()
                             ->select('sku')
-                            ->orderBy('source_id')
+                            ->orderBy('id')
                             ->limit(500)
                             ->offset(500 * $iteration)
                             ->get()

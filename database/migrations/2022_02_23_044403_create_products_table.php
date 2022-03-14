@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('source_id');
-            $table->unsignedBigInteger('sku')->nullable();
+            $table->unsignedBigInteger('sku')->unique()->nullable();
             $table->string('barcode')->nullable();
             $table->text('name')->nullable();
             $table->foreignId('category_id')->nullable()->references('id')->on('categories')->nullOnDelete();
