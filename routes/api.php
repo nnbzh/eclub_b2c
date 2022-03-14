@@ -21,18 +21,12 @@ Route::group(['prefix' => 'auth'], function() {
     Route::get('logout', 'AuthController@logout');
 });
 
-Route::group(['prefix' => 'user'], function() {
-    Route::group(['middleware = auth:api'], function() {
+Route::group(['middleware = auth:api'], function() {
+    Route::group(['prefix' => 'user'], function() {
         Route::post('password', 'UserController@setPassword');
-        Route::apiResource('addresses', 'UserAddressController')->names([
-            'index'     => 'addresses.list',
-            'store'     => 'addresses.create',
-            'update'    => 'addresses.edit',
-            'destroy'   => 'addresses.delete',
-            'show'      => 'addresses.details',
-        ]);
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
     });
+    Route::apiResource('user.addresses', 'UserAddressController')->shallow();
 });
 
 Route::apiResource('products', 'ProductController')->only(['index', 'show'])->whereNumber('product');
@@ -49,3 +43,6 @@ Route::apiResource('cities', 'CityController')->only(['index']);
 Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
 Route::apiResource('delivery-methods', 'DeliveryMethodController')->only(['index']);
+
+Route::get('slots/today', 'SlotController@today');
+Route::get('slots/tomorrow', 'SlotController@tomorrow');

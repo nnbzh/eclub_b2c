@@ -43,6 +43,14 @@ return [
         'europharma' => [
             'host'   => 'https://api.europharma.kz',
             'apiKey' => env('EUROPHARMA_API_KEY')
+        ],
+        'slot' => [
+            'host'   => 'https://slot.europharma.kz/v1',
+            'apiKey' => env('SLOT_API_KEY')
+        ],
+        'elogist' => [
+            'host'   => 'https://api.elogist.kz/v1',
+            'apiKey' => env('ELOGIST_API_KEY')
         ]
     ]
 ];

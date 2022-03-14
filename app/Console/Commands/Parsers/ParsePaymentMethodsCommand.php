@@ -2,31 +2,31 @@
 
 namespace App\Console\Commands\Parsers;
 
-use App\Models\DeliveryMethod;
+use App\Models\PaymentMethod;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class ParseDeliveryMethodsCommand extends Command
+class ParsePaymentMethodsCommand extends Command
 {
-    protected $signature = 'parse:delivery-methods';
-    protected $description = 'Parse delivery-methods from Europharma API';
+    protected $signature = 'parse:payment-methods';
+    protected $description = 'Parse payment-methods from Europharma API';
 
     public function handle()
     {
         try {
-            DB::table('delivery_method_city')->truncate();
-            $deliveryMethods = Http::baseUrl(config('services.api.europharma.host'))
+            DB::table('payment_method_city')->truncate();
+            $paymentMethods = Http::baseUrl(config('services.api.europharma.host'))
                     ->withHeaders(['Authorization' => 'Bearer '. config('services.api.europharma.apiKey')])
-                    ->get('app/delivery-methods')
+                    ->get('app/payment-methods')
                     ->json()['items'] ?? [];
             $methods    = [];
             $cities     = [];
-            $helperMethod = new DeliveryMethod();
+            $helperMethod = new PaymentMethod();
 
-            foreach ($deliveryMethods as $method) {
+            foreach ($paymentMethods as $method) {
                 $helperMethod->setTranslation('name', 'ru', $method['name']);
                 $methods[] = [
                     'id'        => $method['id'],
@@ -37,7 +37,7 @@ class ParseDeliveryMethodsCommand extends Command
                 $cities[$method['id']] = $method['cities'];
             }
 
-            $nonExistingMethods = collect($methods)->whereNotIn('id', DeliveryMethod::query()->get()->pluck('id'));
+            $nonExistingMethods = collect($methods)->whereNotIn('id', PaymentMethod::query()->get()->pluck('id'));
 
             if ($nonExistingMethods->isNotEmpty()) {
                 $nonExistingMethods->transform(function ($method) {
@@ -46,7 +46,7 @@ class ParseDeliveryMethodsCommand extends Command
 
                     return $method;
                 });
-                DeliveryMethod::query()->insert($nonExistingMethods->toArray());
+                PaymentMethod::query()->insert($nonExistingMethods->toArray());
             }
 
             \Batch::update($helperMethod, $methods, 'id');
@@ -56,22 +56,18 @@ class ParseDeliveryMethodsCommand extends Command
             foreach ($cities as $method_id => $city) {
                 foreach ($city as $cityObject) {
                     $newCities[] = [
-                        'delivery_method_id'    => $method_id,
-                        'city_id'               => $cityObject['city_id'],
-                        'min_price'             => $cityObject['min_price'],
-                        'max_price'             => $cityObject['max_price'],
-                        'cost'                  => $cityObject['cost'],
-                        'is_active'             => $cityObject['enabled'] == 1,
+                        'payment_method_id' => $method_id,
+                        'city_id'           => $cityObject['city_id'],
                     ];
                 }
             }
 
-            DB::table('delivery_method_city')->insert($newCities);
-            $this->info("Successfully parsed delivery methods");
-            Log::info("Successfully parsed delivery methods");
+            DB::table('payment_method_city')->insert($newCities);
+            $this->info("Successfully parsed payment methods");
+            Log::info("Successfully parsed payment methods");
         } catch (\Exception $e) {
-            $this->error('Failed while parsing delivery methods');
-            Log::error('Failed while parsing delivery methods', [
+            $this->error('Failed while parsing payment methods');
+            Log::error('Failed while parsing payment methods', [
                 'Message'   => $e->getMessage(),
                 'File'      => $e->getFile(),
                 'Line'      => $e->getLine(),
