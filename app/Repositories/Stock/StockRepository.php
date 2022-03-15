@@ -15,7 +15,7 @@ class StockRepository implements StockRepositoryInterface
             ->table('pharmacy')
             ->select(
                 DB::raw('CAST(SUM(FLOOR(ow_stock.quantity)) as SIGNED) as quantity'),
-                'stock.sku as sky',
+                'stock.sku as sku',
                 'pharmacy.city_id_site as city_id',
                 'stock.changed_at as changed_at'
             )
@@ -38,7 +38,7 @@ class StockRepository implements StockRepositoryInterface
             ->table('stock')
             ->select(
                 DB::raw('CAST(SUM(FLOOR(ow_stock.quantity)) as SIGNED) as quantity'),
-                'stock.sku as sky',
+                'stock.sku as sku',
                 'stock.number as pharmacy_id',
                 'stock.changed_at as changed_at'
             )
