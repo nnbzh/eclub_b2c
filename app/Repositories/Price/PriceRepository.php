@@ -17,6 +17,7 @@ class PriceRepository implements PriceRepositoryInterface
                 'city_id as city_id',
                 'price as price',
                 'price_eclub as sub_price',
+                'store as market_number',
                 'updated_at as changed_at'
             )
             ->where('city_id', $cityId)
