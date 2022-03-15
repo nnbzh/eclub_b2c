@@ -57,7 +57,12 @@ class StockRepository implements StockRepositoryInterface
 
     public function getExistingProductsInCity($products, $cityId)
     {
-        // TODO: Implement getExistingProductsInCity() method.
+        return Stock::query()
+            ->select('sku', 'quantity')
+            ->whereIn('sku', $products->pluck('sku'))
+            ->where('city_id', $cityId)
+            ->where('quantity', '>', 0)
+            ->get();
     }
 
     public function getExistingProductsInPharmacy($products, $pharmacyNumber)

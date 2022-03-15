@@ -31,18 +31,12 @@ class PriceRepository implements PriceRepositoryInterface
         Log::info("Successfully updated prices for city with ID=$cityId");
     }
 
-    public function updateStocksByCityId($cityId)
+    public function getPriceForProductsByCityId($products, $cityId)
     {
-
-    }
-
-    public function updateStocksByPharmacyId($pharmacyId)
-    {
-        // TODO: Implement updateStocksByPharmacyId() method.
-    }
-
-    public function setPrices($products)
-    {
-        // TODO: Implement setPrices() method.
+        return Price::query()
+            ->whereIn('sku', $products->pluck('sku'))
+            ->where('price', '>', 0)
+            ->where('city_id', '=', $cityId)
+            ->get();
     }
 }
