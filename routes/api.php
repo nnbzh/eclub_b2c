@@ -43,6 +43,7 @@ Route::apiResource('cities', 'CityController')->only(['index']);
 Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
 Route::apiResource('delivery-methods', 'DeliveryMethodController')->only(['index']);
+Route::apiResource('payment-methods', 'PaymentMethodController')->only(['index']);
 
 Route::get('slots/today', 'SlotController@today');
 Route::get('slots/tomorrow', 'SlotController@tomorrow');

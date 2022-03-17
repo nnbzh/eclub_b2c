@@ -17,4 +17,8 @@ class PaymentMethod extends Model
         'name',
         'is_active',
     ];
+
+    public function cities() {
+        return $this->belongsToMany(City::class, 'payment_method_city');
+    }
 }
