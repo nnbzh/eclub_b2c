@@ -2,23 +2,15 @@
 
 namespace App\Repositories\Api;
 
-use Illuminate\Support\Facades\Http;
-
-class ElogistRepository
+class ElogistRepository extends ApiRepository
 {
-    private $host;
-    private $token;
+    protected string $key = 'elogist';
 
-    public function __construct()
+    public function getDelayedSlotsByCityId($cityId, $date)
     {
-        $this->host = config('services.api.elogist.host');
-        $this->token = config('services.api.elogist.apiKey');
-    }
-
-    public function getDelayedSlotsByCityId($cityId, $date) {
-        return Http::withHeaders(['Authorization' => "Bearer $this->token"])
-            ->baseUrl($this->host)
-            ->get("orders/load", ['city_id' => $cityId, 'slot_date' => $date])
-            ->json();
+        return $this->client->get("orders/load", [
+                'city_id'   => $cityId,
+                'slot_date' => $date
+            ])->json();
     }
 }

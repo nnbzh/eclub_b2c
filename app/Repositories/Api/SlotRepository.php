@@ -4,28 +4,17 @@ namespace App\Repositories\Api;
 
 use Illuminate\Support\Facades\Http;
 
-class SlotRepository
+class SlotRepository extends ApiRepository
 {
-    private $token;
-    private $host;
+    protected string $key = 'slot';
 
-    public function __construct()
+    public function getTodaySlotsByCityId($cityId)
     {
-        $this->host = config('services.api.slot.host');
-        $this->token = config('services.api.slot.apiKey');
+        return $this->client->get("today/$cityId")->json();
     }
 
-    public function getTodaySlotsByCityId($cityId) {
-        return Http::withHeaders(['Authorization' => "Bearer $this->token"])
-            ->baseUrl($this->host)
-            ->get("today/$cityId")
-            ->json();
-    }
-
-    public function getTomorrowSlotsByCityId($cityId) {
-        return Http::withHeaders(['Authorization' => "Bearer $this->token"])
-            ->baseUrl($this->host)
-            ->get("next-day/$cityId")
-            ->json();
+    public function getTomorrowSlotsByCityId($cityId)
+    {
+        return $this->client->get("next-day/$cityId")->json();
     }
 }

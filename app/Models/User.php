@@ -62,11 +62,23 @@ class User extends Authenticatable
         return User::query()->where('phone', $value)->first();
     }
 
+    public function getAddressAttribute() {
+        return $this->addresses()->where('is_active', true)->first();
+    }
+
     public function addresses() {
         return $this->hasMany(UserAddress::class);
     }
 
-    public function getAddressAttribute() {
-        return $this->addresses()->where('is_active', true)->first();
+    public function deviceTokens() {
+        return $this->hasMany(DeviceToken::class);
+    }
+
+    public function privileges() {
+        return $this->belongsToMany(Privilege::class, 'user_privilege');
+    }
+
+    public function hasPrivilege($key) {
+        return $this->privileges()->where('is_active', true)->where('key', $key)->exists();
     }
 }

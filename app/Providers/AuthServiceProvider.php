@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Grants\PhoneGrant;
+use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\UserRepository;
@@ -27,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
             $grant = $this->makeGrant();
             $server->enableGrantType($grant, Passport::tokensExpireIn());
         });
+        Passport::tokensExpireIn(Carbon::now()->addMonth());
+        Passport::refreshTokensExpireIn(Carbon::now()->addYear());
     }
 
     /**

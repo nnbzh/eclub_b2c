@@ -20,8 +20,8 @@ class PaymentMethodController extends Controller
         $this->validate($request, [
             'city_id' => 'required_without_auth|exists:cities,id'
         ]);
-        $user    = \Auth::user()->address->id;
-        $methods = $this->paymentMethodService->list($request->city_id);
+        $user    = \Auth::user();
+        $methods = $this->paymentMethodService->list($request->city_id ?? $user->address?->id);
 
         return PaymentMethodResource::collection($methods);
     }
