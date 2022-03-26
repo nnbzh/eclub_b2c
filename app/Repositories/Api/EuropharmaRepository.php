@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Api;
 
+use App\Classes\CRMOrder;
+
 class EuropharmaRepository extends ApiRepository
 {
     protected string $key = 'europharma';
@@ -17,5 +19,7 @@ class EuropharmaRepository extends ApiRepository
         ])->json();
     }
 
-
+    public function sendOrderToCrm(CRMOrder $order) {
+        return $this->client->post('app/orders/create', $order->toArray())->json();
+    }
 }

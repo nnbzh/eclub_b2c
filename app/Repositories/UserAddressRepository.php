@@ -7,6 +7,10 @@ use App\Models\UserAddress;
 
 class UserAddressRepository
 {
+    public function getBy($column, $value) {
+        return UserAddress::query()->where($column, $value)->first();
+    }
+
     public function all($filters = [])
     {
         $query = UserAddress::query();

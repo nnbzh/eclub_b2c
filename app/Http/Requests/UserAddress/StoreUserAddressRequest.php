@@ -10,7 +10,7 @@ class StoreUserAddressRequest extends FormRequest
         return [
             'address'   => 'required|string',
             'city_id'   => 'required|int|exists:cities,id',
-            'block'     => 'nullable',
+            'entrance'  => 'nullable',
             'floor'     => 'nullable|int',
             'apartment' => 'nullable',
             'lat'       => 'nullable|string',

@@ -9,7 +9,7 @@ class UpdateUserAddressRequest extends FormRequest
     public function rules() {
         return [
             'address'   => 'required|string',
-            'block'     => 'nullable',
+            'entrance'  => 'nullable',
             'floor'     => 'nullable|int',
             'apartment' => 'nullable',
             'lat'       => 'nullable|string',
