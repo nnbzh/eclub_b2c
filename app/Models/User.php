@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\TransactionStatus;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,20 +53,7 @@ class User extends Authenticatable
         'phone_verified_at' => 'date',
     ];
 
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = \Hash::make($value);
-    }
-
-    public function findForPassport($value) {
-        $value = \StringFormatter::onlyDigits($value);
-
-        return User::query()->where('phone', $value)->first();
-    }
-
-    public function getAddressAttribute() {
-        return $this->addresses()->where('is_active', true)->first();
-    }
-
+    //RELATIONS
     public function addresses() {
         return $this->hasMany(UserAddress::class);
     }
@@ -76,6 +64,46 @@ class User extends Authenticatable
 
     public function privileges() {
         return $this->belongsToMany(Privilege::class, 'user_privilege');
+    }
+
+    public function subscriptions() {
+        return $this->belongsToMany(Subscription::class, 'user_subscription')
+            ->withPivot(
+                'id',
+                'started_at',
+                'expires_at',
+                'price'
+            )
+            ->using(UserSubscription::class)
+            ->as('userSubscription');
+    }
+
+    public function userSubscriptions() {
+        return $this->hasMany(UserSubscription::class);
+    }
+
+    public function lastSubscription() : Subscription|null {
+        return $this->subscriptions()
+            ->wherePivot('expires_at', '>=', now()->toDateString())
+            ->orderByPivot('expires_at', 'desc')
+            ->first();
+    }
+
+    //MUTATORS
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = \Hash::make($value);
+    }
+
+    //ACCESSORS
+    public function getAddressAttribute() {
+        return $this->addresses()->where('is_active', true)->first();
+    }
+
+    //FUNCTIONS
+    public function findForPassport($value) {
+        $value = \StringFormatter::onlyDigits($value);
+
+        return User::query()->where('phone', $value)->first();
     }
 
     public function hasPrivilege($key) {

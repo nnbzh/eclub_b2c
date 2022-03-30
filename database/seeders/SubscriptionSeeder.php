@@ -29,7 +29,9 @@ class SubscriptionSeeder extends Seeder
         ];
 
         foreach ($subscriptions as $subscription) {
-            Subscription::query()->updateOrCreate(['slug' => $subscription['slug']], $subscription);
+            Subscription::query()->updateOrCreate(
+                ['slug' => $subscription['slug']], $subscription
+            );
         }
     }
 }

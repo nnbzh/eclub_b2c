@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('deffered_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('slug');
-            $table->integer('price');
-            $table->integer('special_price')->nullable();
-            $table->integer('days_active')->default(0);
+            $table->string('phone');
+            $table->string('sponsor');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('deffered_subscriptions');
     }
 };

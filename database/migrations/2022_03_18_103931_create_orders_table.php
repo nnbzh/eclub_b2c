@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('number')->nullable();
-            $table->string('status')->nullable()->default(\App\Helpers\OrderStatus::NEW);
+            $table->string('status')->default(\App\Helpers\OrderStatus::NEW);
             $table->foreignId('user_id')->references('id')->on('users')->restrictOnDelete();
             $table->text('address')->nullable();
             $table->foreignId('pharmacy_id')->nullable()->references('id')->on('pharmacies')->nullOnDelete();

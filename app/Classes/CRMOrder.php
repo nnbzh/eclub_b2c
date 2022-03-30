@@ -65,7 +65,7 @@ class CRMOrder
     public function sendToCrm() {
         $repo = new EuropharmaRepository();
         try {
-            return $repo->sendOrderToCrm($this);
+            return $repo->sendOrderToCrm($this->toArray());
         } catch (\Exception $e) {
             dd($e->getMessage());
         }

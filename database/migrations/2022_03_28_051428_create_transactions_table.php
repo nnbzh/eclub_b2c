@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('slug');
-            $table->integer('price');
-            $table->integer('special_price')->nullable();
-            $table->integer('days_active')->default(0);
+            $table->string('transaction_id');
+            $table->foreignId('bankcard_id')->nullable()->references('id')->on('bankcards')->cascadeOnDelete();
+            $table->string('status')->default(\App\Helpers\TransactionStatus::PENDING);
+            $table->morphs('transactionable');
+            $table->text('fields_json')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('transactions');
     }
 };

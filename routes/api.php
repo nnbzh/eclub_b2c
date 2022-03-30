@@ -25,6 +25,7 @@ Route::group(['middleware = auth:api'], function() {
     Route::group(['prefix' => 'user'], function() {
         Route::post('password', 'UserController@setPassword');
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
+        Route::post('subscription', 'UserController@subscribe');
         Route::apiResource('addresses', 'UserAddressController')->shallow();
     });
     Route::group(['prefix' => 'orders'], function() {

@@ -121,12 +121,34 @@
                             </a>
                         </div>
                     </div>
-
+                    <div>
+                        <form id="paymentFormSample" autocomplete="off">
+                            <button type="submit">Оплатить 100 р.</button>
+                        </form>
+                    </div>
                     <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
                 </div>
             </div>
         </div>
+        <script src="https://checkout.cloudpayments.ru/checkout.js"></script>
+        <script>
+            const checkout = new cp.Checkout({
+                publicId: 'test_api_000000000000000002'
+            });
+
+            const fieldValues = {
+                cvv: '911',
+                cardNumber: '4242 4242 4242 4242',
+                expDateMonth: '12',
+                expDateYear: '24',
+            }
+
+            checkout.createPaymentCryptogram(fieldValues)
+                .then((cryptogram) => {
+                    console.log('cryptogram', cryptogram);
+                });
+        </script>
     </body>
 </html>

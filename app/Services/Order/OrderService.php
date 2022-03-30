@@ -6,7 +6,6 @@ use App\Classes\CRMOrder;
 use App\Helpers\OrderChannel;
 use App\Models\Privilege;
 use App\Models\User;
-use App\Repositories\Api\EuropharmaRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserAddressRepository;
 
