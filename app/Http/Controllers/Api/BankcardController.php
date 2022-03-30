@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bankcard\StoreBankcardRequest;
 use App\Services\Payment\Providers\Paybox\Facades\Paybox;
+use Illuminate\Http\Request;
 
 class BankcardController extends Controller
 {
     public function store(StoreBankcardRequest $request) {
-        Paybox::getUrlForCardAddition($request->user());
+        $url = Paybox::getUrlForCardAddition($request->user());
+        
     }
 
+    public function payboxStoreCallback(Request $request) {
+
+    }
 }

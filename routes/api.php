@@ -29,7 +29,7 @@ Route::group(['middleware = auth:api'], function() {
         Route::apiResource('addresses', 'UserAddressController')->shallow();
         Route::group(['prefix' => 'bankcards'], function () {
             Route::post('', 'BankcardController@store');
-            Route::post('paybox/callback', 'BankcardController@payboxStoreCallback');
+            Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');
         });
     });
     Route::group(['prefix' => 'orders'], function() {

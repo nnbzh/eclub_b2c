@@ -22,28 +22,29 @@ class PayboxRepository
     public function getUrlForCardAddition(int $userId) {
         $params = [
             'pg_user_id'    => $userId,
-            'pg_merchant_id'=> $this->merchantId
+            'pg_post_link'  => route('bankcard.paybox.store.callback'),
+            'pg_back_link'  => route('bankcard.paybox.store.callback'),
         ];
-        $params['pg_sig'] = implode(';', $params);
-//        $response = $this->client->post("v1/merchant/$this->merchantId/cardstorage/add", $params);
-//        $response = simplexml_load_string($response->body(), 'SimpleXMLElement', LIBXML_NOCDATA);
-//        $response = json_decode(json_encode($response), true);
-        $this->sendRequest("v1/merchant/$this->merchantId/cardstorage/add", []);
-        dd('asd');
+        $this->sendRequest("v1/merchant/$this->merchantId/cardstorage/add", $params);
     }
 
-    private function sendRequest($url, $params) {
+    private function sendRequest($url, $params, $returnBody = true) {
         $params['pg_merchant_id']   = $this->merchantId;
         $params['pg_salt']          = Str::random();
         $operation                  = explode('/', $url);
         $operation                  = end($operation);
+
         ksort($params);
         array_unshift($params, $operation);
-        $params[]                   = $this->key;
-        $params['pg_sig']           = md5(implode(';', $params));
+        $params[]           = $this->key;
+        $params['pg_sig']   = md5(implode(';', $params));
         unset($params[0], $params[1]);
 
+        $response = $this->client->post($url, $params);
+        $response = simplexml_load_string($response->body(), 'SimpleXMLElement', LIBXML_NOCDATA);
+        $response = json_decode(json_encode($response));
 
+        return $returnBody ? $response : $response->pg_status === 'ok';
     }
 
     function makeFlatParamsArray($arrParams, $parent_name = '')
