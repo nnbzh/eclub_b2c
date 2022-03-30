@@ -27,6 +27,6 @@ trait Imageable
             return $this->imgSrc;
         }
 
-        return config('filesystems.disks.s3.endpoint')."europharm2$this->imgSrc";
+        return config('filesystems.disks.s3.endpoint')."/europharm2$this->imgSrc";
     }
 }

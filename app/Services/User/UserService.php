@@ -5,16 +5,19 @@ namespace App\Services\User;
 use App\Helpers\SubscriptionSponsor;
 use App\Models\User;
 use App\Repositories\BankcardRepository;
+use App\Repositories\ImageRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
 use App\Services\Payment\Facades\Payment;
+use Illuminate\Http\UploadedFile;
 
 class UserService
 {
     public function __construct(
         private UserRepository $userRepository,
         private SubscriptionRepository $subscriptionRepository,
-        private BankcardRepository $bankcardRepository
+        private BankcardRepository $bankcardRepository,
+        private ImageRepository $imageRepository
     )
     {
     }
@@ -64,5 +67,17 @@ class UserService
         $userSubscription->saveOrFail();
 
         return $userSubscription;
+    }
+
+    public function uploadImage(User $user, UploadedFile|null $file)
+    {
+        $lastImage = $user->image()->first();
+        if ($lastImage) {
+            $this->imageRepository->remove('s3', $lastImage);
+        }
+        $src    = $this->imageRepository->storeInDisk('s3', $user, $file);
+        $image  = $this->imageRepository->createForImageable($user, $src);
+
+        return $image;
     }
 }

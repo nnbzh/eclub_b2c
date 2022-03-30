@@ -23,14 +23,16 @@ Route::group(['prefix' => 'auth'], function() {
 
 Route::group(['middleware = auth:api'], function() {
     Route::group(['prefix' => 'user'], function() {
+        Route::put('', 'UserController@update');
         Route::post('password', 'UserController@setPassword');
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');
-        Route::apiResource('addresses', 'UserAddressController')->shallow();
+        Route::post('image', 'UserController@uploadImage');
         Route::group(['prefix' => 'bankcards'], function () {
             Route::post('', 'BankcardController@store');
             Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');
         });
+        Route::apiResource('addresses', 'UserAddressController')->shallow();
     });
     Route::group(['prefix' => 'orders'], function() {
         Route::post('', 'OrderController@store');

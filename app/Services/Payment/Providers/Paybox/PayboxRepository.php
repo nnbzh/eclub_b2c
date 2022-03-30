@@ -25,13 +25,14 @@ class PayboxRepository
             'pg_post_link'  => route('bankcard.paybox.store.callback'),
             'pg_back_link'  => route('bankcard.paybox.store.callback'),
         ];
-        $this->sendRequest("v1/merchant/$this->merchantId/cardstorage/add", $params);
+        $response = $this->sendRequest("v1/merchant/$this->merchantId/cardstorage/add", $params);
+        dd($response);
     }
 
-    private function sendRequest($url, $params, $returnBody = true) {
+    private function sendRequest($uri, $params, $returnBody = true) {
         $params['pg_merchant_id']   = $this->merchantId;
         $params['pg_salt']          = Str::random();
-        $operation                  = explode('/', $url);
+        $operation                  = explode('/', $uri);
         $operation                  = end($operation);
 
         ksort($params);
@@ -40,7 +41,7 @@ class PayboxRepository
         $params['pg_sig']   = md5(implode(';', $params));
         unset($params[0], $params[1]);
 
-        $response = $this->client->post($url, $params);
+        $response = $this->client->post($uri, $params);
         $response = simplexml_load_string($response->body(), 'SimpleXMLElement', LIBXML_NOCDATA);
         $response = json_decode(json_encode($response));
 
