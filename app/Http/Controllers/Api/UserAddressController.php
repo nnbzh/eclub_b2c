@@ -46,13 +46,13 @@ class UserAddressController extends Controller
         $this->authorize('destroy', $address);
         $this->userAddressService->delete($address);
 
-        return response()->noContent();
+        return response()->json(['data' => null]);
     }
 
     public function activate(UserAddress $address) {
         $this->authorize('update', $address);
         $this->userAddressService->activate($address);
 
-        return response()->noContent();
+        return response()->json(['data' => null]);
     }
 }

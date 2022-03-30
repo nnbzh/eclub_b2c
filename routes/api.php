@@ -27,6 +27,10 @@ Route::group(['middleware = auth:api'], function() {
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');
         Route::apiResource('addresses', 'UserAddressController')->shallow();
+        Route::group(['prefix' => 'bankcards'], function () {
+            Route::post('', 'BankcardController@store');
+            Route::post('paybox/callback', 'BankcardController@payboxStoreCallback');
+        });
     });
     Route::group(['prefix' => 'orders'], function() {
         Route::post('', 'OrderController@store');

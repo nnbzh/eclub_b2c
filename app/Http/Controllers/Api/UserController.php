@@ -27,7 +27,7 @@ class UserController extends Controller
         $user = $request->user();
         $this->userService->update($user, $request->validated());
 
-        return response()->noContent();
+        return response()->json(['data' => null]);
     }
 
     public function subscribe(SubscribeRequest $request) {

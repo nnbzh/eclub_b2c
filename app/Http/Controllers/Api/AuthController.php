@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function requestOtp(PhoneNumberRequest $request) {
        $this->loginService->requestOtp($request->phone);
 
-        return response()->noContent();
+        return response()->json(['data' => null]);
     }
 
     public function verifyOtp(VerifyOtpRequest $request) {
@@ -39,6 +39,6 @@ class AuthController extends Controller
         $token->revoke();
         app('Laravel\Passport\RefreshTokenRepository')->revokeRefreshTokensByAccessTokenId($token->id);
 
-        return response()->noContent();
+        return response()->json(['data' => null]);
     }
 }
