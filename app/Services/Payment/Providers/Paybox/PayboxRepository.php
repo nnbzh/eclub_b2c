@@ -16,56 +16,45 @@ class PayboxRepository
     {
         $this->merchantId   = config('payment.paybox.merchantId');
         $this->key          = config('payment.paybox.secretKey');
-        $this->client       = Http::baseUrl($this->baseUrl)->withHeaders(['Content-Type' => 'application/x-www-form-urlencoded']);
+        $this->client       = Http::baseUrl($this->baseUrl);
     }
 
     public function getUrlForCardAddition(int $userId) {
         $params = [
-            'pg_user_id'    => $userId,
+            'pg_user_id'    => "1234",
             'pg_post_link'  => route('bankcard.paybox.store.callback'),
-            'pg_back_link'  => route('bankcard.paybox.store.callback'),
+            'pg_back_link'  => 'http://site.kz/back',
         ];
         $response = $this->sendRequest("v1/merchant/$this->merchantId/cardstorage/add", $params);
-        dd($response);
+
+        return $response['body']->pg_redirect_url;
     }
 
-    private function sendRequest($uri, $params, $returnBody = true) {
+    private function sendRequest($url, $params) {
         $params['pg_merchant_id']   = $this->merchantId;
-        $params['pg_salt']          = Str::random();
-        $operation                  = explode('/', $uri);
+        $params['pg_salt']          = "sAWumVI6p37o2TLS";
+        $operation                  = explode('/', $url);
         $operation                  = end($operation);
 
         ksort($params);
         array_unshift($params, $operation);
         $params[]           = $this->key;
         $params['pg_sig']   = md5(implode(';', $params));
+
         unset($params[0], $params[1]);
 
-        $response = $this->client->post($uri, $params);
+        $response = $this->client->post($url, $params);;
         $response = simplexml_load_string($response->body(), 'SimpleXMLElement', LIBXML_NOCDATA);
         $response = json_decode(json_encode($response));
 
-        return $returnBody ? $response : $response->pg_status === 'ok';
+        return [
+            'status'    => $this->isSuccessful($response),
+            'body'      => $response
+        ];
     }
 
-    function makeFlatParamsArray($arrParams, $parent_name = '')
+    private function isSuccessful($response): bool
     {
-        $arrFlatParams = [];
-        $i = 0;
-        foreach ($arrParams as $key => $val) {
-            $i++;
-            /**
-             * Имя делаем вида tag001subtag001
-             * Чтобы можно было потом нормально отсортировать и вложенные узлы не запутались при сортировке
-             */
-            $name = $parent_name . $key . sprintf('%03d', $i);
-            if (is_array($val)) {
-                $arrFlatParams = array_merge($arrFlatParams, makeFlatParamsArray($val, $name));
-                continue;
-            }
-            $arrFlatParams += array($name => (string)$val);
-        }
-
-        return $arrFlatParams;
+        return $response->pg_status === 'ok';
     }
 }

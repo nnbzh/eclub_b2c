@@ -23,6 +23,7 @@ Route::group(['prefix' => 'auth'], function() {
 
 Route::group(['middleware = auth:api'], function() {
     Route::group(['prefix' => 'user'], function() {
+        Route::get('', 'UserController@me');
         Route::put('', 'UserController@update');
         Route::post('password', 'UserController@setPassword');
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');

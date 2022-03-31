@@ -10,6 +10,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UploadImageRequest;
 use App\Http\Resources\UserResource;
 use App\Services\User\UserService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -53,5 +54,12 @@ class UserController extends Controller
         return response()->json(['data' => [
             'src' => $user->fullImgSrc
         ]]);
+    }
+
+    public function me(Request $request) {
+        $user = $request->user();
+        $user->load('image');
+
+        return new UserResource($user);
     }
 }

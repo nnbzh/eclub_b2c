@@ -11,7 +11,8 @@ class BankcardController extends Controller
 {
     public function store(StoreBankcardRequest $request) {
         $url = Paybox::getUrlForCardAddition($request->user());
-        
+
+        return response()->json(['data' => ['url' => $url]]);
     }
 
     public function payboxStoreCallback(Request $request) {
