@@ -8,6 +8,7 @@ class UpdateUserAddressRequest extends FormRequest
 {
     public function rules() {
         return [
+            'name'      => 'nullable|string',
             'address'   => 'required|string',
             'entrance'  => 'nullable',
             'floor'     => 'nullable|int',

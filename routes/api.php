@@ -59,3 +59,8 @@ Route::apiResource('payment-methods', 'PaymentMethodController')->only(['index']
 
 Route::get('slots/today', 'SlotController@today');
 Route::get('slots/tomorrow', 'SlotController@tomorrow');
+Route::group(['prefix' => 'delivery-zones'], function () {
+    Route::group(['prefix' => 'fast'], function () {
+        Route::get('check', 'FastDeliveryZoneController@isInside');
+    });
+});

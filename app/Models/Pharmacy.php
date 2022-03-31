@@ -23,4 +23,8 @@ class Pharmacy extends Model
     public function city() {
         return $this->belongsTo(City::class);
     }
+
+    public function fastDeliveryZones() {
+        return $this->hasMany(FastDeliveryZone::class);
+    }
 }

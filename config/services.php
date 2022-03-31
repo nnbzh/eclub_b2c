@@ -51,6 +51,10 @@ return [
         'elogist' => [
             'host'   => 'https://api.elogist.kz/v1',
             'apiKey' => env('ELOGIST_API_KEY')
+        ],
+        'eclub' => [
+            'host'   => 'https://app.europharma.kz',
+            'apiKey' => env('ECLUB_API_KEY')
         ]
     ]
 ];

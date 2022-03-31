@@ -33,6 +33,7 @@ class PayboxRepository
     private function sendRequest($url, $params) {
         $params['pg_merchant_id']   = $this->merchantId;
         $params['pg_salt']          = "sAWumVI6p37o2TLS";
+        $params['pg_testing_mode']  = 1;
         $operation                  = explode('/', $url);
         $operation                  = end($operation);
 

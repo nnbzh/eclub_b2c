@@ -8,6 +8,7 @@ class StoreUserAddressRequest extends FormRequest
 {
     public function rules() {
         return [
+            'name'      => 'nullable|string',
             'address'   => 'required|string',
             'city_id'   => 'required|int|exists:cities,id',
             'entrance'  => 'nullable',

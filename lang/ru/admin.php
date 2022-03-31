@@ -59,6 +59,7 @@ return [
             'number'    => 'Номер',
             'is_active' => 'Активный',
             'has_delivery' => 'Есть доставка',
+            'has_fast_delivery' => 'Есть быстрая доставка',
         ],
     ],
     'story' => [
