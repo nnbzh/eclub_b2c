@@ -8,7 +8,9 @@ use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\SubscribeRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UploadImageRequest;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserResource;
+use App\Models\Product;
 use App\Services\User\UserService;
 use Illuminate\Http\Request;
 
@@ -61,5 +63,21 @@ class UserController extends Controller
         $user->load('image');
 
         return new UserResource($user);
+    }
+
+    public function like(Request $request, Product $product) {
+        $user = $request->user();
+        $this->userService->like($user, $product);
+
+        return response()->json(['data' => [
+            'success' => true
+        ]]);
+    }
+
+    public function products(Request $request) {
+        $user       = $request->user();
+        $products   = $this->userService->getUserProducts($user);
+
+        return ProductResource::collection($products);
     }
 }

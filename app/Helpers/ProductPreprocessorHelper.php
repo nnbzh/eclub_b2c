@@ -12,10 +12,13 @@ class ProductPreprocessorHelper
         private StockService $stockService,
     ) {}
 
-    public function process($products, $cityId, $pharmacyNumber = null) {
-        $stocks     = $this->stockService->getExistingProductsInCity($products, $cityId);
-        $products   = $products->whereIn('sku', $stocks->pluck('sku'));
-        $products   = $this->mapWithStocks($products, $stocks->pluck('quantity', 'sku'));
+    public function process($products, $cityId, $pharmacyNumber = null, $inStock = true) {
+        if ($inStock) {
+            $stocks = $this->stockService->getExistingProductsInCity($products, $cityId);
+            $products   = $products->whereIn('sku', $stocks->pluck('sku'));
+            $products   = $this->mapWithStocks($products, $stocks->pluck('quantity', 'sku'));
+        }
+
         $prices     = $this->priceService->getPriceForProductsByCityId($products, $cityId);
         $products   = $this->mapWithPrices($products, $prices->groupBy('sku'));
 

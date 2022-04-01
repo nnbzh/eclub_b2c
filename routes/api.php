@@ -26,6 +26,7 @@ Route::group(['middleware = auth:api'], function() {
         Route::get('', 'UserController@me');
         Route::put('', 'UserController@update');
         Route::post('password', 'UserController@setPassword');
+        Route::get('products', 'UserController@products');
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');
         Route::post('image', 'UserController@uploadImage');
@@ -42,10 +43,13 @@ Route::group(['middleware = auth:api'], function() {
     });
 });
 
-Route::apiResource('products', 'ProductController')->only(['index', 'show'])->whereNumber('product');
-Route::apiResource('products.reviews', 'ProductReviewController')->only(['index', 'store']);
 Route::group(['prefix' => 'products'], function () {
+    Route::get('', 'ProductController@index');
     Route::get('search', 'ProductController@search');
+    Route::get('{product}', 'ProductController@show')->whereNumber('product');
+    Route::get('{product}/reviews', 'ProductReviewController@index')->whereNumber('product');
+    Route::post('{product}/reviews', 'ProductReviewController@store')->whereNumber('product');
+    Route::post('{product}/like', 'UserController@like');
 });
 
 Route::apiResource('brands', 'BrandController')->only(['index']);

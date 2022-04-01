@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Helpers\SubscriptionSponsor;
+use App\Models\Product;
 use App\Models\User;
 use App\Repositories\BankcardRepository;
 use App\Repositories\ImageRepository;
@@ -79,5 +80,22 @@ class UserService
         $image  = $this->imageRepository->createForImageable($user, $src);
 
         return $image;
+    }
+
+    public function like(User $user, Product $product)
+    {
+        if ($user->products()->where('id', $product->id)->doesntExist()) {
+            $user->products()->attach($product);
+        } else {
+            $user->products()->detach($product);
+        }
+    }
+
+    public function getUserProducts($user)
+    {
+        $products   = $user->products()->get();
+        $cityId     = $user->address?->city_id ?? 1;
+
+        return \ProductPreprocessor::process($products, $cityId, inStock:false);
     }
 }

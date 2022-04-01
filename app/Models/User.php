@@ -90,6 +90,10 @@ class User extends Authenticatable
             ->first();
     }
 
+    public function products() {
+        return $this->belongsToMany(Product::class, 'user_product');
+    }
+
     //MUTATORS
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = \Hash::make($value);
