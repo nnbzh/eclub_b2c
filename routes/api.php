@@ -38,6 +38,7 @@ Route::group(['middleware = auth:api'], function() {
     Route::group(['prefix' => 'orders'], function() {
         Route::post('', 'OrderController@store');
         Route::post('{order}', 'OrderController@cancel')->whereNumber('order');
+        Route::post('{order}/reviews', 'OrderReviewController@store')->whereNumber('order');
     });
 });
 

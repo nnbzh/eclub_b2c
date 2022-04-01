@@ -29,4 +29,8 @@ class Review extends Model
     public function rating() {
         return $this->belongsTo(Rating::class);
     }
+
+    public function ratingMessages() {
+        return $this->belongsToMany(RatingMessage::class, 'review_rating_message');
+    }
 }

@@ -20,8 +20,7 @@ class FastDeliveryZoneService
             'city_id' => $fastDeliveryCities->pluck('id')->toArray()
         ]);
         $isInside   = false;
-        $pharmacy   = null;
-        $intersectionCoordinates = [];
+        $pharmacies = [];
         foreach ($zones as $zone) {
             $coordinates = $zone->coordinates;
 
@@ -36,17 +35,14 @@ class FastDeliveryZoneService
 
                 if ($intersect) {
                     $isInside = true;
-                    $pharmacy = $zone->pharmacy;
-                    $intersectionCoordinates = $coordinates;
-                    break;
+                    $pharmacies[$zone->pharmacy->number] = $zone->pharmacy;
                 }
             }
         }
 
         return [
             'inside'        => $isInside,
-            'pharmacy'      => $pharmacy,
-            'coordinates'   => $intersectionCoordinates,
+            'pharmacies'    => array_values($pharmacies),
         ];
     }
 }

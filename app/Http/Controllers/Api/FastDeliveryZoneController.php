@@ -22,15 +22,13 @@ class FastDeliveryZoneController extends Controller
         if (! $intersection['inside']) {
             return response()->json(['data' => [
                 'success'       => $intersection['inside'],
-                'pharmacy'      => null,
-                'coordinates'   => [],
+                'pharmacies'    => null,
             ]]);
         }
 
         return response()->json(['data' => [
             'success'       => $intersection['inside'],
-            'pharmacy'      => new PharmacyResource($intersection['pharmacy']),
-            'coordinates'   => $intersection['coordinates']
+            'pharmacies'    => PharmacyResource::collection($intersection['pharmacies']),
         ]]);
     }
 }

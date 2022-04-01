@@ -4,11 +4,12 @@ namespace App\Models;
 
 use App\Models\Interfaces\IBillable;
 use App\Traits\Billable;
+use App\Traits\Reviewable;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model implements IBillable
 {
-    use Billable;
+    use Billable, Reviewable;
 
     protected $fillable = [
         'number',
