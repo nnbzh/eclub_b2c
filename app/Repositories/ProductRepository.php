@@ -24,6 +24,18 @@ class ProductRepository
         return $query->simplePaginate(100);
     }
 
+    public function getBy($column, $value) {
+        $query = Product::query();
+
+        if (is_array($value)) {
+            $query->whereIn($column, $value);
+        } else {
+            $query->where($column, $value);
+        }
+
+        return $query->get();
+    }
+
     public function search(string $keyword)
     {
         return Product::search($keyword)->simplePaginate(100);

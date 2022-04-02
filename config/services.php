@@ -55,6 +55,6 @@ return [
         'eclub' => [
             'host'   => 'https://app.europharma.kz',
             'apiKey' => env('ECLUB_API_KEY')
-        ]
+        ],
     ]
 ];

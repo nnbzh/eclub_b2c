@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Pharmacy;
 use App\Services\Price\PriceService;
 use App\Services\Stock\StockService;
 
@@ -20,6 +21,16 @@ class ProductPreprocessorHelper
         }
 
         $prices     = $this->priceService->getPriceForProductsByCityId($products, $cityId);
+        $products   = $this->mapWithPrices($products, $prices->groupBy('sku'));
+
+        return $products;
+    }
+
+    public function getExistingInPharmacy($products, Pharmacy $pharmacy) {
+        $stocks = $this->stockService->getExistingProductsInPharmacy($products, $pharmacy->number);
+        $products   = $products->whereIn('sku', $stocks->pluck('sku'));
+        $products   = $this->mapWithStocks($products, $stocks->pluck('quantity', 'sku'));
+        $prices     = $this->priceService->getPriceForProductsByCityId($products, $pharmacy->city_id);
         $products   = $this->mapWithPrices($products, $prices->groupBy('sku'));
 
         return $products;

@@ -50,6 +50,7 @@ Route::group(['prefix' => 'products'], function () {
     Route::get('{product}/reviews', 'ProductReviewController@index')->whereNumber('product');
     Route::post('{product}/reviews', 'ProductReviewController@store')->whereNumber('product');
     Route::post('{product}/like', 'UserController@like');
+    Route::get('pickup-pharmacies', 'ProductController@getPickupPharmacies');
 });
 
 Route::apiResource('brands', 'BrandController')->only(['index']);

@@ -67,6 +67,11 @@ class StockRepository implements StockRepositoryInterface
 
     public function getExistingProductsInPharmacy($products, $pharmacyNumber)
     {
-        // TODO: Implement getExistingProductsInPharmacy() method.
+        return PharmacyStock::query()
+            ->select('sku', 'quantity')
+            ->whereIn('sku', $products->pluck('sku'))
+            ->where('pharmacy_id', $pharmacyNumber)
+            ->where('quantity', '>', 0)
+            ->get();
     }
 }

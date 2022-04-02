@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\GeocoderHelper;
 use App\Helpers\ProductPreprocessorHelper;
 use App\Helpers\StringFormatterHelper;
 use App\Repositories\Price\PriceRepository;
@@ -43,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
     private function bindHelpers() {
         $this->app->bind('stringFormatter', StringFormatterHelper::class);
         $this->app->bind('productPreprocessor', ProductPreprocessorHelper::class);
+        $this->app->bind('geocoder', GeocoderHelper::class);
     }
 
     private function provideProductDependencies() {

@@ -94,6 +94,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'user_product');
     }
 
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+
     //MUTATORS
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = \Hash::make($value);

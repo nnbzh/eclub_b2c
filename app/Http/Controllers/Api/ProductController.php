@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PharmacyResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\Product\ProductService;
@@ -46,6 +47,18 @@ class ProductController extends Controller
         $products = $this->productService->search($request->keyword);
 
         return ProductResource::collection($products);
+    }
+
+    public function getPickupPharmacies(Request $request) {
+        $request->validate([
+            'lat'       => 'required',
+            'lng'       => 'required',
+            'city_id'   => 'required',
+            'products'  => 'required|array|min:1'
+        ]);
+        $pharmacies = $this->productService->getPickupPharmacies($request->city_id,$request->lat,$request->lng,$request->products);
+
+        return PharmacyResource::collection($pharmacies);
     }
 
 }
