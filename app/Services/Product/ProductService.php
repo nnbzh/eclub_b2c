@@ -37,12 +37,19 @@ class ProductService
         $pharmacies = $pharmacies->whereNotNull('lat')->whereNotNull('lng');
         $products   = $this->productRepository->getBy('id', $products);
         foreach ($pharmacies as $pharmacy) {
-            $pharmacy->distance = Geocoder::distanceBetween($lat, $lng, $pharmacy->lat, $pharmacy->lng);
-            $pharmacy->products = ProductPreprocessor::getExistingInPharmacy($products, $pharmacy);
+            $availableProducts          = ProductPreprocessor::getExistingInPharmacy($products, $pharmacy);
+            $pharmacy->distance         = Geocoder::distanceBetween($lat, $lng, $pharmacy->lat, $pharmacy->lng);
+            $pharmacy->products         = $this->mapWithAvailableProducts($products, $availableProducts);
         }
         $pharmacies = $pharmacies->sortBy('distance');
 
         return $pharmacies->where('distance', '<', 50);
+    }
+
+    private function mapWithAvailableProducts($products, $availableProducts) {
+        $products = $products->whereNotIn('id', $availableProducts->pluck('id'));
+
+        return $availableProducts->merge($products);
     }
 
 }
