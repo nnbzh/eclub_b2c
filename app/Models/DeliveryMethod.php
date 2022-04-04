@@ -27,4 +27,8 @@ class DeliveryMethod extends Model
             ->belongsToMany(City::class, 'delivery_method_city')
             ->withPivot(['max_price', 'min_price', 'cost', 'is_active']);
     }
+
+    public function markets() {
+        return $this->belongsToMany(Market::class, 'delivery_method_market');
+    }
 }

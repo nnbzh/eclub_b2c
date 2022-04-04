@@ -140,4 +140,16 @@ return [
             'rating'    => 'Оценка'
         ]
     ],
+    'delivery_method' => [
+        'singular'  => 'Вид доставки',
+        'plural'    => 'Виды доставок',
+        'fields'    => [
+            'name'          => 'Наименование',
+            'is_active'     => 'Активный',
+        ],
+        'relations' => [
+            'cities'    => 'Города',
+            'markets'   => 'Магазины'
+        ]
+    ],
 ];

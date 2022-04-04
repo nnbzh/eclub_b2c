@@ -65,6 +65,11 @@ class AdminMenuGenerator
                 'route' => backpack_url('rating_message'),
                 'icon' => 'la la-comments',
                 'label' => trans('admin.rating_message.plural'),
+            ],
+            [
+                'route' => backpack_url('delivery_method'),
+                'icon' => 'la la-cargo',
+                'label' => trans('admin.delivery_method.plural'),
             ]
         ];
     }
