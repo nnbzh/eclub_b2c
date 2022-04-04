@@ -21,4 +21,16 @@ class Image extends Model
     public function imageable() {
         return $this->morphTo();
     }
+
+    public function getFullImgSrcAttribute() {
+        if (is_null($this->src)) {
+            return null;
+        }
+
+        if (filter_var($this->src, FILTER_VALIDATE_URL)) {
+            return $this->src;
+        }
+
+        return config('filesystems.disks.s3.endpoint')."/europharm2$this->src";
+    }
 }
