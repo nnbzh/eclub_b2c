@@ -40,6 +40,7 @@ class ProductService
             $availableProducts          = ProductPreprocessor::getExistingInPharmacy($products, $pharmacy);
             $pharmacy->distance         = Geocoder::distanceBetween($lat, $lng, $pharmacy->lat, $pharmacy->lng);
             $pharmacy->products         = $this->mapWithAvailableProducts($products, $availableProducts);
+            $pharmacy->ratio            = count($availableProducts) . "/" . count($products);
         }
         $pharmacies = $pharmacies->sortBy('distance');
 
