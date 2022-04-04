@@ -63,4 +63,19 @@ class Product extends Model
     public function description() {
         return $this->hasOne(ProductDescription::class);
     }
+
+    public function ratings() {
+        return $this->hasManyThrough(
+            Rating::class,
+            Review::class,
+            'reviewable_id',
+            'id',
+            'id',
+            'rating_id'
+        )->where('reviewable_type', $this->getMorphClass());
+    }
+
+    public function getAverageRatingAttribute() {
+        return round($this->ratings()->avg('rating'), 2);
+    }
 }

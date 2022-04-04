@@ -13,6 +13,7 @@ class ProductRepository
                 'image',
                 'brand',
                 'category',
+                'ratings'
             ]);
 
         if (! empty($filters)) {

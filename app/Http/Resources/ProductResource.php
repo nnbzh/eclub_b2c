@@ -18,6 +18,7 @@ class ProductResource extends JsonResource
             'quantity'  => $this->quantity,
             'prices'    => $this->prices,
             'images'    => ImageResource::collection($this->images),
+            'rating'    => $this->averageRating,
             'description' => new ProductDescriptionResource($this->whenLoaded('description')),
         ];
     }
