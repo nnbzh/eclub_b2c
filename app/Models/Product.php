@@ -29,6 +29,8 @@ class Product extends Model
         'by_recipe',
         'brand_id',
         'country',
+        'unit_code',
+        'unit_type',
     ];
 
     public function searchableAs()

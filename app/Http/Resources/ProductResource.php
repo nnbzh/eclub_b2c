@@ -16,6 +16,7 @@ class ProductResource extends JsonResource
             'by_recipe' => $this->by_recipe,
             'country'   => $this->country,
             'rating'    => $this->averageRating,
+            'unit'      => $this->unit_code,
             'quantity'  => $this->quantity,
             'prices'    => $this->prices,
             'images'    => ImageResource::collection($this->images),

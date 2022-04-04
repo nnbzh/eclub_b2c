@@ -31,6 +31,7 @@ class ParseProductsCommand extends Command
                     'recipe as by_recipe',
                     'special as is_special',
                     'country',
+                    'unit_type'
                 )
                 ->orderBy('id')
                 ->chunk(500, function ($products) use (&$iteration) {
@@ -51,6 +52,7 @@ class ParseProductsCommand extends Command
                             'by_recipe' => $product->by_recipe === 1,
                             'is_special' => $product->is_special  === 1,
                             'country' => $product->country,
+                            'unit_type' => $product->unit_type,
                         ];
                     }
 
