@@ -21,7 +21,7 @@ class ParseStoreCommand extends Command
             DB::table('product_market')->truncate();
             DB::connection('shop')
                 ->table('store')
-                ->select('type', 'sku')
+                ->select('merchant as type', 'sku')
                 ->orderBy('sku')
                 ->chunk(1000, function ($stores) {
                     $newStores = [];

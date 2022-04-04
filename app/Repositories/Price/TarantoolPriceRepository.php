@@ -16,7 +16,7 @@ class TarantoolPriceRepository implements PriceRepositoryInterface
                     'city_id as CITY_ID',
                     'price as PRICE',
                     'price_eclub as SUB_PRICE',
-                    'store as MARKET_NUMBER',
+                    'merchant as MARKET_NUMBER',
                     'updated_at as CHANGED_AT'
                 )
                 ->where('city_id', $cityId)

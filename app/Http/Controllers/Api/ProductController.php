@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index(Request $request) {
         $validated = $this->validate($request, [
             'brand_id'  => 'nullable|exists:brands,id',
-            'city_id'   => 'required_without_auth'
+            'city_id'   => 'required|int|exists:cities,id'
         ]);
 
         if (empty($validated['city_id'])) {
