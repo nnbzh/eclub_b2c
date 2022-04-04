@@ -15,10 +15,10 @@ class ProductResource extends JsonResource
             'name'      => $this->name,
             'by_recipe' => $this->by_recipe,
             'country'   => $this->country,
+            'rating'    => $this->averageRating,
             'quantity'  => $this->quantity,
             'prices'    => $this->prices,
             'images'    => ImageResource::collection($this->images),
-            'rating'    => $this->averageRating,
             'description' => new ProductDescriptionResource($this->whenLoaded('description')),
         ];
     }
