@@ -21,7 +21,7 @@ class EuropharmaRepository extends ApiRepository
         return $this->client->post('app/orders/create', $data)->json();
     }
 
-    public function cancelOrder($orderNumber) {
-        return $this->client->post("app/orders/$orderNumber/cancel", )->json();
+    public function cancelOrder($orderNumber, $reason) {
+        return $this->client->post("app/orders/$orderNumber/cancel", ['type' => $reason])->json();
     }
 }

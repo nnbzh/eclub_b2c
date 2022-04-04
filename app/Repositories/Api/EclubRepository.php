@@ -13,4 +13,8 @@ class EclubRepository extends ApiRepository
     public function getFastDeliveryZones() {
         return $this->client->get('api/eclub/fast-delivery-zones')->json();
     }
+
+    public function getCancelMessages() {
+        return $this->client->get('api/eclub/cancel-messages')->json();
+    }
 }

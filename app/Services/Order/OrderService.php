@@ -4,8 +4,11 @@ namespace App\Services\Order;
 
 use App\Classes\CRMOrder;
 use App\Helpers\OrderChannel;
+use App\Helpers\OrderStatus;
+use App\Models\Order;
 use App\Models\Privilege;
 use App\Models\User;
+use App\Repositories\Api\EuropharmaRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserAddressRepository;
 
@@ -13,7 +16,8 @@ class OrderService
 {
     public function __construct(
         private OrderRepository $orderRepository,
-        private UserAddressRepository $userAddressRepository
+        private UserAddressRepository $userAddressRepository,
+        private EuropharmaRepository $europharmaRepository
     )
     {
     }
@@ -29,7 +33,7 @@ class OrderService
         $order = $this->orderRepository->create($data);
         $order->products()->sync($data['products']);
         $crmOrder = new CRMOrder($order);
-        $response = $crmOrder->sendToCrm();
+        $response = $this->europharmaRepository->sendOrderToCrm($crmOrder->toArray());
         $this->orderRepository->update($order, ['number' => $response['number']]);
 
         return $order;
@@ -57,5 +61,12 @@ class OrderService
         $data['fields_json']    = array_merge($data['fields_json'], ['channel'          => OrderChannel::CHANNELS[$data['fields_json']['channel']]]);
 
         return $data;
+    }
+
+    public function cancel(Order $order, array $data)
+    {
+        $order = $this->orderRepository->update($order, ['status' => OrderStatus::CANCELED]);
+        $order->cancellation()->create($data);
+        $this->europharmaRepository->cancelOrder($order->number, $data['cancel_message_id']);
     }
 }

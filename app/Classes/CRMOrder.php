@@ -3,7 +3,6 @@
 namespace App\Classes;
 
 use App\Models\Order;
-use App\Repositories\Api\EuropharmaRepository;
 
 class CRMOrder
 {
@@ -60,14 +59,5 @@ class CRMOrder
 
             return $item;
         });
-    }
-
-    public function sendToCrm() {
-        $repo = new EuropharmaRepository();
-        try {
-            return $repo->sendOrderToCrm($this->toArray());
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
     }
 }

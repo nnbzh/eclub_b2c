@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
             'customer_phone'    => $this->customer_phone,
             'payment_method'    => new PaymentMethodResource($this->paymentMethod),
             'delivery_method'   => new DeliveryMethodResource($this->deliveryMethod),
+            'pharmacy'          => new PharmacyResource($this->pharmacy),
             'status'            => $this->status,
             'cost'              => $this->cost,
             'delivery_cost'     => $this->delivery_cost,

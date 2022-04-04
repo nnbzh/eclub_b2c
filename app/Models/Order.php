@@ -53,4 +53,8 @@ class Order extends Model implements IBillable
         return $this->belongsToMany(Product::class, 'order_product')
             ->withPivot('quantity', 'price');
     }
+
+    public function cancellation() {
+        return $this->hasOne(Cancellation::class);
+    }
 }

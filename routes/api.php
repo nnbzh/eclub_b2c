@@ -26,6 +26,7 @@ Route::group(['middleware = auth:api'], function() {
         Route::get('', 'UserController@me');
         Route::put('', 'UserController@update');
         Route::post('password', 'UserController@setPassword');
+        Route::get('orders', 'UserController@orders');
         Route::get('products', 'UserController@products');
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');
@@ -62,6 +63,7 @@ Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
 Route::apiResource('delivery-methods', 'DeliveryMethodController')->only(['index']);
 Route::apiResource('payment-methods', 'PaymentMethodController')->only(['index']);
+Route::apiResource('cancel-messages', 'CancelMessageController')->only(['index']);
 
 Route::get('slots/today', 'SlotController@today');
 Route::get('slots/tomorrow', 'SlotController@tomorrow');
