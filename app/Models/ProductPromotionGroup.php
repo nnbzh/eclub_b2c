@@ -28,4 +28,8 @@ class ProductPromotionGroup extends Pivot
     public function promotionGroup() {
         return $this->belongsTo(PromotionGroup::class);
     }
+
+    public function getNameAttribute() {
+        return $this->product?->name;
+    }
 }
