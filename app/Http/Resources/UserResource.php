@@ -20,7 +20,8 @@ class UserResource extends JsonResource
             'lang' => $this->lang,
             'send_mail' => $this->send_mail,
             'send_notification' => $this->send_notification,
-            'image' => $this->fullImgSrc
+            'image' => $this->fullImgSrc,
+            'subscription' => new SubscriptionResource($this->lastActiveSubscription())
         ];
     }
 }

@@ -90,6 +90,19 @@ class User extends Authenticatable
             ->first();
     }
 
+    public function lastActiveSubscription() : Subscription|null {
+        $sub = $this->subscriptions()
+            ->wherePivot('expires_at', '>=', now()->toDateString())
+            ->orderByPivot('expires_at', 'desc')
+            ->first();
+
+        if (! $sub->isActive()) {
+            return null;
+        }
+
+        return $sub;
+    }
+
     public function products() {
         return $this->belongsToMany(Product::class, 'user_product');
     }
