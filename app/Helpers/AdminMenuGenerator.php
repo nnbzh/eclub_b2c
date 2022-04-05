@@ -68,9 +68,19 @@ class AdminMenuGenerator
             ],
             [
                 'route' => backpack_url('delivery_method'),
-                'icon' => 'la la-cargo',
+                'icon' => 'la la-dolly',
                 'label' => trans('admin.delivery_method.plural'),
-            ]
+            ],
+            [
+                'route' => backpack_url('promotion_group'),
+                'icon' => 'la la-promotion',
+                'label' => trans('admin.promotion_group.plural'),
+            ],
+            [
+                'route' => backpack_url('product_promotion_group'),
+                'icon' => 'la la-promotion',
+                'label' => trans('admin.product_promotion_group.plural'),
+            ],
         ];
     }
 }

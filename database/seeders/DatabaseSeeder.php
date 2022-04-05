@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MarketSeeder::class,
             MenuItemsSeeder::class,
-            RatingSeeder::class
+            RatingSeeder::class,
+            PromotionGroupSeeder::class,
+            SubscriptionSeeder::class,
         ]);
     }
 }

@@ -152,4 +152,18 @@ return [
             'markets'   => 'Магазины'
         ]
     ],
+    'promotion_group' => [
+        'singular'  => 'Группа продвижения',
+        'plural'    => 'Группы продвижения',
+        'fields'    => [
+            'name'          => 'Наименование',
+            'slug'          => 'Ключ',
+        ],
+    ],
+    'product_promotion_group' => [
+        'singular'  => 'Продвигаемый продукт',
+        'plural'    => 'Продвигаемые продукты',
+        'fields'    => [
+        ],
+    ],
 ];

@@ -61,11 +61,13 @@ abstract class BaseCrudController extends CrudController
     protected function setupListOperation() {
         $modelAttributes = trans("admin.".$this->modelNameLower.".fields");
 
-        foreach (array_keys($modelAttributes) as $attribute) {
-            $this->crud->addColumn([
-                'name'  => $attribute,
-                'label' => $modelAttributes[$attribute]
-            ]);
+        if (is_array($modelAttributes)) {
+            foreach (array_keys($modelAttributes) as $attribute) {
+                $this->crud->addColumn([
+                    'name'  => $attribute,
+                    'label' => $modelAttributes[$attribute]
+                ]);
+            }
         }
 
         if ($this->showTimestamps) {
@@ -153,12 +155,15 @@ abstract class BaseCrudController extends CrudController
         $this->setValidation();
         $modelAttributes = trans("admin.".$this->modelNameLower.".fields");
 
-        foreach (array_keys($modelAttributes) as $attribute) {
-            $this->crud->addField([
-                'name'  => $attribute,
-                'label' => $modelAttributes[$attribute]
-            ]);
+        if (is_array($modelAttributes)) {
+            foreach (array_keys($modelAttributes) as $attribute) {
+                $this->crud->addField([
+                    'name'  => $attribute,
+                    'label' => $modelAttributes[$attribute]
+                ]);
+            }
         }
+
 
         if ($this->showTimestamps) {
             $commonAttributes = trans('admin.common');

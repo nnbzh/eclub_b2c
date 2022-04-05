@@ -52,6 +52,7 @@ Route::group(['prefix' => 'products'], function () {
     Route::post('{product}/reviews', 'ProductReviewController@store')->whereNumber('product');
     Route::post('{product}/like', 'UserController@like');
     Route::get('pickup-pharmacies', 'ProductController@getPickupPharmacies');
+    Route::get('groups/{slug}', 'PromotionGroupController@getBySlug');
 });
 
 Route::apiResource('brands', 'BrandController')->only(['index']);
@@ -71,4 +72,8 @@ Route::group(['prefix' => 'delivery-zones'], function () {
     Route::group(['prefix' => 'fast'], function () {
         Route::get('check', 'FastDeliveryZoneController@isInside');
     });
+});
+
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('products', 'AdminController@products');
 });
