@@ -22,7 +22,7 @@ class ProductRepository
 
         $query->orderBy('lft');
 
-        return $query->simplePaginate(100);
+        return $query->simplePaginate(30);
     }
 
     public function getBy($column, $value) {
