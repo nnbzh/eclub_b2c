@@ -17,21 +17,20 @@ class ProductController extends Controller
 
     public function index(Request $request) {
         $validated = $this->validate($request, [
-            'brand_id'  => 'nullable|exists:brands,id',
-            'city_id'   => 'required|int|exists:cities,id'
+            'brand_id'      => 'nullable|exists:brands,id',
+            'city_id'       => 'required|int|exists:cities,id',
+            'category_id'   => 'required|int|exists:categories,id',
         ]);
-
-        if (empty($validated['city_id'])) {
-            $validated['city_id'] = $request->user()->address?->city_id;
-        }
-
         $products = $this->productService->list($validated);
 
         return ProductResource::collection($products);
     }
 
     public function show(Request $request, Product $product) {
-        $product = \ProductPreprocessor::process(collect([$product->load('description')]), 4);
+        $this->validate($request, [
+            'city_id' => 'required|int|exists:cities,id'
+        ]);
+        $product = \ProductPreprocessor::process(collect([$product->load('description')]), $request->city_id);
 
         if (! $product->first()) {
             abort(400, 'Нет в наличии');
