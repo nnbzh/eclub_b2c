@@ -7,19 +7,15 @@ use App\Models\Product;
 
 class ProductRepository
 {
-    public function list(array $filters = []) {
+    public function list(array $filters = [], $relations = []) {
         $query = Product::query()
-            ->with([
-                'image',
-                'brand',
-                'category',
-                'ratings'
-            ]);
+            ->with($relations);
 
         if (! empty($filters)) {
             $query->applyFilters(new ProductFilter, $filters);
         }
 
+        $query->orderBy('category_id');
         $query->orderBy('lft');
 
         return $query->simplePaginate(30);

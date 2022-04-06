@@ -18,6 +18,7 @@ class ProductResource extends JsonResource
             'rating'    => $this->averageRating,
             'unit'      => $this->unit_code,
             'quantity'  => $this->quantity,
+            'category'  => new CategoryResource($this->category),
             'prices'    => $this->prices,
             'images'    => ImageResource::collection($this->images),
             'description' => new ProductDescriptionResource($this->whenLoaded('description')),
