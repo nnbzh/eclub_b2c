@@ -19,7 +19,7 @@ class ProductController extends Controller
         $validated = $this->validate($request, [
             'brand_id'      => 'nullable|exists:brands,id',
             'city_id'       => 'required|int|exists:cities,id',
-            'category_id'   => 'required|int|exists:categories,id',
+            'category_id'   => 'nullable',
         ]);
         $products = $this->productService->list($validated);
 
