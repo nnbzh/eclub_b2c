@@ -69,6 +69,10 @@ Route::apiResource('cancel-messages', 'CancelMessageController')->only(['index']
 
 Route::get('slots/today', 'SlotController@today');
 Route::get('slots/tomorrow', 'SlotController@tomorrow');
+
+Route::post('device-tokens', 'DeviceTokenController@store');
+Route::delete('device-tokens', 'DeviceTokenController@destroy');
+
 Route::group(['prefix' => 'delivery-zones'], function () {
     Route::group(['prefix' => 'fast'], function () {
         Route::get('check', 'FastDeliveryZoneController@isInside');
@@ -80,4 +84,3 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::post('order/send/push', 'OrderController@sendPushOrder');
-Route::post('device-tokens', 'DeviceTokenController@store');

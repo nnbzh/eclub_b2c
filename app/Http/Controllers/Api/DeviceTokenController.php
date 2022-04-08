@@ -21,4 +21,13 @@ class DeviceTokenController extends Controller
 
         return response()->json(['data' => null]);
     }
+
+    public function destroy(Request $request) {
+        $this->validate($request, [
+            'token'     => 'required|string',
+        ]);
+        $this->deviceTokenService->delete($request->token);
+
+        return response()->json(['data' => null]);
+    }
 }

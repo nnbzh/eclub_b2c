@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SentPushNotification whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SentPushNotification whereUserId($value)
  * @mixin \Eloquent
+ * @property-read Model|\Eloquent $pushable
  */
 class SentPushNotification extends Model
 {

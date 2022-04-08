@@ -112,4 +112,8 @@ class Order extends Model implements IBillable
     public function cancellation() {
         return $this->hasOne(Cancellation::class);
     }
+
+    public function courier() {
+        return $this->hasOne(Courier::class);
+    }
 }

@@ -16,4 +16,10 @@ class DeviceTokenService
             'user_id'   => $user?->id
         ]);
     }
+
+    public function delete(mixed $token)
+    {
+        $token = $this->deviceTokenRepository->findByToken($token);
+        $token?->delete();
+    }
 }

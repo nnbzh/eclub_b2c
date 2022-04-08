@@ -96,5 +96,16 @@ class OrderService
         $order = $this->orderRepository->findByNumber($data['number']);
         $order->status = $data['status'];
         $order->saveOrFail();
+        $courier = array_filter([
+            'phone'     => $data['courier_phone'] ?? null,
+            'type'      => $data['type'] ?? null,
+            'yandex_id' => $data['yandex_id'] ?? null,
+            'duration'  => $data['duration'] ?? null,
+            'distance'  => $data['distance'] ?? null,
+        ]);
+
+        if (! empty($courier)) {
+            $order->courier()->updateOrCreate(['order_id' => $order->id], $courier);
+        }
     }
 }

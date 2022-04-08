@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('couriers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
+            $table->string('phone')->nullable();
+            $table->string('courier_id')->nullable();
+            $table->string('type')->nullable();
+            $table->string('distance')->nullable();
+            $table->string('duration')->nullable();
             $table->timestamps();
         });
     }
