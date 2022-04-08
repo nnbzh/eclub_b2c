@@ -49,4 +49,10 @@ class Notification extends Model
         'key',
         'notification_type_id'
     ];
+
+    //SCOPES
+    public function scopeFindByKey($query, string $key)
+    {
+        return $query->active()->where('key', $key)->first();
+    }
 }

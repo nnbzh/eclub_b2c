@@ -78,7 +78,7 @@ class OrderService
         $phone    = \StringFormatter::onlyDigits($phone);
         $receiver = $this->userRepository->findByPhone($phone);
         if ($orderId) {
-            $order = Order::whereNumber($orderId)->first() ?? null;
+            $order = $this->orderRepository->findByNumber($orderId);
             if ($order && ! $receiver) {
                 $receiver = $order->user()->first();
             }
@@ -86,5 +86,14 @@ class OrderService
         if (! $receiver) abort(404);
 
         $receiver->notify(new OrderNotify($message, $orderId));
+    }
+
+    public function callback($data)
+    {
+        if (gettype($data) === 'string') {
+            $data = json_decode($data, true);
+        }
+
+
     }
 }

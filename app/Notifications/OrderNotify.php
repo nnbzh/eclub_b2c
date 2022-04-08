@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\Notification as NotificationModel;
+use App\Models\Notification as EloquentNotification;
 use App\Models\User;
 use App\Services\Push\Channels\ExpoChannel;
 use Illuminate\Bus\Queueable;
@@ -25,7 +25,7 @@ class OrderNotify extends Notification
     {
         $this->message = $message;
         $this->orderId = $orderId;
-        $this->notification = NotificationModel::where('key', 'send_push_order')->first();
+        $this->notification = EloquentNotification::findByKey('send_push_order');
     }
 
     /**

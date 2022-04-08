@@ -23,7 +23,7 @@ class MobizonDriver implements SmsDriverInterface
     {
         $body = [
             'recipient' => $sms->receiver,
-            'text'      => $sms->message,
+            'text'      => $sms->text,
             'from'      => $this->senderName
         ];
         $url = self::BASE_URL."/service/message/sendSmsMessage?output=json&api=v1&apiKey={$this->apiKey}";

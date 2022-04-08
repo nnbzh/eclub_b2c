@@ -31,6 +31,7 @@ Route::group(['middleware = auth:api'], function() {
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');
         Route::post('image', 'UserController@uploadImage');
+        Route::post('device-tokens', 'UserController@addDeviceToken');
         Route::group(['prefix' => 'bankcards'], function () {
             Route::post('', 'BankcardController@store');
             Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');
@@ -39,6 +40,7 @@ Route::group(['middleware = auth:api'], function() {
     });
     Route::group(['prefix' => 'orders'], function() {
         Route::post('', 'OrderController@store');
+        Route::post('callback', 'OrderController@callback');
         Route::post('{order}', 'OrderController@cancel')->whereNumber('order');
         Route::post('{order}/reviews', 'OrderReviewController@store')->whereNumber('order');
     });

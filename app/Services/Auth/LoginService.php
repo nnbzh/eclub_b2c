@@ -16,6 +16,6 @@ class LoginService
             \SMS::to($phone)->text("Код для входа в приложение Eclub: $code")->send();
         }
 
-        Cache::put("$phone/code", $code, 60);
+        Cache::put("$phone/code", $code, 120);
     }
 }

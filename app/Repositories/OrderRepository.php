@@ -6,6 +6,10 @@ use App\Models\Order;
 
 class OrderRepository
 {
+    public function findByNumber($value) {
+        return Order::whereNumber($value)->first();
+    }
+
     public function create(array $data) : Order {
         return Order::query()->create($data);
     }

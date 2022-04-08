@@ -42,9 +42,10 @@ class ProductController extends Controller
 
     public function search(Request $request) {
         $this->validate($request, [
-            'keyword' => 'required'
+            'keyword' => 'required',
+            'city_id' => 'required|int|exists:cities,id'
         ]);
-        $products = $this->productService->search($request->keyword);
+        $products = $this->productService->search($request->keyword, $request->city_id);
 
         return ProductResource::collection($products);
     }

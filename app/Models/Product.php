@@ -76,6 +76,8 @@ class Product extends Model
 {
     use CrudTrait, Imageable, HasTranslations, HasFilters, Reviewable, Searchable;
 
+    const PER_PAGE = 30;
+
     public $translatable = ['name'];
 
     protected $fillable = [

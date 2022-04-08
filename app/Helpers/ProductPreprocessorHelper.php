@@ -16,7 +16,6 @@ class ProductPreprocessorHelper
     public function process($products, $cityId, $pharmacyNumber = null, $inStock = true) {
         if ($inStock) {
             $stocks = $this->stockService->getExistingProductsInCity($products, $cityId);
-            $products   = $products->whereIn('sku', $stocks->pluck('sku'));
             $products   = $this->mapWithStocks($products, $stocks->pluck('quantity', 'sku'));
         }
 
@@ -39,7 +38,7 @@ class ProductPreprocessorHelper
     private function mapWithStocks($products, $stocks)
     {
         $products->map(function ($product) use ($stocks) {
-            $product->quantity = $stocks[$product->sku] ?? null;
+            $product->quantity = $stocks[$product->sku] ?? 0;
 
             return $product;
         });

@@ -18,7 +18,7 @@ class ProductRepository
         $query->orderBy('category_id');
         $query->orderBy('lft');
 
-        return $query->simplePaginate(30);
+        return $query->simplePaginate(40);
     }
 
     public function getBy($column, $value) {

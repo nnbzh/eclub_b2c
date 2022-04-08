@@ -98,4 +98,11 @@ class UserService
 
         return \ProductPreprocessor::process($products, $cityId, inStock:false);
     }
+
+    public function addDeviceToken(User $user, string $token)
+    {
+        $user->deviceTokens()->updateOrCreate([
+            'value' => $token
+        ]);
+    }
 }

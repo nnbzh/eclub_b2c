@@ -85,4 +85,14 @@ class UserController extends Controller
     public function orders(Request $request) {
         return OrderResource::collection($request->user->orders()->get());
     }
+
+    public function addDeviceToken(Request $request) {
+        $this->validate($request, [
+            'token' => 'required|string'
+        ]);
+        $user = $request->user();
+        $this->userService->addDeviceToken($user, $request->token);
+
+        return response()->json(['data' => null]);
+    }
 }

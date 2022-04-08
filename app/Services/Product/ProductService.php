@@ -27,10 +27,10 @@ class ProductService
         return $products;
     }
 
-    public function search(string $keyword)
+    public function search(string $keyword, int $cityId)
     {
         $products   = $this->productRepository->search($keyword);
-        $processed  = ProductPreprocessor::process($products->getCollection(), 1);
+        $processed  = ProductPreprocessor::process($products->getCollection(), $cityId);
         $products   = $products->setCollection($processed);
 
         return $products;

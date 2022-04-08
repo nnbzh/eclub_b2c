@@ -46,4 +46,10 @@ class OrderController extends Controller
 
         return response()->json(['data' => null]);
     }
+
+    public function callback(Request $request) {
+        $this->orderService->callback($request->getContent());
+
+        return response()->json(null, 201);
+    }
 }

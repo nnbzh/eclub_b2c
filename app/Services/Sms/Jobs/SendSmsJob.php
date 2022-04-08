@@ -2,7 +2,7 @@
 
 namespace App\Services\Sms\Jobs;
 
-use App\Services\Sms\Facades\Sms as SmsService;
+use App\Services\Sms\Facades\SMS as SmsFacade;
 use App\Services\Sms\Sms;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -22,6 +22,6 @@ class SendSmsJob
 
     public function handle()
     {
-        SmsService::send($this->sms);
+        SmsFacade::send($this->sms);
     }
 }
