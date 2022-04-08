@@ -18,7 +18,7 @@ class UserService
         private UserRepository $userRepository,
         private SubscriptionRepository $subscriptionRepository,
         private BankcardRepository $bankcardRepository,
-        private ImageRepository $imageRepository
+        private ImageRepository $imageRepository,
     )
     {
     }
@@ -97,12 +97,5 @@ class UserService
         $cityId     = $user->address?->city_id ?? 1;
 
         return \ProductPreprocessor::process($products, $cityId, inStock:false);
-    }
-
-    public function addDeviceToken(User $user, string $token)
-    {
-        $user->deviceTokens()->updateOrCreate([
-            'value' => $token
-        ]);
     }
 }
