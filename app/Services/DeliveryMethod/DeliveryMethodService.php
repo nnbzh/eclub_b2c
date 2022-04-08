@@ -10,7 +10,7 @@ class DeliveryMethodService
     {
     }
 
-    public function list($cityId = null, $user = null, $marketId = null) {
-        return $this->deliveryMethodRepository->list($cityId, $user, $marketId);
+    public function list($cityId = null, $user = null, $marketNumber = null) {
+        return $this->deliveryMethodRepository->list($cityId, $user, $marketNumber);
     }
 }

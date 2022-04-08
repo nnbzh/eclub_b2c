@@ -53,6 +53,6 @@ class Notification extends Model
     //SCOPES
     public function scopeFindByKey($query, string $key)
     {
-        return $query->active()->where('key', $key)->first();
+        return $query->where('key', $key)->first();
     }
 }

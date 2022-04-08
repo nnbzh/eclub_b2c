@@ -36,7 +36,7 @@ class PushNotification
     public function send() {
         match (config('services.push.connection')) {
             'sync'  => \Push::notify($this),
-            'queue' => SendPushNotificationJob::dispatch($this)->onQueue('default'),
+            'queue' => SendPushNotificationJob::dispatch($this)->onQueue('notification'),
         };
     }
 

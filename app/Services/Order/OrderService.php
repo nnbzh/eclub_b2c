@@ -93,7 +93,8 @@ class OrderService
         if (gettype($data) === 'string') {
             $data = json_decode($data, true);
         }
-
-
+        $order = $this->orderRepository->findByNumber($data['number']);
+        $order->status = $data['status'];
+        $order->saveOrFail();
     }
 }

@@ -6,7 +6,7 @@ use App\Models\DeliveryMethod;
 
 class DeliveryMethodRepository
 {
-    public function list($cityId = null, $user = null, $marketId = null) {
+    public function list($cityId = null, $user = null, $marketNumber = null) {
         $query = DeliveryMethod::query()
             ->with([
                 'cities' => fn($query) => $query->where('id', $cityId)
@@ -16,8 +16,8 @@ class DeliveryMethodRepository
                 ->where('delivery_method_city.is_active', true)
                 ->where('city_id', $cityId));
 
-        if ($marketId) {
-            $query->whereHas('markets', fn($query) => $query->where('markets.id', $marketId));
+        if ($marketNumber) {
+            $query->whereHas('markets', fn($query) => $query->where('markets.number', $marketNumber));
         }
 
         return $query
