@@ -8,16 +8,19 @@ use App\Helpers\OrderStatus;
 use App\Models\Order;
 use App\Models\Privilege;
 use App\Models\User;
+use App\Notifications\OrderNotify;
 use App\Repositories\Api\EuropharmaRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserAddressRepository;
+use App\Repositories\UserRepository;
 
 class OrderService
 {
     public function __construct(
         private OrderRepository $orderRepository,
         private UserAddressRepository $userAddressRepository,
-        private EuropharmaRepository $europharmaRepository
+        private EuropharmaRepository $europharmaRepository,
+        private UserRepository $userRepository
     )
     {
     }
@@ -68,5 +71,20 @@ class OrderService
         $order = $this->orderRepository->update($order, ['status' => OrderStatus::CANCELED]);
         $order->cancellation()->create($data);
         $this->europharmaRepository->cancelOrder($order->number, $data['cancel_message_id']);
+    }
+
+    public function sendPushOrder(mixed $phone, mixed $message, mixed $orderId)
+    {
+        $phone    = \StringFormatter::onlyDigits($phone);
+        $receiver = $this->userRepository->findByPhone($phone);
+        if ($orderId) {
+            $order = Order::whereNumber($orderId)->first() ?? null;
+            if ($order && ! $receiver) {
+                $receiver = $order->user()->first();
+            }
+        }
+        if (! $receiver) abort(404);
+
+        $receiver->notify(new OrderNotify($message, $orderId));
     }
 }

@@ -77,3 +77,5 @@ Route::group(['prefix' => 'delivery-zones'], function () {
 Route::group(['prefix' => 'admin'], function() {
     Route::get('products', 'AdminController@products');
 });
+
+Route::post('order/send/push', 'OrderController@sendPushOrder');

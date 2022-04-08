@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Mavinoo\Batch\BatchServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -179,7 +180,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         \App\Services\Sms\SmsServiceProvider::class,
         \App\Providers\SearchServiceProvider::class,
-        \App\Services\Payment\PaymentServiceProvider::class
+        \App\Services\Payment\PaymentServiceProvider::class,
+        \App\Services\Push\PushServiceProvider::class,
     ],
 
     /*
@@ -198,6 +200,7 @@ return [
         'ProductPreprocessor'   => \App\Facades\Helpers\ProductPreprocessor::class,
         'SMS'                   => \App\Services\Sms\Facades\SMS::class,
         'Batch'                 => Mavinoo\Batch\BatchFacade::class,
+        'Push'                  => \App\Services\Push\Facades\Push::class,
     ])->toArray(),
 
 ];

@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             RatingSeeder::class,
             PromotionGroupSeeder::class,
             SubscriptionSeeder::class,
+            NotificationTypeSeeder::class,
+            NotificationSeeder::class,
         ]);
     }
 }

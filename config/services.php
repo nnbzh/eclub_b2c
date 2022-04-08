@@ -39,6 +39,9 @@ return [
     'tarantool' => [
         'enabled' => env('TARANTOOL_ENABLED', true)
     ],
+    'push'      => [
+        'connection' => env('PUSH_CONNECTION', 'sync')
+    ],
     'api'       => [
         'europharma' => [
             'host'   => 'https://api.europharma.kz',

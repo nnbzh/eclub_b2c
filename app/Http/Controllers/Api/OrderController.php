@@ -8,6 +8,7 @@ use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\Order\OrderService;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -33,5 +34,16 @@ class OrderController extends Controller
         $order->load('paymentMethod', 'deliveryMethod', 'pharmacy', 'user', 'review');
 
         return new OrderResource($order);
+    }
+
+    public function sendPushOrder(Request $request) {
+        $this->validate($request, [
+            'phone'     => 'required',
+            'message'   => 'required|string',
+            'order_id'  => 'nullable'
+        ]);
+        $this->orderService->sendPushOrder($request->phone, $request->message, $request->orderId);
+
+        return response()->json(['data' => null]);
     }
 }

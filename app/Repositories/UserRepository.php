@@ -9,6 +9,10 @@ use App\Models\UserSubscription;
 
 class UserRepository
 {
+    public function findByPhone($phone) {
+        return User::wherePhone($phone)->first();
+    }
+
     public function isPhoneUsed($phone) {
         return User::query()->where('phone', $phone)->exists();
     }
