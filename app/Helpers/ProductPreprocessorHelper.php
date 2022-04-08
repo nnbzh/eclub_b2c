@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\Pharmacy;
+use App\Repositories\MarketRepository;
 use App\Services\Price\PriceService;
 use App\Services\Stock\StockService;
 
@@ -48,6 +49,14 @@ class ProductPreprocessorHelper
 
     private function mapWithPrices($products, $prices)
     {
+        $markets = (new MarketRepository)->list()->keyBy('number');
+        $prices = $prices->map(function ($productPrices) use ($markets) {
+            return $productPrices->map(function ($item) use ($markets) {
+                $item->market_name = $markets[$item->market_number]->name ?? null;
+
+                return $item;
+            });
+        });
         $products->map(function ($product) use ($prices) {
             $product->prices = $prices[$product->sku] ?? null;
 
