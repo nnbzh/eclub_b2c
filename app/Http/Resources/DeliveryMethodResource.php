@@ -11,6 +11,7 @@ class DeliveryMethodResource extends JsonResource
         return [
             'id'    => $this->id,
             'name'  => $this->name,
+            'slug'  => $this->slug,
             'cost'  => $this->costs,
         ];
     }

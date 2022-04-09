@@ -145,6 +145,7 @@ return [
         'plural'    => 'Виды доставок',
         'fields'    => [
             'name'          => 'Наименование',
+            'slug'          => 'Ключ',
             'is_active'     => 'Активный',
         ],
         'relations' => [

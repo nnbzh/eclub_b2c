@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Imageable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
@@ -39,13 +40,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DeliveryMethod extends Model
 {
-    use CrudTrait, HasTranslations;
+    use CrudTrait, HasTranslations, Imageable;
 
     public $translatable = ['name'];
 
     protected $fillable = [
         'id',
         'name',
+        'slug',
         'is_active',
         'lft',
         'rgt',
