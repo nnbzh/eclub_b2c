@@ -21,8 +21,11 @@ class ImageUploadedListener
         $destinationPath = strtolower(Str::plural(class_basename($event->model)));
 
         if (Str::startsWith($event->image ?? '', 'data:image')) {
-            $image = \Intervention\Image\ImageManagerStatic::make($event->image)->encode('jpg', 90);
-            $filename = md5($image . time()) . '.jpg';
+            $extension = Str::substr($event->image, 0, strpos($event->image, ';') + 1);
+            $extension = Str::replaceFirst('data:image/', '', $extension);
+            $extension = Str::replaceFirst(';', '', $extension);
+            $image = \Intervention\Image\ImageManagerStatic::make($event->image)->encode($extension, 90);
+            $filename = md5($image . time()) . $extension;
             Storage::disk($disk)->put('europharm2/'. $destinationPath . '/' . $filename, $image->stream());
             $publicDestinationPath = Str::replaceFirst('public/', '', $destinationPath);
             $modelImage = $event->model->image();
