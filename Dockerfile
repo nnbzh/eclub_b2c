@@ -1,2 +1,2 @@
-FROM reg.aqnietgroup.com/docker/laravel-raw-docker-image:latest
+FROM reg.daladev.kz/docker/alpine/base-laravel-image:latest
 COPY . /var/www/app
