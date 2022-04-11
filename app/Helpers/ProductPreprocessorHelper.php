@@ -53,6 +53,7 @@ class ProductPreprocessorHelper
         $prices = $prices->map(function ($productPrices) use ($markets) {
             return $productPrices->map(function ($item) use ($markets) {
                 $item->market_name = $markets[$item->market_number]->name ?? null;
+                $item->market_image = $markets[$item->market_number]->fullImgSrc ?? null;
 
                 return $item;
             });
