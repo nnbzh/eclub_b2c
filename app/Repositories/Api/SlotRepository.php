@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class SlotRepository extends ApiRepository
 {
-    protected string $key = 'slot';
+    protected $key = 'slot';
 
     public function getTodaySlotsByCityId($cityId)
     {

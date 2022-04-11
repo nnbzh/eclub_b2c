@@ -4,7 +4,7 @@ namespace App\Repositories\Api;
 
 class EclubRepository extends ApiRepository
 {
-    protected string $key = 'eclub';
+    protected $key = 'eclub';
 
     public function getDeliveryZones() {
         return $this->client->get('api/eclub/delivery-zones')->json();

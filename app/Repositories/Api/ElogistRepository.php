@@ -4,7 +4,7 @@ namespace App\Repositories\Api;
 
 class ElogistRepository extends ApiRepository
 {
-    protected string $key = 'elogist';
+    protected $key = 'elogist';
 
     public function getDelayedSlotsByCityId($cityId, $date)
     {

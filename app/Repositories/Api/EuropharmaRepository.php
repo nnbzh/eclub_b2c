@@ -4,7 +4,7 @@ namespace App\Repositories\Api;
 
 class EuropharmaRepository extends ApiRepository
 {
-    protected string $key = 'europharma';
+    protected $key = 'europharma';
 
     public function calculateDeliveryCost($cityId, $lat, $lng, $positions, $ownerId = null)
     {
