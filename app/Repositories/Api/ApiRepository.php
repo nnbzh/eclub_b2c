@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Http;
 abstract class ApiRepository
 {
     protected $client;
-    protected string|null $key;
-    protected string|null $host;
-    protected string|null $apiKey;
+    protected $key;
+    protected $host;
+    protected $apiKey;
 
     public function __construct()
     {

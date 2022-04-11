@@ -13,6 +13,7 @@ class DeliveryMethodResource extends JsonResource
             'name'  => $this->name,
             'slug'  => $this->slug,
             'cost'  => $this->costs,
+            'image' => $this->fullImgSrc
         ];
     }
 }
