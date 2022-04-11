@@ -2,8 +2,6 @@
 
 namespace App\Services\Product;
 
-use App\Facades\Helpers\Geocoder;
-use App\Facades\Helpers\ProductPreprocessor;
 use App\Repositories\PharmacyRepository;
 use App\Repositories\ProductRepository;
 
@@ -21,7 +19,7 @@ class ProductService
             'category',
             'ratings'
         ]);
-        $processed  = ProductPreprocessor::process($products->getCollection(), $filters['city_id']);
+        $processed  = \ProductPreprocessor::process($products->getCollection(), $filters['city_id']);
         $products   = $products->setCollection($processed);
 
         return $products;
@@ -30,7 +28,7 @@ class ProductService
     public function search(string $keyword, int $cityId)
     {
         $products   = $this->productRepository->search($keyword);
-        $processed  = ProductPreprocessor::process($products->getCollection(), $cityId);
+        $processed  = \ProductPreprocessor::process($products->getCollection(), $cityId);
         $products   = $products->setCollection($processed);
 
         return $products;
@@ -42,8 +40,8 @@ class ProductService
         $pharmacies = $pharmacies->whereNotNull('lat')->whereNotNull('lng');
         $products   = $this->productRepository->getBy('id', $products);
         foreach ($pharmacies as $pharmacy) {
-            $availableProducts          = ProductPreprocessor::getExistingInPharmacy($products, $pharmacy);
-            $pharmacy->distance         = Geocoder::distanceBetween($lat, $lng, $pharmacy->lat, $pharmacy->lng);
+            $availableProducts          = \ProductPreprocessor::getExistingInPharmacy($products, $pharmacy);
+            $pharmacy->distance         = \Geocoder::distanceBetween($lat, $lng, $pharmacy->lat, $pharmacy->lng);
             $pharmacy->products         = $this->mapWithAvailableProducts($products, $availableProducts);
             $pharmacy->ratio            = count($availableProducts) . "/" . count($products);
         }

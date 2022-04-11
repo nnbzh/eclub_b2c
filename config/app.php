@@ -201,6 +201,7 @@ return [
         'SMS'                   => \App\Services\Sms\Facades\SMS::class,
         'Batch'                 => Mavinoo\Batch\BatchFacade::class,
         'Push'                  => \App\Services\Push\Facades\Push::class,
+        'Geocoder'              => \App\Facades\Helpers\Geocoder::class,
     ])->toArray(),
 
 ];

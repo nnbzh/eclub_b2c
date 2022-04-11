@@ -96,6 +96,6 @@ class UserService
         $products   = $user->products()->get();
         $cityId     = $user->address?->city_id ?? 1;
 
-        return \ProductPreprocessor::process($products, $cityId, inStock:false);
+        return \ProductPreprocessor::process($products, $cityId);
     }
 }

@@ -16120,6 +16120,23 @@
         }
          
     }
+            /**
+     * 
+     *
+     */ 
+        class Geocoder {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function distanceBetween($baseLat, $baseLng, $lat, $lng)
+        {
+                        /** @var \App\Helpers\GeocoderHelper $instance */
+                        return $instance->distanceBetween($baseLat, $baseLng, $lat, $lng);
+        }
+         
+    }
      
 }
 
@@ -16273,6 +16290,27 @@
         {
                         /** @var \Mavinoo\Batch\Batch $instance */
                         return $instance->insert($table, $columns, $values, $batchSize, $insertIgnore);
+        }
+         
+    }
+     
+}
+
+    namespace App\Services\Push\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Push {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function notify($push)
+        {
+                        /** @var \App\Services\Push\PushService $instance */
+                        return $instance->notify($push);
         }
          
     }
@@ -24706,6 +24744,8 @@ namespace  {
             class ProductPreprocessor extends \App\Facades\Helpers\ProductPreprocessor {}
             class SMS extends \App\Services\Sms\Facades\SMS {}
             class Batch extends \Mavinoo\Batch\BatchFacade {}
+            class Push extends \App\Services\Push\Facades\Push {}
+            class Geocoder extends \App\Facades\Helpers\Geocoder {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}
