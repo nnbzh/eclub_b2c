@@ -18,9 +18,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new UpdateStockJob())->everyThreeMinutes();
-        $schedule->job(new UpdatePriceJob())->everyTenMinutes();
-        $schedule->job(new UpdatePharmacyStockJob())->everyTenMinutes();
+        $schedule->command('parse:store')->dailyAt('06:30');
+        $schedule->command('parse:cities')->dailyAt('06:30');
+        $schedule->command('parse:categories')->dailyAt('06:30');
+        $schedule->command('parse:products')->dailyAt('06:30');
+        $schedule->command('parse:pharmacies')->dailyAt('06:30');
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
+        $schedule->job(new UpdateStockJob)->everyThreeMinutes();
+        $schedule->job(new UpdatePriceJob)->everyTenMinutes();
+        $schedule->job(new UpdatePharmacyStockJob)->everyTenMinutes();
     }
 
     /**
