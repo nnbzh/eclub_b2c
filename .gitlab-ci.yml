@@ -1,0 +1,4 @@
+include:
+  - project: 'docker/gitlab-templates-new'
+    ref: master
+    file: '.simple-ci-template-for-php.yml'
