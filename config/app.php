@@ -168,7 +168,6 @@ return [
          * Package Service Providers...
          */
         Mavinoo\Batch\BatchServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Application Service Providers...
          */
