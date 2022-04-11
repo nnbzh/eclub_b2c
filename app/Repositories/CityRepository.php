@@ -7,6 +7,10 @@ use App\Models\City;
 
 class CityRepository
 {
+    public function findById($id) {
+        return City::query()->findOrFail($id);
+    }
+
     public function list($filters = [], $relations = []) {
         $query = City::query()
             ->with($relations)

@@ -28,6 +28,7 @@ class StoreOrderRequest extends FormRequest
             'fields_json.slot_id'   => 'nullable|int',
             'fields_json.slot_time' => 'nullable|string',
             'fields_json.fast_delivery_pharmacy' => 'nullable|string',
+            'fields_json.delivery_amount_id' => 'nullable|int',
         ];
     }
 }

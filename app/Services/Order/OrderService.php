@@ -10,6 +10,7 @@ use App\Models\Privilege;
 use App\Models\User;
 use App\Notifications\OrderNotify;
 use App\Repositories\Api\EuropharmaRepository;
+use App\Repositories\CityRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserAddressRepository;
 use App\Repositories\UserRepository;
@@ -20,7 +21,8 @@ class OrderService
         private OrderRepository $orderRepository,
         private UserAddressRepository $userAddressRepository,
         private EuropharmaRepository $europharmaRepository,
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private CityRepository $cityRepository
     )
     {
     }
@@ -107,5 +109,31 @@ class OrderService
         if (! empty($courier)) {
             $order->courier()->updateOrCreate(['order_id' => $order->id], $courier);
         }
+    }
+
+    public function calculateDeliveryCost(array $data)
+    {
+        $city = $this->cityRepository->findById($data['city_id']);
+
+        if ($city->has_delivery_calculator) {
+            $response = $this->europharmaRepository->calculateDeliveryCost(
+                $city->id,
+                $data['lat'],
+                $data['lng'],
+                $data['positions'],
+                $data['owner_id']
+            );
+            $deliveryAmount = [
+                'delivery_amount_id'    => $response['id'] ?? null,
+                'delivery_cost'         => $response['result']['total']['amount'] ?? 990
+            ];
+        } else {
+            $deliveryAmount = [
+                'delivery_amount_id'    => null,
+                'delivery_cost'         => 990
+            ];
+        }
+
+        return $deliveryAmount;
     }
 }

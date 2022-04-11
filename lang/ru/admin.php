@@ -60,6 +60,7 @@ return [
             'is_active' => 'Активный',
             'has_delivery' => 'Есть доставка',
             'has_fast_delivery' => 'Есть быстрая доставка',
+            'has_delivery_calculator' => 'Расчет стоимости доставки через API',
         ],
     ],
     'story' => [

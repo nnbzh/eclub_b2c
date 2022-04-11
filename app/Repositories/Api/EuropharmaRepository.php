@@ -6,7 +6,7 @@ class EuropharmaRepository extends ApiRepository
 {
     protected string $key = 'europharma';
 
-    public function calculateDeliveryCost($lat, $lng, $positions, $cityId, $ownerId = null)
+    public function calculateDeliveryCost($cityId, $lat, $lng, $positions, $ownerId = null)
     {
         return $this->client->post('app/delivery-amount', [
             'lat'       => $lat,

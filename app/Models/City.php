@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $is_active
  * @property int $has_delivery
  * @property int $has_fast_delivery
+ * @property int $has_delivery_calculator
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DeliveryZone[] $deliveryZones
  * @property-read int|null $delivery_zones_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pharmacy[] $pharmacies
@@ -55,6 +56,7 @@ class City extends Model
         'is_active',
         'has_delivery',
         'has_fast_delivery',
+        'has_delivery_calculator',
     ];
 
     public function deliveryZones() {

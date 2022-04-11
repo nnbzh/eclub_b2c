@@ -39,6 +39,7 @@ Route::group(['middleware = auth:api'], function() {
     });
     Route::group(['prefix' => 'orders'], function() {
         Route::post('', 'OrderController@store');
+        Route::post('delivery-amount', 'OrderController@calculateDeliveryCost');
         Route::post('callback', 'OrderController@callback');
         Route::post('{order}', 'OrderController@cancel')->whereNumber('order');
         Route::post('{order}/reviews', 'OrderReviewController@store')->whereNumber('order');

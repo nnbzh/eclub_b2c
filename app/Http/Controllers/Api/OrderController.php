@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\CalculateDeliveryCostRequest;
 use App\Http\Requests\Order\CancelOrderRequest;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
@@ -45,6 +46,13 @@ class OrderController extends Controller
         $this->orderService->sendPushOrder($request->phone, $request->message, $request->orderId);
 
         return response()->json(['data' => null]);
+    }
+
+    public function calculateDeliveryCost(CalculateDeliveryCostRequest $request) {
+        $data = $request->validated();
+        $response = $this->orderService->calculateDeliveryCost($data);
+
+        return response()->json(['data' => $response]);
     }
 
     public function callback(Request $request) {
