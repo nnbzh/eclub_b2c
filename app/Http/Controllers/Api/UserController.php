@@ -8,7 +8,7 @@ use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\SubscribeRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UploadImageRequest;
-use App\Http\Resources\NotificationResource;
+use App\Http\Resources\SentNotificationResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserResource;
@@ -97,6 +97,6 @@ class UserController extends Controller
         $user           = $request->user();
         $notifications  = $this->userService->getUserNotifications($user, $slug);
 
-        return NotificationResource::collection($notifications);
+        return SentNotificationResource::collection($notifications);
     }
 }

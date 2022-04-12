@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NotificationResource extends JsonResource
+class SentNotificationResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -13,7 +13,8 @@ class NotificationResource extends JsonResource
             'token_id'  => $this->token_id,
             'subject'   => $this->fields_json->subject ?? $this->pushable->subject,
             'text'      => $this->fields_json->text ?? $this->pushable->text,
-            'image'     => $this->pushable->fullImgSrc ?? null
+            'image'     => $this->pushable->fullImgSrc ?? null,
+            'created_at'=> $this->created_at->format('d.m.Y в H:m'),
         ];
     }
 }
