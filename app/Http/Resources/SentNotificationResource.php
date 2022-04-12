@@ -14,7 +14,7 @@ class SentNotificationResource extends JsonResource
             'subject'   => $this->fields_json->subject ?? $this->pushable->subject,
             'text'      => $this->fields_json->text ?? $this->pushable->text,
             'image'     => $this->pushable->fullImgSrc ?? null,
-            'created_at'=> $this->created_at->format('d.m.Y в H:m'),
+            'created_at'=> $this->created_at->format('d.m.Y в H:m') ?? null,
         ];
     }
 }
