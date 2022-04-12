@@ -84,7 +84,10 @@ class UserController extends Controller
     }
 
     public function orders(Request $request) {
-        return OrderResource::collection($request->user->orders()->get());
+        $user = $request->user();
+        $orders = $this->userService->getUserOrders($user);;
+
+        return OrderResource::collection($orders);
     }
 
     public function unreadNotificationsCount(Request $request) {

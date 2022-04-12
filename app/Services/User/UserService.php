@@ -103,4 +103,9 @@ class UserService
     {
         return $this->userRepository->getNotifications($user, $slug);
     }
+
+    public function getUserOrders(User $user)
+    {
+        return $this->userRepository->getOrders($user);
+    }
 }

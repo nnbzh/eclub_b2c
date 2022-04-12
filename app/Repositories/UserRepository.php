@@ -44,4 +44,12 @@ class UserRepository
             ->orderBy("created_at", "desc")
             ->simplePaginate(15);
     }
+
+    public function getOrders(User $user)
+    {
+        return $user
+            ->orders()
+            ->with('paymentMethod', 'deliveryMethod', 'pharmacy', 'user', 'review')
+            ->get();
+    }
 }
