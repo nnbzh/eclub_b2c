@@ -32,7 +32,7 @@ Route::group(['middleware = auth:api'], function() {
         Route::post('subscription', 'UserController@subscribe');
         Route::post('image', 'UserController@uploadImage');
         Route::get('notifications/{slug}', 'UserController@notifications');
-        Route::get('notifications/unread_count', 'UserController@unreadNotificationsCount');
+        Route::get('notifications/unread/count', 'UserController@unreadNotificationsCount');
         Route::group(['prefix' => 'bankcards'], function () {
             Route::post('', 'BankcardController@store');
             Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');

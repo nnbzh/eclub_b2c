@@ -90,7 +90,7 @@ class UserController extends Controller
     public function unreadNotificationsCount(Request $request) {
         $user = $request->user();
 
-        return response()->json(['data' => $user?->unreadNotificationsCount ?? 0]);
+        return response()->json(['data' => ['count' => $user?->unreadNotificationsCount ?? 0]]);
     }
 
     public function notifications(Request $request, $slug) {
