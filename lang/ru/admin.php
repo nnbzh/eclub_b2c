@@ -168,4 +168,12 @@ return [
         'fields'    => [
         ],
     ],
+    'notification_type' => [
+        'singular'  => 'Тип уведомления',
+        'plural'    => 'Типы уведомлений',
+        'fields'    => [
+            'name'          => 'Наименование',
+            'slug'          => 'Ключ',
+        ],
+    ],
 ];

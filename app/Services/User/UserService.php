@@ -98,4 +98,9 @@ class UserService
 
         return \ProductPreprocessor::process($products, $cityId);
     }
+
+    public function getUserNotifications(User $user, $slug)
+    {
+        return $this->userRepository->getNotifications($user, $slug);
+    }
 }

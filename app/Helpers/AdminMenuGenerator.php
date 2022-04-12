@@ -81,6 +81,11 @@ class AdminMenuGenerator
                 'icon' => 'la la-promotion',
                 'label' => trans('admin.product_promotion_group.plural'),
             ],
+            [
+                'route' => backpack_url('notification_type'),
+                'icon' => 'la la-promotion',
+                'label' => trans('admin.notification_type.plural'),
+            ],
         ];
     }
 }

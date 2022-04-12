@@ -53,4 +53,8 @@ class NotificationType extends Model
         'parent_id',
         'depth'
     ];
+
+    public function sentPushNotifications() {
+        return $this->hasMany(SentPushNotification::class);
+    }
 }

@@ -201,6 +201,10 @@ class User extends Authenticatable
         return $this->addresses()->where('is_active', true)->first();
     }
 
+    public function getUnreadNotificationsCountAttribute() {
+        return $this->unreadSentPushNotifications()->count();
+    }
+
     //FUNCTIONS
     public function findForPassport($value) {
         $value = \StringFormatter::onlyDigits($value);

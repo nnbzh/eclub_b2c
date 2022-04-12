@@ -31,6 +31,8 @@ Route::group(['middleware = auth:api'], function() {
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');
         Route::post('image', 'UserController@uploadImage');
+        Route::get('notifications/{slug}', 'UserController@notifications');
+        Route::get('notifications/unread_count', 'UserController@unreadNotificationsCount');
         Route::group(['prefix' => 'bankcards'], function () {
             Route::post('', 'BankcardController@store');
             Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');
@@ -41,7 +43,8 @@ Route::group(['middleware = auth:api'], function() {
         Route::post('', 'OrderController@store');
         Route::post('delivery-amount', 'OrderController@calculateDeliveryCost');
         Route::post('callback', 'OrderController@callback');
-        Route::post('{order}', 'OrderController@cancel')->whereNumber('order');
+        Route::get('{order}', 'OrderController@show')->whereNumber('order');
+        Route::post('{order}/cancel', 'OrderController@cancel')->whereNumber('order');
         Route::post('{order}/reviews', 'OrderReviewController@store')->whereNumber('order');
     });
 });
@@ -73,6 +76,8 @@ Route::get('slots/tomorrow', 'SlotController@tomorrow');
 
 Route::post('device-tokens', 'DeviceTokenController@store');
 Route::delete('device-tokens', 'DeviceTokenController@destroy');
+
+Route::get('notifications', 'NotificationTypeController@index');
 
 Route::group(['prefix' => 'delivery-zones'], function () {
     Route::group(['prefix' => 'fast'], function () {

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 
+use App\Helpers\NotificationStatus;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Models\UserSubscription;
@@ -33,5 +34,14 @@ class UserRepository
             'price'             => is_null($newPrice) ? $subscription->price : $newPrice
         ])
             ->load('subscription');
+    }
+
+    public function getNotifications(User $user, $slug)
+    {
+        return $user->sentPushNotifications()
+            ->whereHas('notificationType', fn($query) => $query->where('slug', $slug))
+            ->orderByRaw("CASE WHEN sent_push_notifications.status='".NotificationStatus::UNREAD."'THEN 1 ELSE 2 END ASC")
+            ->orderBy("created_at", "desc")
+            ->simplePaginate(15);
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\SubscribeRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UploadImageRequest;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserResource;
@@ -86,5 +87,16 @@ class UserController extends Controller
         return OrderResource::collection($request->user->orders()->get());
     }
 
+    public function unreadNotificationsCount(Request $request) {
+        $user = $request->user();
 
+        return response()->json(['data' => $user?->unreadNotificationsCount ?? 0]);
+    }
+
+    public function notifications(Request $request, $slug) {
+        $user           = $request->user();
+        $notifications  = $this->userService->getUserNotifications($user, $slug);
+
+        return NotificationResource::collection($notifications);
+    }
 }
