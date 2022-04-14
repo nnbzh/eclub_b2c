@@ -27,6 +27,9 @@ Route::group(['middleware = auth:api'], function() {
         Route::put('', 'UserController@update');
         Route::post('password', 'UserController@setPassword');
         Route::get('orders', 'UserController@orders');
+        Route::get('orders/active', 'UserController@activeOrders');
+        Route::get('orders/delivered', 'UserController@deliveredOrders');
+        Route::get('orders/pickups', 'UserController@pickupOrders');
         Route::get('products', 'UserController@products');
         Route::put('addresses/{address}/activate', 'UserAddressController@activate');
         Route::post('subscription', 'UserController@subscribe');

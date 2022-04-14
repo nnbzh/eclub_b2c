@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 
+use App\Filters\OrderFilter;
 use App\Helpers\NotificationStatus;
 use App\Models\Subscription;
 use App\Models\User;
@@ -45,11 +46,17 @@ class UserRepository
             ->simplePaginate(15);
     }
 
-    public function getOrders(User $user)
+    public function getOrders(User $user, $filters = [], $relations = [])
     {
-        return $user
-            ->orders()
-            ->with('paymentMethod', 'deliveryMethod', 'pharmacy', 'user', 'review')
+        $query = $user->orders();
+
+        if (! empty($filters)) {
+            $query->applyFilters(new OrderFilter, $filters);
+        }
+
+        return $query
+            ->with($relations)
+            ->orderBy('created_at', 'desc')
             ->get();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PhoneNumberRequest;
 use App\Http\Requests\SetPasswordRequest;
@@ -85,7 +86,45 @@ class UserController extends Controller
 
     public function orders(Request $request) {
         $user = $request->user();
-        $orders = $this->userService->getUserOrders($user);;
+        $orders = $this->userService->getUserOrders($user);
+
+        return OrderResource::collection($orders);
+    }
+
+    public function activeOrders(Request $request) {
+        $user       = $request->user();
+        $filters    = [
+            'status' => [
+                OrderStatus::PROCESSING,
+                OrderStatus::COURIER_TAKE,
+                OrderStatus::COURIER_QUEUE
+            ]
+        ];
+        $orders = $this->userService->getUserOrders($user, $filters);
+
+        return OrderResource::collection($orders);
+    }
+
+    public function deliveredOrders(Request $request) {
+        $user = $request->user();
+        $filters    = [
+            'status' => [
+                OrderStatus::COURIER_DELIVERED,
+            ]
+        ];
+        $orders = $this->userService->getUserOrders($user, $filters);
+
+        return OrderResource::collection($orders);
+    }
+
+    public function pickupOrders(Request $request) {
+        $user = $request->user();
+        $filters    = [
+            'status' => [
+                OrderStatus::PICKUP, OrderStatus::PICKUP_ISSUED
+            ]
+        ];
+        $orders = $this->userService->getUserOrders($user, $filters);
 
         return OrderResource::collection($orders);
     }

@@ -104,8 +104,10 @@ class UserService
         return $this->userRepository->getNotifications($user, $slug);
     }
 
-    public function getUserOrders(User $user)
+    public function getUserOrders(User $user, $filters = [])
     {
-        return $this->userRepository->getOrders($user);
+        return $this->userRepository->getOrders($user, $filters, [
+            'paymentMethod', 'deliveryMethod', 'pharmacy', 'user', 'review'
+        ]);
     }
 }
