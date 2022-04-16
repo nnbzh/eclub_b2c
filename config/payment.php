@@ -11,4 +11,8 @@ return [
             'private'   => 'd8d1173df0c9819acefd01927f2a882a',
         ]
     ],
+    'one_vision'    => [
+        'secret' => '',
+        'apiKey' => ''
+    ]
 ];
