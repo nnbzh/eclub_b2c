@@ -37,7 +37,7 @@ Route::group(['middleware = auth:api'], function() {
         Route::get('notifications/{slug}', 'UserController@notifications');
         Route::get('notifications/unread/count', 'UserController@unreadNotificationsCount');
         Route::group(['prefix' => 'bankcards'], function () {
-            Route::post('', 'BankcardController@store');
+            Route::get('url', 'BankcardController@getUrlForAddition');
             Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');
         });
         Route::apiResource('addresses', 'UserAddressController')->shallow();

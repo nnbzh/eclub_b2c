@@ -11,7 +11,7 @@ class PaymentService
 {
     public function pay($amount, IBillable $billable, $provider, array $params, City $city = null) {
         $paymentService = match ($provider) {
-            'paybox' => Paybox::class,
+            'paybox'     => Paybox::class,
             'one_vision' => OneVision::class,
         };
         $response = $paymentService::pay($amount, $billable, $params, $city);
