@@ -42,6 +42,7 @@ class Block extends Model
     protected $fillable = [
         'title',
         'component_name',
+        'instance_id',
         'parent_id',
         'lft',
         'rgt',

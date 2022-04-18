@@ -46,6 +46,7 @@ return [
         'fields'    => [
             'title'             => 'Наименование блока',
             'component_name'    => 'Наименование компонента',
+            'instance_id'       => 'ID элемента',
         ],
     ],
     'city' => [
