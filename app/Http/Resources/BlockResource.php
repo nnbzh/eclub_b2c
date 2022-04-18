@@ -12,6 +12,7 @@ class BlockResource extends JsonResource
             'id'        => $this->id,
             'title'     => $this->title,
             'component_name' => $this->component_name,
+            'instance_id' => $this->instance_id,
         ];
     }
 }
