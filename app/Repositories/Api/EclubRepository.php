@@ -23,4 +23,12 @@ class EclubRepository extends ApiRepository
             'skus' => $skus
         ])->json();
     }
+
+    public function compselections() {
+        return $this->client->get('api/eclub/compselections')->json();
+    }
+
+    public function categories($id) {
+        return $this->client->get("api/eclub/compilations/{$id}/categories")->json();
+    }
 }

@@ -51,6 +51,7 @@ class Category extends Model
     public $translatable = ['name'];
 
     protected $fillable = [
+        'id',
         'name',
         'is_active',
         'lft',
