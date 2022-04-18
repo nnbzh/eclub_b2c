@@ -157,10 +157,14 @@ abstract class BaseCrudController extends CrudController
 
         if (is_array($modelAttributes)) {
             foreach (array_keys($modelAttributes) as $attribute) {
-                $this->crud->addField([
+                $field = [
                     'name'  => $attribute,
                     'label' => $modelAttributes[$attribute]
-                ]);
+                ];
+                if ($attribute == 'id') {
+                    $field['attributes']['readonly'] = 'readonly';
+                }
+                $this->crud->addField($field);
             }
         }
 

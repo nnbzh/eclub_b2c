@@ -38,9 +38,11 @@ class ParseEclubCategoriesCommand extends Command
                         ]
                     );
                     if (! $new->image()->exists()) {
-                        $new->image()->create([
-                            'src' => 'img_v2'
-                        ]);
+                        if (isset($compilation['img_v2'])) {
+                            $new->image()->create([
+                                'src' => $compilation['img_v2']
+                            ]);
+                        }
                     }
                     $remoteCats = $this->eclubRepository->categories($compilation['id'])['data'] ?? [];
                     $localCats = Category::query()->whereIn('id', array_column($remoteCats, 'id'))->get();
