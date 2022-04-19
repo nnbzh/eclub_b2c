@@ -35,12 +35,10 @@ class OneVisionRepository
         $params['expiration']   = now()->addHour()->toDateTimeString();
         $params['ip']           = request()->ip();
         [$data, $sign]          = $this->createSignature($params);
-        dd($data, $sign);
         $response = $this->client->post($url, [
             'data' => $data,
             'sign' => $sign
         ]);
-        dd($response->json());
         $response = simplexml_load_string($response->body(), 'SimpleXMLElement', LIBXML_NOCDATA);
         $response = json_decode(json_encode($response));
 
