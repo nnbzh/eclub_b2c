@@ -11,6 +11,6 @@ class CategoryService
     }
 
     public function list($type = '') {
-        return $type == 'all' ? $this->categoryRepository->all() : $this->categoryRepository->forMainPage();
+        return $this->categoryRepository->all();
     }
 }
