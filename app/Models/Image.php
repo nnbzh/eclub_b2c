@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $imageable_type
  * @property int|null $imageable_id
  * @property array|null $src
+ * @property array|null $src_second
  * @property string|null $lang
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -40,14 +41,15 @@ class Image extends Model
         'imageable_id',
         'imageable_type',
         'lang',
-        'src'
+        'src',
+        'src_second'
     ];
 
     public function imageable() {
         return $this->morphTo();
     }
 
-    public function getFullImgSrcAttribute() {
+    public function getFirstImgSrcAttribute() {
         if (is_null($this->src)) {
             return null;
         }
@@ -57,5 +59,17 @@ class Image extends Model
         }
 
         return config('filesystems.disks.s3.endpoint')."/europharm2$this->src";
+    }
+
+    public function getSecondImgSrcAttribute() {
+        if (is_null($this->src_second)) {
+            return null;
+        }
+
+        if (filter_var($this->src_second, FILTER_VALIDATE_URL)) {
+            return $this->src_second;
+        }
+
+        return config('filesystems.disks.s3.endpoint')."/europharm2$this->src_second";
     }
 }

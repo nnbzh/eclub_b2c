@@ -13,7 +13,7 @@ class NotificationTypeResource extends JsonResource
             'name'  => $this->name,
             'slug'  => $this->slug,
             'unread_count'  => $this->sent_push_notifications_count ?? null,
-            'image' => $this->fullImgSrc
+            'image' => $this->firstImgSrc
         ];
     }
 }

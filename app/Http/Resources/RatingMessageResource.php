@@ -11,7 +11,7 @@ class RatingMessageResource extends JsonResource
         return [
             'id'        => $this->id,
             'message'   => $this->message,
-            'image'     => $this->fullImgSrc,
+            'image'     => $this->firstImgSrc,
         ];
     }
 }

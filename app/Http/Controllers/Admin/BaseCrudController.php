@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\ImageUploadedEvent;
 use App\Traits\Imageable;
+use App\Traits\ImageableWithTwo;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -33,7 +34,7 @@ abstract class BaseCrudController extends CrudController
     protected $modelNameLower;
     protected bool $showTimestamps = false;
     protected bool $hasReorderOperation = false;
-    protected bool $hasImage = false;
+    protected int $hasImage = 0;
 
     public function setup()
     {
@@ -81,10 +82,21 @@ abstract class BaseCrudController extends CrudController
             }
         }
 
-        if ($this->hasImage) {
+        if ($this->hasImage == 1 || $this->hasImage == 2) {
             $this->crud->addColumn([
                 'name' => 'imgSrc',
                 'label' => trans('admin.image.singular'),
+                'type' => 'image',
+                'disk' => 's3',
+                'width' => '150px',
+                'height' => '150px',
+            ]);
+        }
+
+        if ($this->hasImage == 2) {
+            $this->crud->addColumn([
+                'name' => 'imgSrcSecond',
+                'label' => trans('admin.image.singular'). ' V2',
                 'type' => 'image',
                 'disk' => 's3',
                 'width' => '150px',
@@ -95,14 +107,16 @@ abstract class BaseCrudController extends CrudController
 
     public function store()
     {
-        if (! $this->hasImage) {
+        if ($this->hasImage == 0) {
             return $this->parentStore();
         }
 
         $this->crud->hasAccessOrFail('create');
         $request = $this->crud->validateRequest();
         $image   = $request->get('img_src');
+        $imageSecond = $request->get('img_src_second');
         $request->request->remove('img_src');
+        $request->request->remove('img_src_second');
         $this->crud->registerFieldEvents();
         $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
         $this->data['entry'] = $this->crud->entry = $item;
@@ -111,6 +125,10 @@ abstract class BaseCrudController extends CrudController
 
         if ($image) {
             event(new ImageUploadedEvent($item, $image));
+        }
+
+        if ($imageSecond) {
+            event(new ImageUploadedEvent($item, $imageSecond, true));
         }
 
         return $this->crud->performSaveAction($item->getKey());
@@ -125,7 +143,9 @@ abstract class BaseCrudController extends CrudController
         $this->crud->hasAccessOrFail('update');
         $request = $this->crud->validateRequest();
         $image   = $request->get('img_src');
+        $imageSecond = $request->get('img_src_second');
         $request->request->remove('img_src');
+        $request->request->remove('img_src_second');
         $this->crud->registerFieldEvents();
         $item = $this->crud->update(
             $request->get($this->crud->model->getKeyName()),
@@ -135,7 +155,11 @@ abstract class BaseCrudController extends CrudController
         \Alert::success(trans('backpack::crud.update_success'))->flash();
         $this->crud->setSaveAction();
 
-        event(new ImageUploadedEvent($item, $image, $request->get('_locale') ?? 'ru'));
+        event(new ImageUploadedEvent($item, $image, locale: $request->get('_locale') ?? 'ru'));
+
+        if ($imageSecond) {
+            event(new ImageUploadedEvent($item, $imageSecond, true, $request->get('_locale') ?? 'ru'));
+        }
 
         return $this->crud->performSaveAction($item->getKey());
     }
@@ -180,10 +204,21 @@ abstract class BaseCrudController extends CrudController
             }
         }
 
-        if ($this->hasImage) {
+        if ($this->hasImage == 1 || $this->hasImage == 2) {
             $this->crud->addField([
                 'name' => 'img_src',
                 'label' => trans('admin.image.singular'),
+                'type' => 'image',
+                'disk' => 's3',
+                'width' => '150px',
+                'height' => '150px',
+            ]);
+        }
+
+        if ($this->hasImage == 2) {
+            $this->crud->addField([
+                'name' => 'img_src_second',
+                'label' => trans('admin.image.singular'). ' V2',
                 'type' => 'image',
                 'disk' => 's3',
                 'width' => '150px',
@@ -234,6 +269,10 @@ abstract class BaseCrudController extends CrudController
     }
 
     private function setHasImage($model) {
-        $this->hasImage = in_array(Imageable::class, class_uses($model::class));
+        if (in_array(ImageableWithTwo::class, class_uses($model::class))) {
+            $this->hasImage = 2;
+        } else if (in_array(Imageable::class, class_uses($model::class))) {
+            $this->hasImage = 1;
+        }
     }
 }

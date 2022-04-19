@@ -12,7 +12,7 @@ class MarketResource extends JsonResource
             'id'        => $this->id,
             'name'      => $this->name,
             'number'    => $this->number,
-            'image'     => $this->fullImgSrc
+            'image'     => $this->firstImgSrc
         ];
     }
 }

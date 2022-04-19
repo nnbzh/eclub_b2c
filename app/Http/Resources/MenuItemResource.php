@@ -11,7 +11,7 @@ class MenuItemResource extends JsonResource
         return [
             'id'    => $this->id,
             'name'  => $this->name,
-            'image' => $this->fullImgSrc,
+            'image' => $this->firstImgSrc,
             'component' => $this->component
         ];
     }

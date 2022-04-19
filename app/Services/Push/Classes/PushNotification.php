@@ -28,7 +28,7 @@ class PushNotification
             'extra' => [
                 'badge' => $this->receiver?->unreadSentPushNotifications()->count(),
                 'type'  => $this->pushable?->notifcationType->slug ?? null,
-                'image' => $this->pushable?->fullImgSrc
+                'image' => $this->pushable?->firstImgSrc
             ]
         ];
     }

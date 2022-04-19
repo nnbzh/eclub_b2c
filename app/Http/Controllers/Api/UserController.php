@@ -57,7 +57,7 @@ class UserController extends Controller
         $this->userService->uploadImage($user, $request->file('image'));
 
         return response()->json(['data' => [
-            'src' => $user->fullImgSrc
+            'src' => $user->firstImgSrc
         ]]);
     }
 
