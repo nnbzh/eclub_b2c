@@ -12,7 +12,7 @@ return [
         ]
     ],
     'one_vision'    => [
-        'secret' => '',
-        'apiKey' => ''
+        'secret' => env('ONE_VISION_SECRET'),
+        'apiKey' => env('ONE_VISION_KEY')
     ]
 ];

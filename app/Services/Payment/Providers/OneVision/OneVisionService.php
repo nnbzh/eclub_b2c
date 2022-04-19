@@ -4,6 +4,7 @@ namespace App\Services\Payment\Providers\OneVision;
 
 use App\Models\City;
 use App\Models\Interfaces\IBillable;
+use App\Models\User;
 use App\Services\Payment\Contracts\PaymentProviderContract;
 
 class OneVisionService implements PaymentProviderContract
@@ -22,7 +23,7 @@ class OneVisionService implements PaymentProviderContract
         // TODO: Implement revoke() method.
     }
 
-    public function getUrlForCardAddition() {
-        return $this->oneVisionRepository->getUrlForCardAddition(1);
+    public function getUrlForCardAddition(User $user) {
+        return $this->oneVisionRepository->getUrlForCardAddition($user->id);
     }
 }

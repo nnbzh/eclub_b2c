@@ -9,7 +9,8 @@ use App\Services\Payment\Providers\OneVision\Facades\OneVision;
 class BankcardController extends Controller
 {
     public function getUrlForAddition(StoreBankcardRequest $request) {
-        $url = OneVision::getUrlForCardAddition($request->user());
+        $user = $request->user();
+        $url = OneVision::getUrlForCardAddition($user);
 
         return response()->json(['data' => ['url' => $url]]);
     }

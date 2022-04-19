@@ -21,7 +21,7 @@ class OneVisionRepository
     public function getUrlForCardAddition(int $userId) {
         $params = [
             'reference'     => "$userId",
-            'amount'        => rand(10, 20),
+            'amount'        => 1000,
             'currency'      => 'KZT',
             'description'   => 'Add card for user'
         ];
@@ -35,10 +35,11 @@ class OneVisionRepository
         $params['expiration']   = now()->addHour()->toDateTimeString();
         $params['ip']           = request()->ip();
         [$data, $sign]          = $this->createSignature($params);
+        dd($data, $sign);
         $response = $this->client->post($url, [
             'data' => $data,
             'sign' => $sign
-        ]);;
+        ]);
         dd($response->json());
         $response = simplexml_load_string($response->body(), 'SimpleXMLElement', LIBXML_NOCDATA);
         $response = json_decode(json_encode($response));
