@@ -135,7 +135,7 @@ abstract class BaseCrudController extends CrudController
         \Alert::success(trans('backpack::crud.update_success'))->flash();
         $this->crud->setSaveAction();
 
-        event(new ImageUploadedEvent($item, $image, $request->get('_locale')));
+        event(new ImageUploadedEvent($item, $image, $request->get('_locale') ?? 'ru'));
 
         return $this->crud->performSaveAction($item->getKey());
     }

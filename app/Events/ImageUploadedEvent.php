@@ -13,7 +13,7 @@ class ImageUploadedEvent
      *
      * @return void
      */
-    public function __construct(public $model, public $image, public $locale = null)
+    public function __construct(public $model, public $image, public $locale = 'ru')
     {
         //
     }
