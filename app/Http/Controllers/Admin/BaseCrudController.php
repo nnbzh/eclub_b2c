@@ -55,7 +55,7 @@ abstract class BaseCrudController extends CrudController
     protected function setupReorderOperation($field = 'name')
     {
         $this->crud->set('reorder.label', $field);
-        $this->crud->set('reorder.max_level', 3);
+        $this->crud->set('reorder.max_level', 10);
     }
 
     protected function setupListOperation() {
