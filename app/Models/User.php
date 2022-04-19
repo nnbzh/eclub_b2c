@@ -168,7 +168,7 @@ class User extends Authenticatable
             ->orderByPivot('expires_at', 'desc')
             ->first();
 
-        if (! $sub->isActive()) {
+        if (is_null($sub) || ! $sub->isActive()) {
             return null;
         }
 
