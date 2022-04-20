@@ -15,14 +15,15 @@ class ParseProductDescriptionsCommand extends Command
 
     public function handle()
     {
-        $iteration = 0;
+        $iteration  = 0;
+        $start      = microtime(true);
         try {
             DB::connection('shop')
                 ->table('product_description')
                 ->whereNotNull('description')
                 ->where('description', '<>', '')
                 ->orderBy('product_id')
-                ->chunk(100, function ($descriptions) {
+                ->chunk(100, function ($descriptions) use (&$iteration) {
                     $descriptions = $descriptions->groupBy('product_id');
                     $productDescriptions = ProductDescription::query()
                         ->whereIn('product_id', $descriptions->keys())
@@ -63,9 +64,12 @@ class ParseProductDescriptionsCommand extends Command
                     if ($descrsToUpdate->isNotEmpty()) {
                         \Batch::update($helperDescr, $descrsToUpdate->toArray(), 'product_id');
                     }
-
+                    $this->info("This is $iteration iteration");
+                    $iteration++;
                 })
             ;
+            $end = microtime(true);
+            $this->info("Spent: ". ($end - $start)/60);
             $this->info("Successfully parsed descriptions");
             Log::info("Successfully parsed descriptions");
         } catch (\Exception $e) {
