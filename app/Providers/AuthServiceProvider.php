@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Helpers\RolePermission;
 use App\Http\Grants\PhoneGrant;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\UserRepository;
@@ -40,6 +42,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole(RolePermission::ROLE_SUPER_ADMIN) ? true : null;
+        });
     }
 
     private function makeGrant(): PhoneGrant

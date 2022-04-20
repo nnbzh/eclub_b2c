@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             SubscriptionSeeder::class,
             NotificationTypeSeeder::class,
             NotificationSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }
