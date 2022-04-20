@@ -119,6 +119,14 @@ return [
             'brand'     => 'Бренд',
         ],
     ],
+    'product_description' => [
+        'singular'  => 'Описание продукта',
+        'plural'    => 'Описание продуктов',
+        'fields'    => [
+            'description'   => 'Описание',
+            'video_url'     => 'Видео'
+        ],
+    ],
     'pharmacy' => [
         'singular'  => 'Аптека',
         'plural'    => 'Аптеки',

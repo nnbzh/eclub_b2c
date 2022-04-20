@@ -144,4 +144,8 @@ class Product extends Model
     public function getAverageRatingAttribute() {
         return round($this->ratings()->avg('rating'), 2);
     }
+
+    public function getProductDescriptionAttribute() {
+        return $this->description()->first()?->description;
+    }
 }

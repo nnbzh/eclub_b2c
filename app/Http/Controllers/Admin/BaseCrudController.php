@@ -166,11 +166,11 @@ abstract class BaseCrudController extends CrudController
 
     public function edit($id)
     {
+        app()->setLocale(request('_locale', 'ru'));
+
         if (! $this->hasImage) {
             return $this->parentEdit($id);
         }
-
-        app()->setLocale(request('_locale', 'ru'));
 
         return $this->parentEdit($id);
     }
