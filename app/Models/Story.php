@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Imageable;
+use App\Traits\ImageableWithTwo;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Story extends Model
 {
-    use CrudTrait, Imageable, HasTranslations;
+    use CrudTrait, ImageableWithTwo, HasTranslations;
 
     public $translatable = ['img_src'];
 
