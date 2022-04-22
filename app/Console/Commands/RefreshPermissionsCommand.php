@@ -23,6 +23,7 @@ class RefreshPermissionsCommand extends Command
             Permission::query()->updateOrCreate([
                 'name' => RolePermission::PERMISSION_VIEW."_".$item['uri'],
                 'guard_name' => $guard,
+            ], [
                 'model'     => $item['uri']
             ]);
 
@@ -31,6 +32,7 @@ class RefreshPermissionsCommand extends Command
                     Permission::query()->updateOrCreate([
                         'name' => $operation."_".$item['uri'],
                         'guard_name' => $guard,
+                    ], [
                         'model'     => $item['uri']
                     ]);
                 }
