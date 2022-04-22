@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\ImageUploadedEvent;
+use App\Helpers\RolePermission;
 use App\Traits\Imageable;
 use App\Traits\ImageableWithTwo;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -31,26 +32,54 @@ abstract class BaseCrudController extends CrudController
     use ReorderOperation;
 
     protected $attributes;
-    protected $modelNameLower;
+    protected $modelName;
     protected bool $showTimestamps = false;
     protected bool $hasReorderOperation = false;
     protected int $hasImage = 0;
 
     public function setup()
     {
+        [$model, $class] = $this->getModelAndClassName();
+        $this->modelName = $class = strtolower(Str::snake($class));
+        $this->attributes = \DB::getSchemaBuilder()->getColumnListing((new $model)->getTable());
+        $this->setBackpackConfigs($model, $class);
+        $this->setupAccess();
+        $this->setHasImage($this->crud->model);
+    }
+
+    private function getModelAndClassName() {
         $class = str_replace('CrudController', '', class_basename($this));
         $model = "App\\Models\\$class";
+
+        return [$model, $class];
+    }
+
+    private function setBackpackConfigs($model, $class) {
         $this->crud->setModel($model);
-        $this->modelNameLower = $class = strtolower(Str::snake($class));
         $this->crud->setRoute(config('backpack.base.route_prefix')."/$class");
         $this->crud->setEntityNameStrings(trans('admin.'.$class.".singular"), trans('admin.'.$class.".plural"));
-        $this->attributes = \DB::getSchemaBuilder()->getColumnListing($this->crud->model->getTable());
+    }
+
+    private function setupAccess() {
+        $user           = backpack_user();
+        $permissions    = [
+            'list'      => RolePermission::PERMISSION_VIEW,
+            'show'      => RolePermission::PERMISSION_VIEW,
+            'create'    => RolePermission::PERMISSION_CREATE,
+            'update'    => RolePermission::PERMISSION_UPDATE,
+            'delete'    => RolePermission::PERMISSION_DESTROY,
+        ];
+        foreach ($permissions as $operation => $permission) {
+            $action = $permission."_".$this->modelName;
+            if ($user->can($action)) {
+                continue;
+            }
+            $this->crud->denyAccess($operation);
+        }
 
         if (! $this->hasReorderOperation) {
             $this->crud->denyAccess('reorder');
         }
-
-        $this->setHasImage($this->crud->model);
     }
 
     protected function setupReorderOperation($field = 'name')
@@ -60,7 +89,7 @@ abstract class BaseCrudController extends CrudController
     }
 
     protected function setupListOperation() {
-        $modelAttributes = trans("admin.".$this->modelNameLower.".fields");
+        $modelAttributes = trans("admin.".$this->modelName.".fields");
 
         if (is_array($modelAttributes)) {
             foreach (array_keys($modelAttributes) as $attribute) {
@@ -177,7 +206,7 @@ abstract class BaseCrudController extends CrudController
 
     protected function setupCreateOperation() {
         $this->setValidation();
-        $modelAttributes = trans("admin.".$this->modelNameLower.".fields");
+        $modelAttributes = trans("admin.".$this->modelName.".fields");
 
         if (is_array($modelAttributes)) {
             foreach (array_keys($modelAttributes) as $attribute) {

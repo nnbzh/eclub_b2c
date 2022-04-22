@@ -8,8 +8,8 @@ class RolePermission
     const ROLE_SUPER_ADMIN      = 'super-admin';
     const ROLE_CONTENT_MANAGER  = 'content-manager';
 
-    const OPERATION_VIEW        = 'view';
-    const OPERATION_CREATE      = 'create';
-    const OPERATION_DESTROY     = 'destroy';
-    const OPERATION_UPDATE      = 'update';
+    const PERMISSION_VIEW       = 'view';
+    const PERMISSION_CREATE     = 'create';
+    const PERMISSION_DESTROY    = 'destroy';
+    const PERMISSION_UPDATE     = 'update';
 }

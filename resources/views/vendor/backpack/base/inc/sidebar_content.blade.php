@@ -2,6 +2,7 @@
     @php(
         $allowedItems = \App\Helpers\AdminMenuGenerator::getAllowedItems(backpack_user(),$group['items'])
     )
+
     @if(count($allowedItems) > 0)
         <li class="nav-title" style="font-size: 1rem;">{{ $group['label'] }}</li>
         @foreach($allowedItems as $item)

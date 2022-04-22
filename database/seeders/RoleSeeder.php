@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Helpers\RolePermission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {

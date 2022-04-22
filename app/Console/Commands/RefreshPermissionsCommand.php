@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Helpers\AdminMenuGenerator;
 use App\Helpers\RolePermission;
+use App\Models\Permission;
 use Illuminate\Console\Command;
-use Spatie\Permission\Models\Permission;
 
 class RefreshPermissionsCommand extends Command
 {
@@ -14,22 +14,24 @@ class RefreshPermissionsCommand extends Command
     public function handle() {
         $guard      = 'web';
         $operations = [
-            RolePermission::OPERATION_DESTROY,
-            RolePermission::OPERATION_UPDATE,
-            RolePermission::OPERATION_CREATE
+            RolePermission::PERMISSION_DESTROY,
+            RolePermission::PERMISSION_UPDATE,
+            RolePermission::PERMISSION_CREATE
         ];
-        $items = collect(AdminMenuGenerator::items())->whereNotNull('uri');
+        $items = collect(AdminMenuGenerator::items())->pluck('items')->flatten(1)->whereNotNull('uri');
         foreach ($items as $item) {
             Permission::query()->updateOrCreate([
-                'name' => RolePermission::OPERATION_VIEW."_".$item['uri'],
+                'name' => RolePermission::PERMISSION_VIEW."_".$item['uri'],
                 'guard_name' => $guard,
+                'model'     => $item['uri']
             ]);
 
             if ($item['require_permission']) {
                 foreach ($operations as $operation) {
                     Permission::query()->updateOrCreate([
                         'name' => $operation."_".$item['uri'],
-                        'guard_name' => $guard
+                        'guard_name' => $guard,
+                        'model'     => $item['uri']
                     ]);
                 }
             }

@@ -43,7 +43,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::before(function ($user, $ability) {
-            return $user->hasRole(RolePermission::ROLE_SUPER_ADMIN) ? true : null;
+            return $user->hasRole(RolePermission::ROLE_SUPER_ADMIN) ? true : $user->hasPermissionTo($ability, 'web');
         });
     }
 
