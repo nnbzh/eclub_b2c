@@ -40,6 +40,12 @@ class AdminMenuGenerator
                 'label' => trans('backpack::permissionmanager.roles'),
                 'require_permission' => true
             ],
+            [
+                'uri' => 'user',
+                'icon' => 'la la-user',
+                'label' => trans('admin.user.plural'),
+                'require_permission' => true
+            ],
         ];
     }
 

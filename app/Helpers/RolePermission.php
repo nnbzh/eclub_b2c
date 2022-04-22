@@ -12,4 +12,18 @@ class RolePermission
     const PERMISSION_CREATE     = 'create';
     const PERMISSION_DESTROY    = 'destroy';
     const PERMISSION_UPDATE     = 'update';
+
+    public static function getLocaleRoleNames($role = null) {
+        $roles = [
+            self::ROLE_ADMIN            => trans('role.admin'),
+            self::ROLE_SUPER_ADMIN      => trans('role.super-admin'),
+            self::ROLE_CONTENT_MANAGER  => trans('role.content-manager'),
+        ];
+
+        if ($role) {
+            return $roles[$role];
+        }
+
+        return $roles;
+    }
 }
