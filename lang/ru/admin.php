@@ -172,9 +172,15 @@ return [
             'slug'          => 'Ключ',
         ],
     ],
-    'product_promotion_group' => [
+    'promotion_group_product' => [
         'singular'  => 'Продвигаемый продукт',
         'plural'    => 'Продвигаемые продукты',
+        'fields'    => [
+        ],
+    ],
+    'promotion_group_category' => [
+        'singular'  => 'Продвигаемая категория',
+        'plural'    => 'Продвигаемые категории',
         'fields'    => [
         ],
     ],

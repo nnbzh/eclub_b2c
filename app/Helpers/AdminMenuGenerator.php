@@ -134,9 +134,15 @@ class AdminMenuGenerator
                 'require_permission' => true,
             ],
             [
-                'uri' => 'product_promotion_group',
+                'uri' => 'promotion_group_product',
                 'icon' => 'la la-promotion',
-                'label' => trans('admin.product_promotion_group.plural'),
+                'label' => trans('admin.promotion_group_product.plural'),
+                'require_permission' => true,
+            ],
+            [
+                'uri' => 'promotion_group_category',
+                'icon' => 'la la-promotion',
+                'label' => trans('admin.promotion_group_category.plural'),
                 'require_permission' => true,
             ],
             [

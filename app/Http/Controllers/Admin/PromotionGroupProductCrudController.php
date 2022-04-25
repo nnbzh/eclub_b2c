@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Models\PromotionGroup;
 
-class ProductPromotionGroupCrudController extends BaseCrudController
+class PromotionGroupProductCrudController extends BaseCrudController
 {
     protected bool $hasReorderOperation = true;
 

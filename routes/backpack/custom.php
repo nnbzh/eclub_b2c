@@ -29,7 +29,8 @@ Route::group([
     Route::crud('rating_message', 'RatingMessageCrudController');
     Route::crud('delivery_method', 'DeliveryMethodCrudController');
     Route::crud('promotion_group', 'PromotionGroupCrudController');
-    Route::crud('product_promotion_group', 'ProductPromotionGroupCrudController');
+    Route::crud('promotion_group_product', 'PromotionGroupProductCrudController');
+    Route::crud('promotion_group_category', 'PromotionGroupCategoryCrudController');
     Route::crud('notification_type', 'NotificationTypeCrudController');
     Route::crud('product_description', 'ProductDescriptionCrudController');
     Route::crud('role', 'RoleCrudController');

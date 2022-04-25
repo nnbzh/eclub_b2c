@@ -39,6 +39,10 @@ class PromotionGroup extends Model
     ];
 
     public function products() {
-        return $this->belongsToMany(Product::class, 'product_promotion_group')->using(ProductPromotionGroup::class);
+        return $this->belongsToMany(Product::class, 'promotion_group_product')->using(PromotionGroupProduct::class);
+    }
+
+    public function categories() {
+        return $this->belongsToMany(Product::class, 'promotion_group_category')->using(PromotionGroupProduct::class);
     }
 }
