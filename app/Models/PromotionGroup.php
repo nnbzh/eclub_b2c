@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read array $translations
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
  * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder|PromotionGroup newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PromotionGroup newQuery()
