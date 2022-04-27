@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\ImageableWithTwo;
+use App\Traits\Imageable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
@@ -46,7 +46,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
-    use CrudTrait, HasTranslations, ImageableWithTwo;
+    use CrudTrait, HasTranslations, Imageable;
 
     public $translatable = ['name'];
 

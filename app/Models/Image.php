@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Image extends Model
 {
-    use HasTranslations;
+    use HasTranslations, CrudTrait;
 
     public $translatable = ['src'];
 
@@ -42,7 +43,11 @@ class Image extends Model
         'imageable_type',
         'lang',
         'src',
-        'src_second'
+        'src_second',
+        'depth',
+        'parent_id',
+        'lft',
+        'rgt',
     ];
 
     public function imageable() {

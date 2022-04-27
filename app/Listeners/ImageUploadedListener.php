@@ -16,7 +16,7 @@ class ImageUploadedListener
      */
     public function handle(ImageUploadedEvent $event)
     {
-        $attributeName = $event->isSecond ? 'src_second' : 'src';
+        $attributeName = 'src';
         $disk = "s3";
         $destinationPath = strtolower(Str::plural(class_basename($event->model)));
 
@@ -43,7 +43,7 @@ class ImageUploadedListener
                 $modelImage->create([$attributeName => "/$publicDestinationPath/$filename"]);
             }
         } else if (is_null($event->image) && $event->locale) {
-            $modelImage = $event->model->image()->first();
+            $modelImage = $event->model?->image()->first();
 
             if (! $modelImage) {
                 return ;

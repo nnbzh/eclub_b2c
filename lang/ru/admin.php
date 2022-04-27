@@ -76,8 +76,6 @@ return [
         'singular'  => 'Картинка',
         'plural'    => 'Картинки',
         'fields'    => [
-            'src'       => 'Наименование',
-            'is_active' => 'Активный',
         ],
     ],
     'brand' => [

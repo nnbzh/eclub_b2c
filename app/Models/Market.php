@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFilters;
-use App\Traits\ImageableWithTwo;
+use App\Traits\Imageable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Market extends Model
 {
-    use ImageableWithTwo, CrudTrait, HasFilters, HasTranslations;
+    use Imageable, CrudTrait, HasFilters, HasTranslations;
 
     public $translatable = ['img_src'];
 

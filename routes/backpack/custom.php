@@ -34,4 +34,5 @@ Route::group([
     Route::crud('notification_type', 'NotificationTypeCrudController');
     Route::crud('product_description', 'ProductDescriptionCrudController');
     Route::crud('role', 'RoleCrudController');
+    Route::crud('image', 'ImageCrudController');
 }); // this should be the absolute last line of this file

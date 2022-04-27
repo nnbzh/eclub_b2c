@@ -48,6 +48,7 @@ class OrderService
         $data['user_id']        = $user->id;
         $data['customer_name']  = $data['customer_name'] ?? $user->name;
         $data['customer_phone'] = $data['customer_phone'] ?? $user->phone;
+        $data['status']         = OrderStatus::NEW;
         if (isset($data['user_address_id'])) {
             $userAddress = $this->userAddressRepository->getBy('id', $data['user_address_id']);
             $data['address'] = [

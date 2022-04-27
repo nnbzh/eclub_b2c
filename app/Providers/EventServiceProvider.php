@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Events\ImageUploadedEvent;
 use App\Listeners\ImageUploadedListener;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Order;
 use App\Models\Permission;
 use App\Observers\CategoryObserver;
+use App\Observers\ImageObserver;
 use App\Observers\OrderObserver;
 use App\Observers\PermissionObserver;
 use Illuminate\Auth\Events\Registered;
@@ -40,5 +42,6 @@ class EventServiceProvider extends ServiceProvider
     {
         Category::observe(CategoryObserver::class);
         Order::observe(OrderObserver::class);
+        Image::observe(ImageObserver::class);
     }
 }
