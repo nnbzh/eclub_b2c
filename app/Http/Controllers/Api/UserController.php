@@ -95,6 +95,7 @@ class UserController extends Controller
         $user       = $request->user();
         $filters    = [
             'status' => [
+                OrderStatus::NEW,
                 OrderStatus::PROCESSING,
                 OrderStatus::COURIER_TAKE,
                 OrderStatus::COURIER_QUEUE

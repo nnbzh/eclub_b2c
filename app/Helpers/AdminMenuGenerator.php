@@ -155,7 +155,7 @@ class AdminMenuGenerator
     }
 
     public static function canView($user, $uri) {
-        return $user->can(RolePermission::PERMISSION_VIEW."_".$uri);
+        return $user->can(RolePermission::CRUD_VIEW."_".$uri);
     }
 
     public static function getAllowedItems($user, $items) {

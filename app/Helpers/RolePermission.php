@@ -8,10 +8,10 @@ class RolePermission
     const ROLE_SUPER_ADMIN      = 'super-admin';
     const ROLE_CONTENT_MANAGER  = 'content-manager';
 
-    const PERMISSION_VIEW       = 'view';
-    const PERMISSION_CREATE     = 'create';
-    const PERMISSION_DESTROY    = 'destroy';
-    const PERMISSION_UPDATE     = 'update';
+    const CRUD_VIEW       = 'view';
+    const CRUD_CREATE     = 'create';
+    const CRUD_DESTROY    = 'destroy';
+    const CRUD_UPDATE     = 'update';
 
     public static function getLocaleRoleNames($role = null) {
         $roles = [

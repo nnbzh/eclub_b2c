@@ -62,11 +62,11 @@ abstract class BaseCrudController extends CrudController
     private function setupAccess() {
         $user           = backpack_user();
         $permissions    = [
-            'list'      => RolePermission::PERMISSION_VIEW,
-            'show'      => RolePermission::PERMISSION_VIEW,
-            'create'    => RolePermission::PERMISSION_CREATE,
-            'update'    => RolePermission::PERMISSION_UPDATE,
-            'delete'    => RolePermission::PERMISSION_DESTROY,
+            'list'      => RolePermission::CRUD_VIEW,
+            'show'      => RolePermission::CRUD_VIEW,
+            'create'    => RolePermission::CRUD_CREATE,
+            'update'    => RolePermission::CRUD_UPDATE,
+            'delete'    => RolePermission::CRUD_DESTROY,
         ];
         foreach ($permissions as $operation => $permission) {
             $action = $permission."_".$this->modelName;
@@ -139,7 +139,7 @@ abstract class BaseCrudController extends CrudController
         $this->crud->setSaveAction();
 
         if ($image) {
-            event(new ImageUploadedEvent($item, $image));
+            event(new ImageUploadedEvent($item, $image, RolePermission::CRUD_CREATE));
         }
 
         return $this->crud->performSaveAction($item->getKey());
@@ -164,7 +164,7 @@ abstract class BaseCrudController extends CrudController
         \Alert::success(trans('backpack::crud.update_success'))->flash();
         $this->crud->setSaveAction();
 
-        event(new ImageUploadedEvent($item, $image, 'edit', $request->get('_locale') ?? 'ru'));
+        event(new ImageUploadedEvent($item, $image, RolePermission::CRUD_UPDATE, $request->get('_locale') ?? 'ru'));
 
         return $this->crud->performSaveAction($item->getKey());
     }
