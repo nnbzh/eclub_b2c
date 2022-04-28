@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ImageUploadedEvent;
+
 class ImageCrudController extends BaseCrudController
 {
     protected bool $hasReorderOperation = true;
@@ -57,6 +59,61 @@ class ImageCrudController extends BaseCrudController
         }
         $this->crud->addField($idField);
         $this->crud->addField($typeField);
+        $this->crud->addField([
+            'name' => 'src',
+            'label' => trans('admin.image.singular'),
+            'type' => 'image',
+            'disk' => 's3',
+            'width' => '150px',
+            'height' => '150px',
+        ]);
+    }
+
+    public function store()
+    {
+        $this->crud->hasAccessOrFail('create');
+        $request = $this->crud->validateRequest();
+        $binary = $request->request->get('src');
+        $request->request->remove('src');
+        $data = [
+            'imageable_id'      => $this->imageableId,
+            'imageable_type'    => $this->imageableType,
+        ];
+        event(new ImageUploadedEvent($binary, $data, 'create'));
+        $this->crud->setSaveAction('save_and_back');
+
+        return redirect(route('image.index'));
+    }
+
+    public function edit($id)
+    {
+        app()->setLocale(request('_locale', 'ru'));
+
+        return $this->parentEdit($id);
+    }
+
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+        $request = $this->crud->validateRequest();
+        $binary = $request->request->get('src');
+        $request->request->remove('src');
+        $data = [
+            'locale'=> $request->get('_locale', 'ru'),
+            'entry' => $this->crud->getCurrentEntry(),
+        ];
+        event(new ImageUploadedEvent($binary, $data, 'update'));
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction();
+    }
+
+    private function filterRequest($request) {
+
+    }
+
+    protected function setupUpdateOperation()
+    {
         $this->crud->addField([
             'name' => 'src',
             'label' => trans('admin.image.singular'),

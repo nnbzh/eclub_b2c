@@ -12,7 +12,6 @@ class CategoryResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'image'         => $this->firstImgSrc,
-            'image_v2'      => $this->secondImgSrc,
             'subcategories' => self::collection($this->whenLoaded('subcategories'))
         ];
     }

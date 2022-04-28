@@ -43,7 +43,6 @@ class Image extends Model
         'imageable_type',
         'lang',
         'src',
-        'src_second',
         'depth',
         'parent_id',
         'lft',
@@ -54,7 +53,7 @@ class Image extends Model
         return $this->morphTo();
     }
 
-    public function getFirstImgSrcAttribute() {
+    public function getFullUrlAttribute() {
         if (is_null($this->src)) {
             return null;
         }
@@ -64,17 +63,5 @@ class Image extends Model
         }
 
         return config('filesystems.disks.s3.endpoint')."/europharm2$this->src";
-    }
-
-    public function getSecondImgSrcAttribute() {
-        if (is_null($this->src_second)) {
-            return null;
-        }
-
-        if (filter_var($this->src_second, FILTER_VALIDATE_URL)) {
-            return $this->src_second;
-        }
-
-        return config('filesystems.disks.s3.endpoint')."/europharm2$this->src_second";
     }
 }

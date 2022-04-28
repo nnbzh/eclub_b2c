@@ -3,11 +3,15 @@
 namespace App\Listeners;
 
 use App\Events\ImageUploadedEvent;
+use App\Helpers\RolePermission;
+use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ImageUploadedListener
 {
+    const DISK      = 's3';
+    const ATTRIBUTE = 'src';
     /**
      * Handle the event.
      *
@@ -16,48 +20,56 @@ class ImageUploadedListener
      */
     public function handle(ImageUploadedEvent $event)
     {
-        $attributeName = 'src';
-        $disk = "s3";
-        $destinationPath = strtolower(Str::plural(class_basename($event->model)));
+        $image      = $event->binary ?? '';
+        $operation  = $event->operation;
+        if ($operation == RolePermission::CRUD_CREATE) {
+            $destinationPath = $this->getFolderFromImageable($event->data['imageable_type']);
+            $filename = $this->storeAndGetFilename($image, $destinationPath);
+            Image::create([
+                'imageable_id'      => $event->data['imageable_id'],
+                'imageable_type'    => $event->data['imageable_type'] ,
+                self::ATTRIBUTE     => "/$destinationPath/$filename"
+            ]);
 
-        if (Str::startsWith($event->image ?? '', 'data:image')) {
-            $extension = Str::substr($event->image, 0, strpos($event->image, ';') + 1);
-            $extension = Str::replaceFirst('data:image/', '', $extension);
-            $extension = Str::replaceFirst(';', '', $extension);
-            $image = \Intervention\Image\ImageManagerStatic::make($event->image)->encode($extension, 90);
-            $filename = md5($image . time()) . ".$extension";
-            Storage::disk($disk)->put('europharm2/'. $destinationPath . '/' . $filename, $image->stream());
-            $publicDestinationPath = Str::replaceFirst('public/', '', $destinationPath);
-            $modelImage = $event->model->image();
-
-            if ($modelImage->exists()) {
-                $modelImage = $modelImage->first();
-
-                if (in_array($event->locale, array_keys($modelImage->getTranslations()[$attributeName]))) {
-                    Storage::disk($disk)->delete("europharm2".$modelImage?->getTranslation($attributeName, $event->locale));
+            return;
+        }
+        if ($operation == RolePermission::CRUD_UPDATE) {
+            $locale = $event->data['locale'];
+            $entry  = $event->data['entry'];
+            $translations = $entry->getTranslations()[self::ATTRIBUTE];
+            if (Str::startsWith($image ?? '', 'data:image')) {
+                $destinationPath = $this->getFolderFromImageable($entry->imageable_type);
+                $filename       = $this->storeAndGetFilename($image, $destinationPath);
+                if (in_array($locale, array_keys($translations))) {
+                    Storage::disk(self::DISK)->delete('europharm2'.$translations[$locale]);
                 }
-
-                $modelImage->setTranslation($attributeName, $event->locale, "/$publicDestinationPath/$filename");
-                $modelImage->saveOrFail();
-            } else {
-                $modelImage->create([$attributeName => "/$publicDestinationPath/$filename"]);
-            }
-        } else if (is_null($event->image) && $event->locale) {
-            $modelImage = $event->model?->image()->first();
-
-            if (! $modelImage) {
-                return ;
-            }
-
-            Storage::disk($disk)->delete("europharm2".$modelImage?->getTranslation($attributeName, $event->locale));
-            $allTranslations = $modelImage->getTranslations()[$attributeName];
-
-            if (count($allTranslations) == 1 && array_key_first($allTranslations) == $event->locale) {
-                $modelImage->delete();
-            } else {
-                $modelImage->forgetTranslation($attributeName, $event->locale);
-                $modelImage->saveOrFail();
+                $entry->setTranslation(self::ATTRIBUTE, $locale, "/$destinationPath/$filename");
+                $entry->saveOrFail();
+            } elseif (empty($image)) {
+                if (count($translations) == 1 && array_key_first($translations) == $locale) {
+                    $entry->delete();
+                } else {
+                    $entry->forgetTranslation(self::ATTRIBUTE, $locale);
+                    $entry->saveOrFail();
+                    Storage::disk(self::DISK)->delete('europharm2'.$translations[$locale] ?? '');
+                }
             }
         }
+    }
+
+    private function storeAndGetFilename($image, $folder)
+    {
+        $extension = Str::substr($image, 0, strpos($image, ';') + 1);
+        $extension = Str::replaceFirst('data:image/', '', $extension);
+        $extension = Str::replaceFirst(';', '', $extension);
+        $image = \Intervention\Image\ImageManagerStatic::make($image)->encode($extension, 90);
+        $filename = md5($image . time()) . ".$extension";
+        Storage::disk(self::DISK)->put('europharm2/'. $folder . '/' . $filename, $image->stream());
+
+        return $filename;
+    }
+
+    private function getFolderFromImageable($namespace) {
+        return strtolower(Str::plural(last(explode('\\', $namespace))));
     }
 }

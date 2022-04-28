@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
             'quantity'  => $this->quantity ?? $this->pivot?->quantity,
             'category'  => new CategoryResource($this->category),
             'prices'    => $this->prices,
-            'purchase_price' => $this->when(! empty($this->pivot), $this->pivot->price),
+            'purchase_price' => $this->pivot->price ?? null,
             'images'    => ImageResource::collection($this->images),
             'description' => new ProductDescriptionResource($this->whenLoaded('description')),
         ];

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\ImageUploadedEvent;
 use App\Helpers\RolePermission;
 use App\Traits\Imageable;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -16,18 +15,13 @@ use Illuminate\Support\Str;
 
 abstract class BaseCrudController extends CrudController
 {
-    use CreateOperation {
-        store as parentStore;
-    }
-
+    use ListOperation;
+    use ShowOperation;
+    use CreateOperation;
     use UpdateOperation {
-        update as parentUpdate;
         edit as parentEdit;
     }
-
-    use ListOperation;
     use DeleteOperation;
-    use ShowOperation;
     use ReorderOperation;
 
     protected $attributes;
@@ -122,64 +116,6 @@ abstract class BaseCrudController extends CrudController
         }
     }
 
-    public function store()
-    {
-        if (! $this->hasImage) {
-            return $this->parentStore();
-        }
-
-        $this->crud->hasAccessOrFail('create');
-        $request = $this->crud->validateRequest();
-        $image   = $request->get('img_src');
-        $request->request->remove('img_src');
-        $this->crud->registerFieldEvents();
-        $item = $this->crud->create($this->crud->getStrippedSaveRequest($request));
-        $this->data['entry'] = $this->crud->entry = $item;
-        \Alert::success(trans('backpack::crud.insert_success'))->flash();
-        $this->crud->setSaveAction();
-
-        if ($image) {
-            event(new ImageUploadedEvent($item, $image, RolePermission::CRUD_CREATE));
-        }
-
-        return $this->crud->performSaveAction($item->getKey());
-    }
-
-    public function update()
-    {
-        if (! $this->hasImage) {
-            return $this->parentUpdate();
-        }
-
-        $this->crud->hasAccessOrFail('update');
-        $request = $this->crud->validateRequest();
-        $image   = $request->get('img_src');
-        $request->request->remove('img_src');
-        $this->crud->registerFieldEvents();
-        $item = $this->crud->update(
-            $request->get($this->crud->model->getKeyName()),
-            $this->crud->getStrippedSaveRequest($request)
-        );
-        $this->data['entry'] = $this->crud->entry = $item;
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-        $this->crud->setSaveAction();
-
-        event(new ImageUploadedEvent($item, $image, RolePermission::CRUD_UPDATE, $request->get('_locale') ?? 'ru'));
-
-        return $this->crud->performSaveAction($item->getKey());
-    }
-
-    public function edit($id)
-    {
-        app()->setLocale(request('_locale', 'ru'));
-
-        if (! $this->hasImage) {
-            return $this->parentEdit($id);
-        }
-
-        return $this->parentEdit($id);
-    }
-
     protected function setupCreateOperation() {
         $this->setValidation();
         $modelAttributes = trans("admin.".$this->modelName.".fields");
@@ -211,25 +147,15 @@ abstract class BaseCrudController extends CrudController
 
         if ($this->hasImage) {
             $this->crud->addField([
-                'name' => 'img_src',
-                'label' => trans('admin.image.singular'),
-                'type' => 'image',
-                'disk' => 's3',
-                'width' => '150px',
-                'height' => '150px',
+                'name'      => 'images',
+                'type'      => 'images_relationship',
+                'attribute' => 'full_url',
+                'disk'      => 's3'
             ]);
             if ($this->crud->getCurrentOperation() == 'update') {
                 $entry = $this->crud->getCurrentEntry();
                 \Session::put('imageable_id', $entry->id);
                 \Session::put('imageable_type', get_class($entry));
-                $html = '<div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="'. route('image.index') .'" target="_blank" class="btn btn-dark btn-sm" role="button" aria-pressed="true">Все картины</a>
-                    </div>';
-                $this->crud->addField([   // CustomHTML
-                    'name'  => 'seperator',
-                    'type'  => 'custom_html',
-                    'value' => $html
-                ]);
             }
         }
     }
