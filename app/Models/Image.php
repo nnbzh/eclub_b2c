@@ -64,4 +64,10 @@ class Image extends Model
 
         return config('filesystems.disks.s3.endpoint')."/europharm2$this->src";
     }
+
+    public function getHtmlImageAttribute() {
+        return '<div style="text-align: center">
+                    <img src="'. $this->fullUrl .'" style="width: 300px; height: 300px;">
+                </div>';
+    }
 }
