@@ -71,6 +71,7 @@ Route::apiResource('cities', 'CityController')->only(['index']);
 Route::apiResource('stories', 'StoryController')->only(['index']);
 Route::apiResource('menu-items', 'MenuItemController')->only(['index']);
 Route::apiResource('delivery-methods', 'DeliveryMethodController')->only(['index']);
+Route::get('delivery-methods/available', 'DeliveryMethodController@available');
 Route::apiResource('payment-methods', 'PaymentMethodController')->only(['index']);
 Route::apiResource('cancel-messages', 'CancelMessageController')->only(['index']);
 

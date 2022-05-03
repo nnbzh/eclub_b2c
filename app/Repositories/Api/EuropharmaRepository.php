@@ -24,4 +24,14 @@ class EuropharmaRepository extends ApiRepository
     public function cancelOrder($orderNumber, $reason) {
         return $this->client->post("app/orders/$orderNumber/cancel", ['type' => $reason])->json();
     }
+
+    public function getAvailableDeliveryMethods($cityId, $lat, $lng, $positions)
+    {
+        return $this->client->post('app/delivery-available', [
+            'lat'       => $lat,
+            'lng'       => $lng,
+            'positions' => $positions,
+            'city_id'   => $cityId,
+        ])->json();
+    }
 }
