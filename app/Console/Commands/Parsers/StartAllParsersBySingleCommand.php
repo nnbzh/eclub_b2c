@@ -27,6 +27,7 @@ class StartAllParsersBySingleCommand extends Command
             Artisan::queue('update:stocks'),
             Artisan::queue('update:pharmacy-stocks'),
             Artisan::queue('update:prices'),
+            Artisan::queue('permissions:refresh'),
         ])
             ->onConnection('redis');
     }
