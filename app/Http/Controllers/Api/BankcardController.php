@@ -15,7 +15,8 @@ class BankcardController extends Controller
         return response()->json(['data' => ['url' => $url]]);
     }
 
-    public function store() {
+    public function store()
+    {
 
     }
 }
