@@ -41,6 +41,8 @@ Route::group(['middleware = auth:api'], function() {
             Route::post('paybox/callback', 'BankcardController@payboxStoreCallback')->name('bankcard.paybox.store.callback');
         });
         Route::apiResource('addresses', 'UserAddressController')->shallow();
+        Route::apiResource('reminders', 'ReminderController')->shallow();
+        Route::post('reminders/sync', 'ReminderController@synchronize');
     });
     Route::group(['prefix' => 'orders'], function() {
         Route::post('', 'OrderController@store');

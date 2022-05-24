@@ -192,6 +192,10 @@ class User extends Authenticatable
         return $this->sentPushNotifications()->where('status', NotificationStatus::UNREAD);
     }
 
+    public function reminders() {
+        return $this->hasMany(Reminder::class);
+    }
+
     //MUTATORS
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = \Hash::make($value);
