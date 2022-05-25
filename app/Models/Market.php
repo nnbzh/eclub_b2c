@@ -71,6 +71,19 @@ class Market extends Model
         return $this->belongsToMany(Category::class, 'market_category');
     }
 
+    public function getLogoAttribute() {
+        $logo = $this->images()->skip(1)->first();
+        if (is_null($logo->src)) {
+            return null;
+        }
+
+        if (filter_var($logo->src, FILTER_VALIDATE_URL)) {
+            return $logo->src;
+        }
+
+        return config('filesystems.disks.s3.endpoint')."/europharm2$logo->src";
+    }
+
 //    public function categories() {
 //        return $this->hasManyDeep(Category::class, ['product_market', Product::class], [
 //            'market_number',
