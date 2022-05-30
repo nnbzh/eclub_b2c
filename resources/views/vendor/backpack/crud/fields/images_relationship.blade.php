@@ -86,7 +86,7 @@
         </div>
     </div>
     <div class="btn-group">
-        <input type="hidden" data-handle="hiddenImage" value="{{ $value }}">
+        <input type="hidden" data-handle="hiddenImage" value="{{ $value ?? ''}}">
         <a class="btn btn-light btn-sm" role="button" href="{{route('image.index')}}">
             Добавить|Изменить изображения
         </a>
