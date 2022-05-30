@@ -1,7 +1,7 @@
 @php
     $field['prefix'] = $field['prefix'] ?? '';
     $field['disk'] = $field['disk'] ?? null;
-    $images = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? '';
+    $images = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? [];
 
     if (! function_exists('getDiskUrl')) {
         function getDiskUrl($disk, $path) {
