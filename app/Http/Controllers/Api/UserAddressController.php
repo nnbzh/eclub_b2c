@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 
 class UserAddressController extends Controller
 {
+    public function __construct(private UserAddressService $userAddressService)
+    {
+    }
 
     public function show(UserAddress $address) {
 //        $this->authorize('show', $address);
