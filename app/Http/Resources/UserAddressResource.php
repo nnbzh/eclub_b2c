@@ -10,6 +10,7 @@ class UserAddressResource extends JsonResource
     {
         return [
             'id'        => $this->id,
+            'name'      => $this->name,
             'address'   => $this->address,
             'block'     => $this->block,
             'floor'     => $this->floor,
