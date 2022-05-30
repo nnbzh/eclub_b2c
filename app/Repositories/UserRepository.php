@@ -16,7 +16,9 @@ class UserRepository
     }
 
     public function isPhoneUsed($phone) {
-        return User::query()->where('phone', $phone)->exists();
+        $user = User::query()->where('phone', $phone)->first();
+
+        return $user && $user->name && $user->email && $user->password;
     }
 
     public function update(User $user, array $data)
