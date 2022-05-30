@@ -12,7 +12,7 @@ class UserAddressResource extends JsonResource
             'id'        => $this->id,
             'name'      => $this->name,
             'address'   => $this->address,
-            'block'     => $this->block,
+            'entrance'  => $this->entrance,
             'floor'     => $this->floor,
             'apartment' => $this->apartment,
             'lat'       => $this->lat,
