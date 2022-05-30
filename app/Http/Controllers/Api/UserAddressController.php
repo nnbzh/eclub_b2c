@@ -12,10 +12,9 @@ use Illuminate\Http\Request;
 
 class UserAddressController extends Controller
 {
-    public function __construct(private UserAddressService $userAddressService) {}
 
     public function show(UserAddress $address) {
-        $this->authorize('show', $address);
+//        $this->authorize('show', $address);
 
         return new UserAddressResource($address);
     }
@@ -36,21 +35,21 @@ class UserAddressController extends Controller
     }
 
     public function update(UpdateUserAddressRequest $request, UserAddress $address) {
-        $this->authorize('update', $address);
+//        $this->authorize('update', $address);
         $userAddress = $this->userAddressService->update($address, $request->validated());
 
         return new UserAddressResource($userAddress);
     }
 
     public function destroy(UserAddress $address) {
-        $this->authorize('destroy', $address);
+//        $this->authorize('destroy', $address);
         $this->userAddressService->delete($address);
 
         return response()->json(['data' => null]);
     }
 
     public function activate(UserAddress $address) {
-        $this->authorize('update', $address);
+//        $this->authorize('update', $address);
         $this->userAddressService->activate($address);
 
         return response()->json(['data' => null]);
