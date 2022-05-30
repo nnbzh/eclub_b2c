@@ -9,7 +9,7 @@ class UpdateUserRequest extends FormRequest
     public function rules() {
         return [
             'name'      => 'nullable|string',
-            'email'     => 'nullable|email|unique',
+            'email'     => 'nullable|email|unique:users',
             'gender'    => 'nullable|in:m,f',
             'birthdate' => 'nullable|date',
             'lang'      => 'nullable|in:kk,en,ru',
