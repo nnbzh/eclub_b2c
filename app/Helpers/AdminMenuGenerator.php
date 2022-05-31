@@ -46,6 +46,12 @@ class AdminMenuGenerator
                 'label' => trans('admin.user.plural'),
                 'require_permission' => true
             ],
+            [
+                'uri' => 'order',
+                'icon' => 'la la-shopping-cart',
+                'label' => trans('admin.order.plural'),
+                'require_permission' => true
+            ],
         ];
     }
 

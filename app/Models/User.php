@@ -206,6 +206,10 @@ class User extends Authenticatable
         return $this->addresses()->where('is_active', true)->first();
     }
 
+    public function getNameOrPhoneAttribute() {
+        return $this->name ?? $this->phone ?? '';
+    }
+
     public function getUnreadNotificationsCountAttribute() {
         return $this->unreadSentPushNotifications()->count();
     }

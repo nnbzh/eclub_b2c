@@ -6,6 +6,7 @@ use App\Models\Interfaces\IBillable;
 use App\Traits\Billable;
 use App\Traits\HasFilters;
 use App\Traits\Reviewable;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -65,7 +66,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model implements IBillable
 {
-    use Billable, Reviewable, HasFilters;
+    use Billable, Reviewable, HasFilters, CrudTrait;
 
     protected $fillable = [
         'number',
